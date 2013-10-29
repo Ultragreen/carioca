@@ -1,0 +1,55 @@
+--- 
+uuid: 
+  :type: :gem
+  :resource: uuid
+  :description: a Rubygems called uuid to build UUID ids.
+  :service: UUID
+logger: 
+#  :distributed: true
+  :type: :builtin
+  :resource: logger
+  :init_options: 
+    :target: /tmp/log.file
+  :description: The standard ruby Logger internal wrapper Service
+  :service: Carioca::Services::InternalLogger
+configuration:
+#  :distributed: true
+  :type: :builtin
+  :resource: configuration
+  :description: The configuration service of Carioca
+  :service: Carioca::Services::Configuration
+  :init_options:
+    :config_file: ./spec/config/.config
+dorsal:
+  :type: :gem
+  :resource: dorsal
+  :description: The Dorsal Distributed Services architecture
+  :service: Dorsal::Controller	       
+  :init_options:
+    :host: localhost
+    :port: 8686
+    :dir: /tmp/dorsal
+    :description: Ultragreen Ring Server
+dummy: 
+  :type: :file
+  :resource: ./spec/samples/dummy.rb
+  :description: a dummy test service
+  :service: ExternalServices::Dummy
+distdummy:
+  :type: :file
+  :resource: ./spec/samples/dummy.rb
+  :description: a dummy test service
+  :service: ExternalServices::Dummy
+  :distributed: true
+uuidbygemfile:
+  :type: :gem_file
+  :resource: uuid:lib/uuid.rb
+  :description: uuid file in gem
+  :service: UUID
+debug: 
+  :type: :builtin
+  :resource: debug
+  :init_options: 
+    :service: dummy
+  :description: Class Proxy debug logger Service
+  :service: Carioca::Services::ProxyDebug
