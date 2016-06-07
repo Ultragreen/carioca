@@ -20,6 +20,7 @@ require 'methodic'
 require 'carioca/services'
 require 'yaml'
 require 'drb/drb'
+require 'xmlsimple'
 
 # overwriting Hash class 
 # @private
@@ -66,22 +67,35 @@ module Carioca
       # the name of the config file in YAML format
       attr_accessor :config_file
       
-      # constructor  (pre-open the config file in YAML)
+      # constructor  (pre-open the config file in default:YAML)
       # @param [Hash] options the options records
       # @option options [String] :config_file (REQUIRED) the name of the config file
       # @option options [String] :context a context (root) name to bind in YAML Structure
+      # @option options [String] :content a string (xml or yaml) content for configuration
+      # @option options [String] :xml_input a boolean if you want load and save in XML
       def initialize(options = {})
         @config_file = options[:config_file]
+        @xml_input = options[:xml_input]
+        @content  = options[:content]
         newsets = {}
-        if File::exist?(@config_file) then
-          newsets = YAML::load_file(@config_file).deep_symbolize
-          newsets = newsets[options[:context].to_sym] if options[:context] && newsets[options[:context].to_sym]
-          deep_merge!(self, newsets)
+        if @config_file then
+          @content = File::readlines(@config_file).join if File::exist?(@config_file)
         end
+        if options[:xml_input] then
+          newsets = XmlSimple.xml_in( @content, {
+                                        'ForceArray' => [ 'sequence', 'step' ],
+                                        'KeepRoot' => true,
+                                      }).deep_symbolize_keys
+        else
+          newsets = YAML::load(@content).deep_symbolize_keys
+        end
+        newsets = newsets[options[:context].to_sym] if options[:context] && newsets[options[:context].to_sym]
+        deep_merge!(self, newsets)
       end
       
       # save the Hash(self) in the file named by @config_file
       # @return [TrueClass,FalseClass] true if save! successfull
+      # @note TODO save in XML format
       def save!
         res = false
         File.open(@config_file, "w") do |f|

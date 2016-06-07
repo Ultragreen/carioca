@@ -16,7 +16,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('uuid')
   s.add_development_dependency('code_statistics')
   s.add_development_dependency('yard-rspec')
-  s.add_dependency('dorsal')
+  s.add_dependency('xml-simple')	
+  s.add_dependency('dorsal')	
   s.add_dependency('methodic')
   s.required_ruby_version = '>= 1.8.1'
   s.rdoc_options << '--title' << 'Carioca : Gem documentation' << '--main' << 'doc/manual.rdoc' << '--line-numbers' 

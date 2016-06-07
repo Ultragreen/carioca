@@ -1,6 +1,7 @@
 require'rubygems'
 require'rspec'
 require 'carioca'
+require 'fileutils'
 
 $debug = true
 
@@ -35,7 +36,7 @@ describe Carioca do
         carioca1 = Carioca::Services::Registry.init
         carioca2 = Carioca::Services::Registry.init
         test = (carioca1.inspect == carioca2.inspect)
-        test.should be_true
+        test.should be true
       end
       
 
@@ -175,7 +176,7 @@ describe Carioca do
           
           it "should be saved in other file" do 
             $conf.config_file = '/tmp/.config'
-            $conf.save!.should be_true
+            $conf.save!.should be true
             
           end
           it "should stop the configuration service" do

@@ -128,6 +128,7 @@ module PrivateMethodsCariocaServicesRegistry
       eval("@obj = #{@list[_name][:service]}::new(@list[_name][:init_options])")
     end
     if dist then
+      p @ring_server
       @ring_server.start_service({ :name => _opts[:name], :object => @obj, :description => @list[_name][:description], :owner => @name })
       @loaded_services[_opts[:name]] = @ring_server.bind_to_service :name => _opts[:name]
     else
