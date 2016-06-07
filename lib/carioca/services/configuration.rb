@@ -17,7 +17,7 @@
 
 require 'rubygems'
 require 'methodic'
-require 'carioca/services'
+require_relative '../services'
 require 'yaml'
 require 'drb/drb'
 

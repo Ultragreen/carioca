@@ -1,6 +1,7 @@
 require'rubygems'
 require'rspec'
 require 'carioca'
+require 'fileutils'
 
 $debug = true
 
@@ -35,7 +36,7 @@ describe Carioca do
         carioca1 = Carioca::Services::Registry.init
         carioca2 = Carioca::Services::Registry.init
         test = (carioca1.inspect == carioca2.inspect)
-        test.should be_true
+        test.should be true
       end
       
 
@@ -175,7 +176,7 @@ describe Carioca do
           
           it "should be saved in other file" do 
             $conf.config_file = '/tmp/.config'
-            $conf.save!.should be_true
+            $conf.save!.should be true
             
           end
           it "should stop the configuration service" do
@@ -221,7 +222,7 @@ describe Carioca do
             $dummy_dist = subject.start_service :name => 'distdummy'        
           end
           it "should exist a processus Ring server" do 
-            File::exist?('/tmp/dorsal/ringserver.pid').should be_true
+            File::exist?('/tmp/dorsal/ringserver.pid').should be true
             pid = `ps aux|grep ruby|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
             pid.should_not be_empty
           end
@@ -283,14 +284,14 @@ describe Carioca do
       context "Distributed Service" do
         it "should be possible to stop a distributed service" do
           $dummy_dist = subject.start_service :name => 'distdummy'        
-          subject.stop_service({:name => 'distdummy'}).should be_true        
+          subject.stop_service({:name => 'distdummy'}).should be true        
         end
         it "should not exist forked daemon instance for this stopped service" do
           pid = `ps aux|grep ruby|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
           pid.should be_empty
         end
         it "should not exist the pid file of this stopped services" do
-          File::exist?('/tmp/dorsal/service-distdummy.pid').should be_false
+          File::exist?('/tmp/dorsal/service-distdummy.pid').should be false
           $dummy_dist = subject.start_service :name => 'distdummy'
         end
       end
@@ -398,7 +399,7 @@ describe Carioca do
         prev = subject.registry_filename
         subject.registry_filename = '/tmp/test.reg'
         subject.save!
-        File::exist?('/tmp/test.reg').should be_true
+        File::exist?('/tmp/test.reg').should be true
         subject.registry_filename = prev
         subject.registry_filename.should eq "spec/config/services.registry"
       end
@@ -449,6 +450,20 @@ describe Carioca do
       end
     end
   end
+  after :all do
+    FileUtils.rm_rf("/tmp/log.file")
+    File::unlink('/tmp/dorsal/ringserver.pid') if File::exist?('/tmp/dorsal/ringserver.pid')
+    File::unlink('/tmp/dorsal/service-distdummy.pid') if File::exist?('/tmp/dorsal/service-distdummy.pid')
+    pid = `ps aux|grep ruby|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
+    unless pid.empty? then
+      res = `kill -TERM #{pid.chomp}`
+    end
+    pid = `ps aux|grep ruby|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
+    unless pid.empty? then
+      res = `kill -TERM #{pid.chomp}`
+    end
+  end
+
 end
 
 
