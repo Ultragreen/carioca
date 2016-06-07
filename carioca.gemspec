@@ -23,8 +23,8 @@ Gem::Specification.new do |s|
   
 
   s.add_dependency 'dorsal', "~> 1.0"
-  s.add_dependency 'methodic' "~> 1.2", '>= 1.2'
-  s.add_dependency('xml-simple')	
+  s.add_dependency 'methodic', "~> 1.2", '>= 1.2'
+  s.add_dependency 'xml-simple', "~> 1.1", '>= 1.1.5'	
 
   s.required_ruby_version = '>= 1.8.1'
   s.rdoc_options << '--title' << 'Carioca : Gem documentation' << '--main' << 'doc/manual.rdoc' << '--line-numbers' 
