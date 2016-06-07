@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{carioca}
   s.author = "Romain GEORGES"
-  s.version = "1.2"
+  s.version = "1.3"
   s.license =  "BSD-2"
   s.date = %q{2013-02-18}
   s.summary = %q{Carioca : Configuration Agent and Registry with Inversion Of Control for your Applications}
