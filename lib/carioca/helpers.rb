@@ -15,7 +15,7 @@ class Class
   def use_configuration(_options = {})
     options = Methodic.get_options(_options)
     options.specify_classes_of :with_file => String
-    options.specify_default_value_of :with_file => 'services/registry.yml'
+    options.specify_default_value_for :with_file => 'services/registry.yml'
     options.merge
     options.validate!
     Carioca::Services::Registry.init.start_service :name => 'configuration', :params => { :config_file => options[:with_file]}
@@ -27,7 +27,7 @@ Module.class_eval do
   def init_registry _options={}
     options = Methodic.get_options(_options)
     options.specify_classes_of :with_file => String
-    options.specify_default_value_of :with_file => 'services/registry.yml'
+    options.specify_default_value_for :with_file => 'services/registry.yml'
     options.merge
     options.validate!
     Carioca::Services::Registry.init :file => options[:with_file]

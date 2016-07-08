@@ -21,6 +21,7 @@ require_relative '../services'
 require 'yaml'
 require 'drb/drb'
 require 'xmlsimple'
+require 'active_support/all'
 
 # overwriting Hash class 
 # @private
@@ -77,13 +78,14 @@ module Carioca
         @config_file = options[:config_file]
         @xml_input = options[:xml_input]
         @content  = options[:content]
+        @force_array =  options[:force_array]
         newsets = {}
         if @config_file then
           @content = File::readlines(@config_file).join if File::exist?(@config_file)
         end
         if options[:xml_input] then
           newsets = XmlSimple.xml_in( @content, {
-                                        'ForceArray' => [ 'sequence', 'step' ],
+                                        'ForceArray' => @force_array,
                                         'KeepRoot' => true,
                                       }).deep_symbolize_keys
         else
