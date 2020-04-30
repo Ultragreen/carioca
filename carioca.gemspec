@@ -23,7 +23,7 @@ s.add_development_dependency 'uuid', '~> 2.3.9'
 
 
 
-  s.add_dependency 'dorsal', "~> 1.0"
+  s.add_dependency 'dorsal', "~> 1.3"
   s.add_dependency 'methodic', "~> 1.3", '>= 1.3'
   s.add_dependency 'xml-simple', "~> 1.1", '>= 1.1.5'
   s.add_dependency 'activesupport', "~> 6.0.2.2"

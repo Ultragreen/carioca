@@ -224,7 +224,7 @@ describe Carioca do
           end
           it "should exist a processus Ring server" do
             File::exist?('/tmp/dorsal/ringserver.pid').should be true
-            pid = `ps aux|grep ruby|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
+            pid = `ps aux|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
             pid.should_not be_empty
           end
           it "should log if debug mode", :if => $debug do
@@ -288,7 +288,7 @@ describe Carioca do
           subject.stop_service({:name => 'distdummy'}).should be true
         end
         it "should not exist forked daemon instance for this stopped service" do
-          pid = `ps aux|grep ruby|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
+          pid = `ps aux|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
           pid.should be_empty
         end
         it "should not exist the pid file of this stopped services" do
@@ -452,14 +452,14 @@ describe Carioca do
     end
   end
   after :all do
-    FileUtils.rm_rf("/tmp/log.file")
+    #FileUtils.rm_rf("/tmp/log.file")
     File::unlink('/tmp/dorsal/ringserver.pid') if File::exist?('/tmp/dorsal/ringserver.pid')
     File::unlink('/tmp/dorsal/service-distdummy.pid') if File::exist?('/tmp/dorsal/service-distdummy.pid')
-    pid = `ps aux|grep ruby|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
+    pid = `ps aux|grep -v grep |grep 'Ultragreen Ring Server'|awk '{ print $2}'`
     unless pid.empty? then
       res = `kill -TERM #{pid.chomp}`
     end
-    pid = `ps aux|grep ruby|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
+    pid = `ps aux|grep -v grep |grep 'a dummy test service'|awk '{ print $2}'`
     unless pid.empty? then
       res = `kill -TERM #{pid.chomp}`
     end
