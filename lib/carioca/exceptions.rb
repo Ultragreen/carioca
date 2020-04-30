@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# coding: utf-8
 #---
 # Author : Romain GEORGES
 # type : gem component library

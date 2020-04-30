@@ -1,4 +1,5 @@
-require 'carioca' 
+# coding: utf-8
+require 'carioca'
 namespace :carioca  do
   desc "initialize Carioca Registry"
   task :init_registry do

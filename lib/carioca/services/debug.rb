@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# coding: utf-8
 # $BUILTIN
 # $NAME debug
 # $SERVICE Carioca::Services::ProxyDebug
@@ -6,7 +6,7 @@
 # $DESCRIPTION Proxy class debugger Service for Carioca
 # Copyright Ultragreen (c) 2012
 #---
-# Author : Romain GEORGES 
+# Author : Romain GEORGES
 # type : class definition Ruby
 # obj : Generic Debugs tools library
 #---
@@ -18,12 +18,12 @@ require 'methodic'
 
 module Carioca
   module Services
-    
-    
+
+
     # Service Debug of Carioca
     # Proxy Class Debug for devs
     class ProxyDebug
-      
+
       # ProxyDebug service constructor (has a class proxy => so a service proxy)
       # @param [Hash] _options the params
       # @option _options [String] :service the name of the service you want to proxyfying
@@ -41,10 +41,10 @@ module Carioca
         @log  = Registry.init.get_service :name => 'logger'
         @mapped_service = options[:service]
       end
-      
-      # method_missing overload to make the class proxy efficient 
+
+      # method_missing overload to make the class proxy efficient
       def method_missing(methodname, *args,&block)
-        @log.debug("ProxyDebug") { "BEGIN CALL for mapped service #{@mapped_service} "} 
+        @log.debug("ProxyDebug") { "BEGIN CALL for mapped service #{@mapped_service} "}
         @log.debug("ProxyDebug") { "called: #{methodname} " }
         @log.debug("ProxyDebug") { "args : #{args.join " "}" }
         if block_given? then
@@ -69,5 +69,3 @@ if $0 == __FILE__ then
   puts 'this is a RUBY library file'
   puts "Copyright (c) Ultragreen"
 end
-
-

@@ -1,5 +1,5 @@
 require 'rubygems'
-
+require "bundler/gem_tasks"
 require 'rspec'
 require 'rake'
 require "rake/clean"
@@ -11,8 +11,9 @@ require 'yard/rake/yardoc_task.rb'
 require "rake/tasklib"
 require "roodi"
 require "roodi_task"
- 
- 
+require 'code_statistics'
+
+
 RoodiTask.new() do | t |
 t.patterns = %w(lib/**/*.rb)
 t.config = "ultragreen_roodi_coding_convention.yml"
@@ -31,12 +32,12 @@ RSpec::Core::RakeTask.new('spec')
 
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = [ 'lib/**/*.rb', '-', 'doc/**/*','spec/**/*_spec.rb']			   
+  t.files   = [ 'lib/**/*.rb', '-', 'doc/**/*','spec/**/*_spec.rb']
   t.options += ['--title', "Gem Documentation"]
   t.options += ['-o', "yardoc"]
   t.options += ['-r', "doc/manual.rdoc"]
 end
-YARD::Config.load_plugin('yard-rspec') 
+YARD::Config.load_plugin('yard-rspec')
 
 namespace :yardoc do
   task :clobber do
@@ -60,3 +61,9 @@ Rake::RDocTask.new('rdoc') do |d|
 end
 
 task :default => [:gem]
+
+task :stage do
+  Rake::Task["clean"].invoke
+  Rake::Task["clobber"].invoke
+  Rake::Task["install"].invoke
+end

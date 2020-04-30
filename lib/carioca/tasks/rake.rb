@@ -1,5 +1,6 @@
+# coding: utf-8
 require 'rake'
-require 'rubygems' 
+require 'rubygems'
 require 'carioca'
 
 $VERBOSE = nil
@@ -18,6 +19,5 @@ end
 res.pop
 tasks_path = res.join('/').concat('/lib/carioca/tasks/')
 
-  
-Dir["#{tasks_path}/*.rake"].each { |ext| load ext }
 
+Dir["#{tasks_path}/*.rake"].each { |ext| load ext }

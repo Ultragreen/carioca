@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# coding: utf-8
 #---
 # Author : Romain GEORGES
 # type : gem component library
@@ -19,24 +19,24 @@ module PrivateMethodsCariocaServicesRegistry
     @list  = Hash::new
     load if File::exist?(@registry_filename)
     unless @list.include?('logger') then
-      self.register_service({:name => 'logger', 
+      self.register_service({:name => 'logger',
                               :service => 'Carioca::Services::InternalLogger',
-                              :resource => 'logger', 
-                              :description => "The standard ruby Logger internal wrapper Service", 
-                              :type => :builtin, 
+                              :resource => 'logger',
+                              :description => "The standard ruby Logger internal wrapper Service",
+                              :type => :builtin,
                               :init_options => { :target => "/tmp/log.file"}})
       @logger_not_in_reg = true
-    end         
+    end
     @loaded_services = Hash::new
     # preload logger service
-    @log = self.start_service :name => 'logger' 
-    @log.level =(@debug)? Logger::DEBUG : Logger::INFO     
+    @log = self.start_service :name => 'logger'
+    @log.level =(@debug)? Logger::DEBUG : Logger::INFO
     @log.debug('Carioca') { "Registry started, service logger preloaded" }
     @log.debug('Carioca') { "Logger registered, not in configured registry" } if @logger_not_in_reg
   end
-  
-  # verify dependancies in services structure 
-  # in @list from a service defition 
+
+  # verify dependancies in services structure
+  # in @list from a service defition
   # in _options and start it if needed
   def verify_requires_dependancies(_options)
     _name = _options[:shortname]
@@ -45,18 +45,18 @@ module PrivateMethodsCariocaServicesRegistry
         raise RegistryError::new 'Missing Required depedancy #{service}' unless @list.keys.include? service
         unless @loaded_services.include?(service) then
           @log.debug('Carioca') { "Registry dependancy found and not loaded : #{service}" }
-          restart_service :name => service 
+          restart_service :name => service
         end
       end
-    end      
+    end
   end
-  
-  # require file for a service 
+
+  # require file for a service
   # from a service definition in _options
   def require_service(_options)
     _name = _options[:shortname]
     sym = ":#{@list[_name][:service].split('::').last}"
-    case @list[_name][:type] 
+    case @list[_name][:type]
     when :file then
       require @list[_name][:resource]
     when :builtin then
@@ -67,7 +67,7 @@ module PrivateMethodsCariocaServicesRegistry
         raise RegistryError::new("Config failed")
       end
     when :gem then
-      require @list[_name][:resource] 
+      require @list[_name][:resource]
     when :gem_file then
       (_name,_file) = @list[_name][:resource].split(':')
       _dfile = Carioca::Services::search_file_in_gem _name,_file
@@ -76,7 +76,7 @@ module PrivateMethodsCariocaServicesRegistry
       else
         raise RegistryError::new("Config failed")
       end
-    else 
+    else
       raise RegistryError::new("Config failed")
     end
   end
@@ -91,7 +91,7 @@ module PrivateMethodsCariocaServicesRegistry
     end
     return options
   end
-  
+
   #shutdown ring server if empty
   def shutdown_ring_if_empty
     get_ring if @ring_server.nil?
@@ -114,7 +114,7 @@ module PrivateMethodsCariocaServicesRegistry
     end
   end
 
-  # instanciate Object from class defintion of a service defined in 
+  # instanciate Object from class defintion of a service defined in
   # the service definition in _opts
   def instanciate_service(_opts)
     _name = _opts[:shortname]
@@ -122,7 +122,7 @@ module PrivateMethodsCariocaServicesRegistry
     get_ring if dist
     @list[_name][:init_options].merge! _opts[:params] unless _opts[:params].nil?
     @obj = Object::new
-    if @list[_name][:init_options].nil? then 
+    if @list[_name][:init_options].nil? then
       eval("@obj = #{@list[_name][:service]}::new")
     else
       eval("@obj = #{@list[_name][:service]}::new(@list[_name][:init_options])")
@@ -135,8 +135,8 @@ module PrivateMethodsCariocaServicesRegistry
     end
     return @loaded_services[_opts[:name]]
   end
-  
-  # call the garbage method of a service if exist and 
+
+  # call the garbage method of a service if exist and
   # Delete from the loaded services list
   def kill_service(options)
     @log.debug('Carioca') { "Service #{options[:name]} stopped" } if @log
@@ -146,7 +146,7 @@ module PrivateMethodsCariocaServicesRegistry
   end
 
   def kill_distributed_service(options)
-    preserve = (options[:preserve].nil?)? false : options[:preserve] 
+    preserve = (options[:preserve].nil?)? false : options[:preserve]
     get_ring if @ring_server.nil?
     if @ring_server.list_services.include?(options[:name]) then
       if options[:preserve] and  @ring_server.list_services[options[:name]][:owner] != @name then
@@ -166,5 +166,3 @@ module PrivateMethodsCariocaServicesRegistry
 
 
 end # end of PrivateMethodsCariocaServicesRegistry
-
-

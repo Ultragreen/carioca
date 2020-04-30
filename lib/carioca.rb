@@ -1,6 +1,6 @@
 
 #!/usr/bin/env ruby
-# -*- coding: utf-8 -*-
+# coding: utf-8
 #---
 # Author : Romain GEORGES
 # type : gem component library
@@ -23,27 +23,27 @@ require 'carioca/private'
 module Carioca
 
 
-  
+
   # module Services
-  # @note this module is a namespace Carioca::Services 
+  # @note this module is a namespace Carioca::Services
   module Services
-    
-    
+
+
     # class Registry
     #  This class provide the Registry manager for Carioca
     # @note this class is a Singleton Class to instanciate do not use new (initializer), but :
-    #    Carioca::Services::Registry.init options 
-    # @example Complete usage 
+    #    Carioca::Services::Registry.init options
+    # @example Complete usage
     #    require 'rubygems'
-    #    require 'carioca'  
-    #    registry = Carioca::Services::Registry.init 
+    #    require 'carioca'
+    #    registry = Carioca::Services::Registry.init
     #    registry = Carioca::Services::Registry.init :file => 'myservices.registry'
     #    registry = Carioca::Services::Registry.init :file => 'myservices.registry', :debug => true
     class Registry
 
       include PrivateMethodsCariocaServicesRegistry
-      
-      # for singleton 
+
+      # for singleton
       private_class_method :new
       private :verify_requires_dependancies
       private :require_service
@@ -52,17 +52,17 @@ module Carioca
       private :scan_instance_suffix
       private :kill_distributed_service
       private :shutdown_ring_if_empty
-      
-      
+
+
       @@inst = nil
-      
+
       # Singleton constructor for Registry
       # @param [Hash] _options the options, keys are symbols
       # @option _options [String] :file The path of your registry YAML definition (see YAML registry format)
-      # @option _options [TrueClass,FalseClass] :debug Boolean activation/deactiviation of the carioca debug mode (log traces) 
+      # @option _options [TrueClass,FalseClass] :debug Boolean activation/deactiviation of the carioca debug mode (log traces)
       # @return [Carioca::Services::Registry] Singleton class instance of Registry
       # @example usage
-      #    registry = Carioca::Services::Registry.init # or  
+      #    registry = Carioca::Services::Registry.init # or
       #    registry = Carioca::Services::Registry.init :file => 'myservices.registry' # or
       #    registry = Carioca::Services::Registry.init :file => 'myservices.registry', :debug => true
       def Registry.init(_options = {})
@@ -72,52 +72,52 @@ module Carioca
         @@inst = new(options) if @@inst.nil?
         return @@inst
       end
-      
+
       # @example read
       #   registry = Carioca::Services::Registry.init
       #   p registry.registry_filename
       # @example write
       #   registry = Carioca::Services::Registry.init
       #   p registry.registry_filename = '/tmp/test.file'
-      # @attr_reader [Hash] list a hash table of all structured registred services definition 
+      # @attr_reader [Hash] list a hash table of all structured registred services definition
       # (come from file and explicitly registered services)
       attr_accessor :registry_filename
-      
-      # @example 
+
+      # @example
       #   registry = Carioca::Services::Registry.init
       #   p registry.list
-      # @attr_reader [Hash] list a hash table of all structured registred services definition 
+      # @attr_reader [Hash] list a hash table of all structured registred services definition
       # (come from file and explicitly registered services)
       attr_reader :list
 
-      # @example 
+      # @example
       #   registry = Carioca::Services::Registry.init
       #   p registry.loaded_services # you should see the logger service Hash definition
-      # @attr_reader [Hash] loaded_services a hash table of all structured loaded services 
+      # @attr_reader [Hash] loaded_services a hash table of all structured loaded services
       attr_reader :loaded_services
 
-      # @example 
+      # @example
       #   registry = Carioca::Services::Registry.init
       #   p registry.debug
       # @attr_reader [TrueClass,FalseClass] debug a boolean of the current debug status
       attr_reader :debug
 
-      # @example 
+      # @example
       #   registry = Carioca::Services::Registry.init
       #   p registry.name
       #   registry.name = 'Agent'
       # @attr_reader [String] the name of the Registry, used for distributed services
       # @note default value is 'Carioca'
       attr_accessor :name
-      
+
       # writer accessor for debug (interaction with log service)
-      # @example 
+      # @example
       #   registry = Carioca::Services::Registry.init
       #   p registry.debug = true
-      # @param [TrueClass,FalseClass] _value true or false to activate/deactivate debug mode 
+      # @param [TrueClass,FalseClass] _value true or false to activate/deactivate debug mode
       # @note interaction with preloaded service logger
       def debug=(_value)
-        @log.level =(_value)? Logger::DEBUG : Logger::INFO     
+        @log.level =(_value)? Logger::DEBUG : Logger::INFO
       end
 
 
@@ -126,7 +126,7 @@ module Carioca
       # @option _options [String] :name The name of the service to stop
       # @return [TruaClass,FalseClass] true if service effectivly stopped, false if not, or :name == 'logger'
       # @example usage
-      #    registry = Carioca::Services::Registry.init 
+      #    registry = Carioca::Services::Registry.init
       #    registry.start_service :name => 'configuration'
       #    registry.stop_service :name => 'configuration'
       #    #=> return true
@@ -142,23 +142,23 @@ module Carioca
         options.validate!
         @log.debug('Carioca') { "Service logger can't be unloaded" } if @log and options[:name] == 'logger'
         return false if options[:name] == 'logger'
-        if @loaded_services.include?(options[:name]) then        
+        if @loaded_services.include?(options[:name]) then
           options = scan_instance_suffix(options)
           return kill_distributed_service options if @list[options[:shortname]][:distributed]
           return kill_service options
         else
           @log.debug('Carioca') { "Service #{options[:name]} not loaded" } if @log
-          return false          
+          return false
         end
       end
-      
+
 
       # register a new service in registry added to @list
       # @param [Hash] _options the options hash, key are :symbols
       # @option _options [String] :name the name of the service (required)
       # @option _options [String] :resource the resource, must be a gem name, a fullpath filename, a builtin service (required)
       # @option _options [Symbol] :type the resource type of the service, must be :gem, :builtin or :file (required)
-      # @option _options [String] :service the realname of the service class with namespace (eg. ExternalServices::Dummy ) 
+      # @option _options [String] :service the realname of the service class with namespace (eg. ExternalServices::Dummy )
       # @option _options [String] :description the description of the service (required)
       # @option _options [Hash] :init_options the params of the service, keys are symbols
       # @option _options [Array] :requires the list of [String] services name required to load this service
@@ -167,7 +167,7 @@ module Carioca
       # @raise ArgumentError when :type is not in [:gem,:file,:builtin]
       def register_service(_options)
         options = Methodic.get_options(_options)
-        options.specify_classes_of({:name => String, :resource => String, :description => String, :type => Symbol, :service => String }) 
+        options.specify_classes_of({:name => String, :resource => String, :description => String, :type => Symbol, :service => String })
         options.specify_presences_of([:name,:type,:resource,:service])
         cond = Proc::new{|option| if [:gem,:gem_file,:file,:builtin].include? option then true else false end }
         options.specify_condition_for :type => cond
@@ -193,7 +193,7 @@ module Carioca
         @list.delete(options[:name])
         return true
       end
-      
+
       # overload @list (self.list) by adding/reloading the builtins services definition scanned from Carioca gem
       #  alterate @list
       # @example usage
@@ -203,11 +203,11 @@ module Carioca
       def discover_builtins
         @list.merge! Carioca::Services::discover_builtins
       end
-      
+
       # save the registry file in self.registry_filename
       # @return [TruaClass,FalseClass] true if the file is saved
       # @example usage
-      #    registry = Carioca::Services::Registry.init :file => './empty.file' 
+      #    registry = Carioca::Services::Registry.init :file => './empty.file'
       #    registry.discover_builtins
       #    registry.unregister_service :name => 'configuration'
       #    registry.save!
@@ -218,15 +218,15 @@ module Carioca
         end
         return res
       end
-      
+
       # start or get e previously started service in @list
       # @return [Object] the loaded service class instance
       # @param [Hash] _options the params, key are symbols
       # @option _options [String] :name the name of the service
       # @option _options [Hash] :params the params of the service
       # @raise [RegistryError] Config Failed, for unconsistant service definition in @list
-      # @example usage 
-      #    registry = Carioca::Services::Registry.init 
+      # @example usage
+      #    registry = Carioca::Services::Registry.init
       #    config = registry.start_service :name => 'configuration'
       #    proxy = subject.start_service :name => 'debug' , :params => {:service => 'configuration'}
       def start_service(_options)
@@ -235,7 +235,7 @@ module Carioca
         options.specify_presences_of([:name])
         options.validate!
         @log.debug('Carioca') { "getting service #{options[:name]}"} if @log
-        self.restart_service(options) unless @loaded_services.include? options[:name] 
+        self.restart_service(options) unless @loaded_services.include? options[:name]
         return @loaded_services[options[:name]]
       end
       alias :get_service :start_service
@@ -246,8 +246,8 @@ module Carioca
       # @option _options [String] :name the name of the service
       # @option _options [Hash] :params the params of the service
       # @raise [RegistryError] Config Failed, for unconsistant service definition in @list
-      # @example usage 
-      #    registry = Carioca::Services::Registry.init 
+      # @example usage
+      #    registry = Carioca::Services::Registry.init
       #    config = registry.restart_service :name => 'configuration'
       #    config = registry.restart_service :name => 'configuration' # stop and restart the previous services
       #    proxy = subject.restart_service :name => 'debug' , :params => {:service => 'configuration'}
@@ -264,17 +264,17 @@ module Carioca
           kill_distributed_service options
         elsif @loaded_services.include? options[:name] then
           @log.debug('Carioca') { "Restarting service #{options[:name]}"} if @log
-          kill_service options     
-        end    
+          kill_service options
+        end
         verify_requires_dependancies(options)
         require_service(options)
         return instanciate_service(options)
       end
-      
+
       # close the registry (finalizer)
-      #  * stop all the services 
+      #  * stop all the services
       #  * kill logger
-      #  * call private kill_service for each 
+      #  * call private kill_service for each
       # @note the garbage method hook is call if defined, for each service
       # @return [TrueClass,FalseClass] true if registry closed successfully
       def close
@@ -283,7 +283,7 @@ module Carioca
         @loaded_services.keys.each do |service|
           options[:name] = service
           options = scan_instance_suffix(options)
-          next if options[:name] == 'logger' 
+          next if options[:name] == 'logger'
           kill_distributed_service :name => options[:name], :preserve => true if @list[options[:shortname]][:distributed]
           kill_service options unless @list[options[:shortname]][:distributed]
         end
@@ -293,7 +293,7 @@ module Carioca
       end
 
       # load the registry file from self.registry_filename
-      # @return [Hash] @list the list Structure of the loaded registry 
+      # @return [Hash] @list the list Structure of the loaded registry
       # @example usage
       #    registry = Carioca::Services::Registry.init
       #    registry.registry_filename = "./an_other.file"
@@ -303,12 +303,12 @@ module Carioca
         @list = YAML.load_file(@registry_filename)
       end
       alias :reload :load
-      
+
     end # end of Carioca::Services::Registry
   end # end of Carioca:Services
 end # end of Carioca
 
-# Exception overload class for Carioca 
+# Exception overload class for Carioca
 class RegistryError < Exception; end
 
 

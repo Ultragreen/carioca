@@ -1,14 +1,14 @@
-#!/usr/bin/env ruby
+# coding: utf-8
 # $BUILTIN
 # $NAME configuration
-# $SERVICE Carioca::Services::Configuration 
+# $SERVICE Carioca::Services::Configuration
 # $RESOURCE configuration
 # $DESCRIPTION The Carioca Configuration Service
 # $INIT_OPTIONS config_file => ./.config
 
 # Copyright Ultragreen (c) 2005
 #---
-# Author : Romain GEORGES 
+# Author : Romain GEORGES
 # type : class definition Ruby
 # obj : Generic config library
 #---
@@ -23,11 +23,11 @@ require 'drb/drb'
 require 'xmlsimple'
 require 'active_support/all'
 
-# overwriting Hash class 
+# overwriting Hash class
 # @private
 class Hash
 
-  # recursively transform Hash keys form String to Symbols 
+  # recursively transform Hash keys form String to Symbols
   # come from Rails code
   # exist in Ruby 2.0
   def deep_symbolize
@@ -41,7 +41,7 @@ class Hash
 
   # pretty accessor for hash record
   # like ahash[:key] => ahash.key
-  # r/w accessor 
+  # r/w accessor
   def method_missing(name, *args, &block)
     if name.to_s =~ /(.+)=$/
       self[$1.to_sym] = args.first
@@ -50,14 +50,14 @@ class Hash
     end
   end
 end
-    
+
 
 
 
 
 module Carioca
 
-  module Services 
+  module Services
 
     # settings Hash record utilities class
     # @note please do not use Standalone ( dependancy of Configuration class )
@@ -67,7 +67,7 @@ module Carioca
 
       # the name of the config file in YAML format
       attr_accessor :config_file
-      
+
       # constructor  (pre-open the config file in default:YAML)
       # @param [Hash] options the options records
       # @option options [String] :config_file (REQUIRED) the name of the config file
@@ -94,7 +94,7 @@ module Carioca
         newsets = newsets[options[:context].to_sym] if options[:context] && newsets[options[:context].to_sym]
         deep_merge!(self, newsets)
       end
-      
+
       # save the Hash(self) in the file named by @config_file
       # @return [TrueClass,FalseClass] true if save! successfull
       # @note TODO save in XML format
@@ -108,7 +108,7 @@ module Carioca
 
 
       private
-      # full recursive merger for hash 
+      # full recursive merger for hash
       def deep_merge!(target, data)
         merger = proc{|key, v1, v2|
           Settings === v1 && Settings === v2 ? v1.merge(v2, &merger) : v2 }
@@ -118,22 +118,22 @@ module Carioca
 
     end
 
-    
-    
-    
+
+
+
     # Service Configuration of Carioca
-    class Configuration 
-      
+    class Configuration
+
       include DRb::DRbUndumped
-      
-      # @example 
+
+      # @example
       #   config = Carioca::Services::Configuration::new :config_file => 'afilename', :context => 'production'
       #   p config.config_file
       #   config_file = 'newfilename'
       # @attr_reader [String] the filename of the YAML struct
       attr_accessor :settings
 
-      
+
       # Configuration service constructor (open config)
       # @param [Hash] _options the params
       # @option _options [String] :config_file the filename of the config
@@ -145,28 +145,28 @@ module Carioca
         options.merge
         @settings = Carioca::Services::Settings.new(options)
       end
-      
-      # Proxy to @settings.save! 
+
+      # Proxy to @settings.save!
       #  save the Hash(self) in the file named by @config_file
       # @return [TrueClass,FalseClass] true if save! successfull
       # @example usage
       #   config = Carioca::Services::Configuration::new :config_file => 'afilename', :context => 'production'
-      #   config.config_file = 'newfile'   
+      #   config.config_file = 'newfile'
       #   config.save!
       def save!
         @settings.save!
       end
 
-      
+
       # reading wrapper to @settings.config_file accessor
-      # @return [String] @config_file the file name  
+      # @return [String] @config_file the file name
       # @example usage
       #   config = Carioca::Services::Configuration::new :config_file => 'afilename', :context => 'production'
-      #   p config.config_file 
+      #   p config.config_file
       def config_file
         @settings.config_file
       end
-      
+
       # writting wrapper to @settings.config_file accessor
       # @param [String] name the file name
       # @example usage
@@ -184,7 +184,7 @@ module Carioca
         @settings = nil
         return true
       end
-      
+
     end
   end
 end
@@ -193,7 +193,7 @@ end
 
 
 
-# interactive hacks 
+# interactive hacks
 if $0 == __FILE__ then
   conf =Carioca::Services::Configuration::new :config_file => 'spec/config/.config'
   p conf

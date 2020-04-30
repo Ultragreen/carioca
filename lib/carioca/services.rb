@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# coding: utf-8
 #---
 # Author : Romain GEORGES
 # type : gem component library
@@ -11,13 +11,13 @@ module Carioca
 
   # namespace Services for Registry AND buitlins
   module  Services
-    # class method returning full path in Carioca gem for builtin services files according to installed gem path. 
+    # class method returning full path in Carioca gem for builtin services files according to installed gem path.
     # @note do not use directly for generale purpose (expert/hacks only)
     # @param [String] _name the name of a service
     # @return [String,false] the full path filename orfalse if not found
     def Services::search_builtins(_name)
       if Gem::Specification.respond_to?(:find_by_name)
-        begin 
+        begin
         spec = Gem::Specification.find_by_name('carioca')
         rescue LoadError
           spec = nil
@@ -44,13 +44,13 @@ module Carioca
         return false
       end
     end
-    
+
     # class method returning the path of a file in gem if exist or false
     # @note do not use directly for generale purpose (expert/hacks only)
     # @return [String|FalseClass] the full path of a service file
     def Services::search_file_in_gem(_gem,_file)
       if Gem::Specification.respond_to?(:find_by_name)
-        begin 
+        begin
         spec = Gem::Specification.find_by_name(_gem)
         rescue LoadError
           spec = nil
@@ -79,7 +79,7 @@ module Carioca
     # @return [Hash] the [Carioca::Services::Registry]@list complement
     def Services::discover_builtins
       if Gem::Specification.respond_to?(:find_by_name)
-        begin 
+        begin
           spec = Gem::Specification.find_by_name('carioca')
         rescue LoadError
           spec = nil
@@ -114,7 +114,7 @@ module Carioca
     def Services::validate_service(file,res)
         init_options =  {}
         if open(file).grep(/^# \$BUILTIN/).size > 0 then
-          service = open(file).grep(/# \$SERVICE/).first.split[2] 
+          service = open(file).grep(/# \$SERVICE/).first.split[2]
           resource = open(file).grep(/# \$RESOURCE/).first.split[2]
           desc = open(file).grep(/# \$DESCRIPTION/).first
           desc = desc.split(' ')
@@ -124,13 +124,13 @@ module Carioca
             prev = opt.split
             init_options[prev[2].to_sym] = prev[4]
           end
-          distributed = (open(file).grep(/# \$DISTRIBUTED/))? true : false 
+          distributed = (open(file).grep(/# \$DISTRIBUTED/))? true : false
           req = open(file).grep(/# \$REQUIRES/)
           if req.empty? then
             requires = []
           else
             requires = req.split
-            requires.shift   
+            requires.shift
           end
 
         end
@@ -138,6 +138,6 @@ module Carioca
           res[resource] = { :service => service, :type => :builtin, :description => description, :resource => resource}
           res[resource][:init_options] = init_options unless init_options.empty?
         end
-    end    
+    end
   end
 end

@@ -1,3 +1,4 @@
+# coding: utf-8
 module ExternalServices
   class Dummy
     def initialize
