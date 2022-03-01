@@ -1,32 +1,39 @@
-Gem::Specification.new do |s|
-  s.name = %q{carioca}
-  s.author = "Romain GEORGES"
-  s.version = "1.4"
-  s.license =  "BSD-2-Clause"
-  s.summary = %q{Carioca : Configuration Agent and Registry with Inversion Of Control for your Applications}
-  s.email = %q{romain@ultragreen.net}
-  s.homepage = %q{https://github.com/Ultragreen/carioca}
-  s.description = %q{Carioca : provide a full IoC light Container for designing your applications}
-  s.files = `git ls-files`.split($/)
+# frozen_string_literal: true
 
+require_relative "lib/carioca/constants"
 
-  s.add_development_dependency "rake", "~> 13.0.1"
-  s.add_development_dependency 'rspec', '~> 3.9.0'
-  s.add_development_dependency 'yard', '~> 0.9.24'
-  s.add_development_dependency 'rdoc', '~> 6.2.1'
-  s.add_development_dependency 'roodi', '~> 5.0.0'
-  s.add_development_dependency 'code_statistics', '~> 0.2.13'
-  s.add_development_dependency 'yard-rspec', '~> 0.1'
-
-
-s.add_development_dependency 'uuid', '~> 2.3.9'
+Gem::Specification.new do |spec|
+  spec.name          = "carioca"
+  spec.version       = Carioca::Constants::VERSION
+  spec.authors       = ["Romain GEORGES"]
+  spec.email         = ["romain@ultragreen.net"]
 
 
 
-  s.add_dependency 'dorsal', "~> 1.3"
-  s.add_dependency 'methodic', "~> 1.3", '>= 1.3'
-  s.add_dependency 'xml-simple', "~> 1.1", '>= 1.1.5'
-  s.add_dependency 'activesupport', "~> 6.0.2.2"
-  s.required_ruby_version = '>= 1.8.1'
+
+  spec.license =  "BSD-3-Clause"
+
+  spec.summary = %q{Carioca : Configuration Agent and Registry with Inversion Of Control for your Applications}
+  spec.homepage = %q{https://github.com/Ultragreen/carioca}
+  spec.description = %q{Carioca : provide a full IoC light Container for designing your applications}
+
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
+
+  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemse"
+
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = spec.homepage
+
+
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  # Uncomment to register a new dependency of your gem
+  # spec.add_dependency "example-gem", "~> 1.0"
 
 end

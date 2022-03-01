@@ -1,7 +1,0 @@
-How to install carioca ?
-=========================
-
-Please install the gem version via RubyGems : 
-
-$ su -
-# gem ins carioca

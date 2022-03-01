@@ -1,69 +1,8 @@
-require 'rubygems'
+# frozen_string_literal: true
+
 require "bundler/gem_tasks"
-require 'rspec'
-require 'rake'
-require "rake/clean"
-require "rubygems/package_task"
-require "rdoc/task"
-require 'rspec/core/rake_task'
-require 'yard'
-require 'yard/rake/yardoc_task.rb'
-require "rake/tasklib"
-require "roodi"
-require "roodi_task"
-require 'code_statistics'
+require "rspec/core/rake_task"
 
+RSpec::Core::RakeTask.new(:spec)
 
-RoodiTask.new() do | t |
-t.patterns = %w(lib/**/*.rb)
-t.config = "ultragreen_roodi_coding_convention.yml"
-end
-
-
-CLEAN.include('*.tmp','*.old')
-CLOBBER.include('*.tmp', 'build/*','#*#')
-
-
-content = File::readlines(File.join(File.dirname(__FILE__), 'carioca.gemspec')).join
-spec = eval(content)
-
-RSpec::Core::RakeTask.new('spec')
-
-
-
-YARD::Rake::YardocTask.new do |t|
-  t.files   = [ 'lib/**/*.rb', '-', 'doc/**/*','spec/**/*_spec.rb']
-  t.options += ['--title', "Gem Documentation"]
-  t.options += ['-o', "yardoc"]
-  t.options += ['-r', "doc/manual.rdoc"]
-end
-YARD::Config.load_plugin('yard-rspec')
-
-namespace :yardoc do
-  task :clobber do
-    rm_r "yardoc" rescue nil
-    rm_r ".yardoc" rescue nil
-  end
-end
-task :clobber => "yardoc:clobber"
-
-
-Gem::PackageTask.new(spec) do |pkg|
-  pkg.need_tar = true
-  pkg.need_zip = true
-end
-
-Rake::RDocTask.new('rdoc') do |d|
-  d.rdoc_files.include('doc/**/*','bin/*')
-  d.main = 'doc/manual.rdoc'
-  d.title = 'Uglibs : Ultragreen libraries'
-  d.options << '--line-numbers' << '--diagram' << '-SHN'
-end
-
-task :default => [:gem]
-
-task :stage do
-  Rake::Task["clean"].invoke
-  Rake::Task["clobber"].invoke
-  Rake::Task["install"].invoke
-end
+task default: :spec
