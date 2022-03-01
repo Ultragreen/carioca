@@ -1,19 +1,30 @@
 require 'rubygems'
 require 'carioca'
 
-registry =  Carioca::Registry.init  filename: '/tmp/carioca.registry'
+
+Carioca::Registry.configure do |spec|
+    spec.filename = '/tmp/carioca.registry'
+end
+
+registry = Carioca::Registry.init
+registry.add service: :logger, definition: {
+    type: :stdlib,
+    resource: 'logger',
+    description: "A logger",
+    service: 'Logger'
+}
+p Carioca::Registry.config
 
 
 
-registry.get_service name: :configuration, options: {test: 'titi'}
+class Application
+    using Carioca::Injector
 
-uuid = registry.get_service name: :uuid
+    inject service: :configuration
+    inject service: :logger
 
-pp uuid.generate
+    p configuration.class
 
-pp registry.active_services.keys
-pp registry.services.keys
+    logger.info 'test'
 
-5.times do p registry.get_service(name: :configuration).inspect end
-
-registry.get_service(name: :test)
+end
