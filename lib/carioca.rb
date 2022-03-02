@@ -7,7 +7,7 @@ module Carioca
   
   class Config
     include Carioca::Constants
-    attr_accessor :filename, :debug, :name
+    attr_accessor :filename, :debug, :name, :builtins
     def initialize
       @filename = DEFAULT_REGISTRY_FILE
       @debug = false
@@ -15,8 +15,8 @@ module Carioca
       @builtins = {configuration: { type: :builtin,
                                     resource: "configuration",
                                     description: "The configuration service of Carioca",
-                                    service: "Carioca::Services::Configuration",
-                                    init_options: { config_file: "./.config" } }}
+                                    service: "Carioca::Services::Configuration::new config_file: './.config' }" }}
+
     end
   end
 
@@ -34,8 +34,8 @@ module Carioca
     end
 
 
-    def Registry.init(**keywords)
-      @@inst ||= new(**keywords)      
+    def Registry.init()
+      @@inst ||= new    
       return @@inst
     end
 
@@ -46,36 +46,29 @@ module Carioca
     attr_accessor :services
     attr_accessor :active_services
 
-    def get_service(name: , options: nil)
-      service = nil
-      raise ':name keywords missing' unless name
+    def get_service(name: )
       raise 'Service not found' unless @services.include? name
-      require  @services[name][:resource] if [:gem, :file, :stdlib].include? @services[name][:type]
-      unless @services[name][:init_options].nil? and options.nil? then 
-        params = (@services[name][:init_options])? @services[name][:init_options] : {}
-        options ||= { }
-        params.merge! options
-        @active_services[name] ||= Kernel.const_get(@services[name][:service])::new **params
-      else
-        @active_services[name] ||= Kernel.const_get(@services[name][:service])::new 
-      end
-      return active_services[name] 
+      service = @services[name]
+      require  service[:resource] if [:gem, :file, :stdlib].include? service[:type]
+      @active_services[name] ||= eval("lambda { #{service[:service]} }").call
+      return @active_services[name] 
     end
 
 
     def add(service: , definition: )
-      raise ':service keyword is missing' unless service
-      raise ':definition keyword is missing' unless definition
-      [:type, :resource, :description, :service].each do |spec|
-        p definition 
-        raise "Key :#{spec} is mandatory in a service definition" unless definition.include? spec
-      end
-      @services[service] = definition
+      raise "Service #{service} already exist." if @services.include? service
+      checker = Carioca::Services::Validator::new service: service , definition: definition
+      checker.validate!
+      @services[service] = checker.definition
     end
 
     private 
     def initialize
+      @services = Hash::new
       @active_services = Hash::new
+      @@config.builtins.each do |service, spec|
+        add service: service, definition: spec
+      end
       open_registry_file if File::exist? @@config.filename
     end
 

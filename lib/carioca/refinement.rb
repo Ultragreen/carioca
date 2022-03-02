@@ -5,12 +5,13 @@ module Carioca
             private
   
             def inject(service: )               
-                self.create_method(service){return Carioca::Registry.get.get_service name: service }
+                self.create_methods(service){return Carioca::Registry.get.get_service name: service }
             end
 
-            def create_method(name, &block)
-                self.class.send(:define_method, name, &block)
-              end
+            def create_methods(name, &block)
+              self.define_method name, &block
+              self.class.send(:define_method, name, &block)
+            end
 
 
             

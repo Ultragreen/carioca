@@ -11,20 +11,19 @@ registry.add service: :logger, definition: {
     type: :stdlib,
     resource: 'logger',
     description: "A logger",
-    service: 'Logger'
+    service: 'Logger::new(STDOUT)'
 }
-p Carioca::Registry.config
 
 
 
-class Application
-    using Carioca::Injector
-
-    inject service: :configuration
-    inject service: :logger
-
-    p configuration.class
-
-    logger.info 'test'
+class MonAppli < Carioca::Container
+    def test
+        logger.warn 'toto'
+    end
 
 end
+
+
+test = MonAppli::new.test
+
+
