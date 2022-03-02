@@ -2,7 +2,7 @@
 module Carioca
     class Container
 
-        using Carioca::Injector
+        extend Carioca::Injector
 
         inject service: :logger
         inject service: :configuration
