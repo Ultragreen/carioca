@@ -1,0 +1,57 @@
+require "tty-prompt"
+require "pastel"
+
+namespace :carioca  do
+    namespace :registry do 
+        desc "Adding service to Carioca Registry file"
+        task :add_service do
+            begin 
+                puts "Carioca : registering service :"
+                config = Carioca::Configuration::new
+                prompt = TTY::Prompt.new
+                pastel = Pastel.new
+                filename = prompt.ask("Registry File path ?", default: config.filename)
+                registry_file = Carioca::RegistryFile::new filename: filename
+                name = prompt.ask("Service name ?") { |q| q.required true }.to_sym
+                if config.builtins.include? name or  registry_file.validated.include? name then
+                    puts 'Carioca : service already defined or Builtins'
+                    exit 1
+                end 
+                definition = {
+                    :type => prompt.select("Choose the service type ?", [:gem, :stdlib, :file, :internal]),
+                    :description => prompt.ask("Description ?", default: "The #{name} service"),
+                    :service => prompt.ask("Service [#{name}] inline Proc Ruby code ?", default: name.to_s.capitalize)
+                }
+                map = {:gem => "Rubygem name", :stdlib => "StdLib name", :file => "absolut path of the Ruby file"}
+                definition[:resource] = prompt.ask("Give the #{map[definition[:type]]} ? ", default: name.to_s ) if  map.keys.include? definition[:type]
+                have_depends = prompt.yes?("Did this service have dependencies ? ")
+                if have_depends then
+                    potentials = config.builtins.merge(registry_file.validated).keys
+                    definition[:depends] = prompt.multi_select("Choose your depends ?", potentials, min: 1)
+                end
+                puts "\n => Service : #{name}"
+                puts "Definition "
+                definition.each do |key,value|
+                    puts " * #{key}: #{value}"
+                end
+                is_correct = prompt.yes?("Is it correct ? ")
+            rescue TTY::Reader::InputInterrupt
+                puts 'Carioca : interrupted'
+                exit 5
+            end
+            if is_correct then 
+                begin
+                    registry_file.add service: name, definition: definition
+                    registry_file.save!
+                rescue => e 
+                    puts "Carioca: Can't save : #{e}"
+                    exit 10
+                end
+
+                puts "Carioca : Registry saved"
+            else
+                puts 'Carioca : Nothing saved'
+            end
+        end
+    end
+  end

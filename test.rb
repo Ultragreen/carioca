@@ -3,48 +3,58 @@ require 'carioca'
 
 
 Carioca::Registry.configure do |spec|
-    spec.filename = '/tmp/carioca.registry'
-    spec.log_file = '/tmp/test.rge'
+    spec.filename = './config/carioca.registry'
+    spec.debug = true
+    spec.init_from_file = true
+    #    spec.log_file = '/tmp/test.rge'
+    spec.config_file = './config/settings.yml'
+    spec.config_root = :monappli
+    spec.environment = :development
 end
 
 
+class MyService
+    extend Carioca::Injector
+    inject service: :logger
+
+    def initialize
+        logger.warn(self.class.to_s) {'Init service'}
+    end
+
+    def hello
+        logger.info(self.class.to_s) {'Hello World'}
+    end
+end
+
+
+spec = {
+    service: 'MyService::new',
+    type: :internal,
+}
+
+Carioca::Registry.init.add service: :myservice, definition: spec
+
+logger = Carioca::Registry.get.get_service name: :logger
+
+logger.info(self.to_s) { "avaible services : #{Carioca::Registry.get.services.keys} "} 
+
+config = Carioca::Registry.get.get_service name: :configuration
+config.settings.newkey = "value"
+
+logger.info(self.to_s) { config.settings }
 
 class MonAppli < Carioca::Container
     def test
-        logger.warn uuid.generate
+        myservice.hello
+        logger.warn(self.class.to_s) {uuid.generate}
     end
 
     inject service: :uuid
-    p 
+    inject service: :myservice
+    logger.info(self.to_s) { uuid.generate }
 
 end
 
 
-class Test
-
-
-    def initialize
-        p 'a test'
-    end
-end
-
-class Other
-    extend Carioca::Injector
-    p active_services
-    inject service: :uuid
-    inject service: :test
-    inject service: :untest2
-    p test
-    p untest2
-    uuid.generate
-    def titi
-        p services
-        p 'yes'
-    end
-end
-
-test = MonAppli::new.test
-
-
-test2 = Other::new
-test2.titi
+appli = MonAppli::new
+appli.test
