@@ -1,10 +1,11 @@
 module Carioca
     class Configuration
         include Carioca::Constants
-        attr_accessor :filename, :name, :builtins, :log_target
+        include Carioca::Helpers
+        attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path
         attr_accessor :config_file, :config_root, :environment, :supported_environment
         attr_writer :debug, :init_from_file
-        attr_reader :log_file
+        attr_reader :log_file, :locales_availables
         def initialize
             @init_from_file = true
             @filename = DEFAULT_REGISTRY_FILE.dup
@@ -17,6 +18,13 @@ module Carioca
             @config_root = DEFAULT_CONFIG_ROOT.dup
             @log_target = '::Logger::new(STDOUT)'
             @supported_environment = DEFAULT_ENVIRONMENTS_LIST.dup
+            @default_locale = DEFAULT_LOCALE
+            @locales_availables = []
+            path = search_file_in_gem('carioca',"config/locales")
+            @locales_load_path = Dir[File.expand_path(path) + "/*.yml"]
+            Dir[path + '/*.yml'].sort.each do |file|
+                @locales_availables.push File::basename(file,'.yml').to_sym
+            end
         end
 
         def debug? 

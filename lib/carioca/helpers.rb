@@ -5,6 +5,10 @@ module Carioca
             return self.get_service name: :logger
         end
 
+        def i18n
+            return self.get_service name: :i18n
+        end
+
         def debug(message: )
             log.debug(self.config.name) { "#{message}" } 
         end

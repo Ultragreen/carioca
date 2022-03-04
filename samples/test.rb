@@ -10,6 +10,8 @@ Carioca::Registry.configure do |spec|
     spec.config_file = './config/settings.yml'
     spec.config_root = :monappli
     spec.environment = :development
+    spec.default_locale = :fr
+    spec.locales_load_path << Dir[File.expand_path('./config/locales') + "/*.yml"]
 end
 
 
@@ -37,6 +39,9 @@ Carioca::Registry.init.add service: :myservice, definition: spec
 logger = Carioca::Registry.get.get_service name: :logger
 
 logger.info(self.to_s) { "avaible services : #{Carioca::Registry.get.services.keys} "} 
+i18n = Carioca::Registry.get.get_service name: :i18n
+i18n.locale = :es
+p i18n.t(:test)
 
 config = Carioca::Registry.get.get_service name: :configuration
 config.settings.newkey = "value"
@@ -56,5 +61,11 @@ class MonAppli < Carioca::Container
 end
 
 
+
+
 appli = MonAppli::new
 appli.test
+
+
+
+

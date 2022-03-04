@@ -28,12 +28,19 @@ class Hash
             class ConfigFile
                 include Carioca::Constants
                 attr_accessor :filename, :data
+                attr_reader :error
+
                 def initialize(filename:)
                     @filename = filename
                     @data = {}
+                    @error = ""
                     open
+ 
                 end 
 
+                def error? 
+                    return !@error.empty? 
+                end
 
                 def create!(force: false)
                     write_ok = true
@@ -45,7 +52,8 @@ class Hash
                     if File::exist?(@filename) then
                         begin 
                             @data = YAML.load_file(@filename)
-                        rescue Exception
+                        rescue Exception => e
+                            @error = e.message
                             @data = {}
                         end
                     end
@@ -70,8 +78,14 @@ class Hash
                 
                 attr_accessor :config_file
                 attr_accessor :stage
-                
+               
+                include Carioca::Helpers
+     
                 def initialize(config_filename: , stage:, root:)
+                    registry = Carioca::Registry.get
+                    @logger = registry.get_service name: :logger
+                    @i18n = registry.get_service name: :i18n
+                    
                     @stage = stage
                     @root = root
                     @config_file = Carioca::Services::Config::ConfigFile::new filename: config_filename
@@ -87,25 +101,21 @@ class Hash
                 private
                 def initconf
                     newsets = {}
+                    @logger.debug("Carioca->Config") { @i18n.t('config.load.error', message: @config_file.error) } if @config_file.error? 
                     @content = @config_file.data
 
                     unless @stage then
                         newsets = @content
                     else
-                        newsets = @content[@root][:default]
+                        self.merge!  @content[@root][:default]
                         data = @content[@root][@stage]
-                        deep_merge!(newsets,data)
+                        self.deep_merge! data
+
                     end
-                    deep_merge!(self, newsets)
+
+
                 end
                 
-                def deep_merge!(target, data)
-
-                    merger = proc do |key, v1, v2|
-                        Settings === v1 && Settings === v2 ? v1.merge(v2, &merger) : v2
-                    end
-                    target.merge! data, &merger
-                end
                 
             end
 

@@ -1,0 +1,19 @@
+fr:
+  service:
+    adding: "Service %{name} Ajouté"
+    starting: "Démarrage du service %{name}"
+    getting: "Appel du service %{name}"
+    depends: "Dépendence du service %{name}"
+  notify: 
+    locale: "Service pré-chargé :i18n sur la locale : %{loc}"
+    logger: "Service pré-chargé :logger sur la cible : %{target}"
+    useless_entry: "Entrée inutile dans le registre (service pré-defini) %{altered} dans %{filename}"
+  init: 
+    carioca: "Initialisation du registre Carioca"
+    builtins: "Préparation des services pré-définis"
+    registry: 
+      processing: "Initialisation du registre depuis le fichier : %{filename}"
+      success: "Registre initialisé avec succès"
+  config:
+    load:
+      error: "Fichier de configuration ignoré, erreur : %{message}"

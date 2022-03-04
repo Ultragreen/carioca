@@ -6,6 +6,8 @@ module Carioca
         DEFAULT_CONFIG_FILE = './config/settings.yml'
         DEFAULT_ENVIRONMENT = :development
         DEFAULT_CONFIG_ROOT = :carioca
+        DEFAULT_LOCALE = :en
+        
 
         # service definitions specs
         SERVICES_MANDATORY_SPECS = {type: Symbol, service: String}
@@ -26,7 +28,16 @@ module Carioca
           logger: {
             type: :stdlib,
             resource: "logger",
-            description: "The Carioca Logger"
+            description: "The Logger service of Carioca",
+            depends: [:i18n]
+          },
+          i18n:{
+            type: :internal,
+            description: "The Internalisation service of Carocia",
+            service: "Carioca::Services::I18n.get(
+                                default_locale: Carioca::Registry.config.default_locale,
+                                load_path: Carioca::Registry.config.locales_load_path,
+                                locales_availables: Carioca::Registry.config.locales_availables)"
           }
         }
 

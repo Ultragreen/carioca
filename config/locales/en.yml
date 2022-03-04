@@ -1,0 +1,15 @@
+en:
+  service: 
+    adding: "Adding service %{name}"
+    starting: "Starting service %{name}"
+    getting: "Getting service %{name}"
+    depends: "Dependencie service %{name}"
+  notify: 
+    locale: "Preloaded service :i18n on locale : %{loc}"
+    logger: "Preloaded service :logger ready on %{target}"
+  init: 
+    carioca: "Initializing Carioca registry"
+    builtins: "Preparing builtins services"
+    registry: 
+        processing: "Initializing registry from file : %{filename}"
+        success: "Registry initialized successfully"
