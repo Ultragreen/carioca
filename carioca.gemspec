@@ -13,9 +13,9 @@ Gem::Specification.new do |spec|
 
   spec.license =  "BSD-3-Clause"
 
-  spec.summary = %q{Carioca : Configuration Agent and Registry with Inversion Of Control for your Applications}
+  spec.summary = %q{Carioca : Container And Registry with Inversion Of Control for your Applications}
   spec.homepage = %q{https://github.com/Ultragreen/carioca}
-  spec.description = %q{Carioca : provide a full IoC light Container for designing your applications}
+  spec.description = %q{Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a services registry, build with logs, config and Internationalization facilities for designing your applications}
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
@@ -36,6 +36,11 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "tty-prompt", "~>0.23.1"
   spec.add_dependency "pastel", "~>0.8.0"
+  spec.add_dependency 'i18n', "~> 1.10"
+  spec.add_dependency 'locale', "~> 2.1"
+  spec.add_dependency "deep_merge", "~> 1.2"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.0"
 
 
 end

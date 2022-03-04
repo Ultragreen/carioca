@@ -81,11 +81,11 @@ module Carioca
         def open_registry_file
           debug message: i18n.t('init.registry.processing', filename: @@config.filename) if @@config.debug?
           registry_file = Carioca::RegistryFile::new filename: @@config.filename
-          debug message: i18n.t('notify.useless_entry', altered: registry_file.altered.to_s, filename: @@config.filename ) if registry_file.altered? and @@config.debug?
+          debug message: i18n.t('notify.useless_entry', altered: registry_file.altered.to_s, file_name: @@config.filename ) if registry_file.altered? and @@config.debug?
           registry_file.validated.each do |service,spec|
             add service: service, definition: spec
           end
-          debug message: i18n.t('init.registry.processing') if @@config.debug?
+          debug message: i18n.t('init.registry.success') if @@config.debug?
         end 
     
     

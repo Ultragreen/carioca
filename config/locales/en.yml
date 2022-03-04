@@ -7,9 +7,13 @@ en:
   notify: 
     locale: "Preloaded service :i18n on locale : %{loc}"
     logger: "Preloaded service :logger ready on %{target}"
+    useless_entry: "Useless entry in registry (builtin service) %{altered} in %{filename}"
   init: 
     carioca: "Initializing Carioca registry"
     builtins: "Preparing builtins services"
     registry: 
-        processing: "Initializing registry from file : %{filename}"
-        success: "Registry initialized successfully"
+      processing: "Initializing registry from file : %{filename}"
+      success: "Registry initialized successfully"
+  config:
+    load:
+      error: "Config file ignored, error : %{message}"
