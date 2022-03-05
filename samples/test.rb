@@ -4,13 +4,16 @@ require 'carioca'
 
 Carioca::Registry.configure do |spec|
     spec.filename = './config/carioca.registry'
-    spec.debug = true
+    spec.debug = false
     spec.init_from_file = true
     #    spec.log_file = '/tmp/test.rge'
     spec.config_file = './config/settings.yml'
     spec.config_root = :monappli
     spec.environment = :development
     spec.default_locale = :fr
+    spec.log_level = :debug
+    spec.output_mode = :mono
+
     spec.locales_load_path << Dir[File.expand_path('./config/locales') + "/*.yml"]
 end
 
@@ -58,13 +61,37 @@ class MonAppli < Carioca::Container
     inject service: :myservice
     logger.info(self.to_s) { uuid.generate }
 
+    inject service: :output
+
+    def test2
+        cycle = [:unknown,:fatal,:error,:ko,:warn,:info,:item,:arrow,:scheduling,:trigger,:sending, :calling,:receive,:ok,:success,:debug,:flat]
+        cycle.each do |verb| 
+            output.send verb, verb.to_s
+        end
+        output.color = false
+        cycle.each do |verb| 
+            output.send verb, verb.to_s
+        end
+        output.emoji = false
+        cycle.each do |verb| 
+            output.send verb, verb.to_s
+        end
+        output.color = true
+        cycle.each do |verb| 
+            output.send verb, verb.to_s
+        end
+
+    end
+
 end
+
 
 
 
 
 appli = MonAppli::new
 appli.test
+appli.test2
 
 
 

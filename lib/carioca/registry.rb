@@ -59,7 +59,8 @@ module Carioca
           conf_logger = @@config.builtins[:logger]
           conf_logger[:service] = @@config.log_target
           add service: :logger, definition: @@config.builtins[:logger], skip_validation: true
-          get_service name: :logger
+          log = get_service name: :logger
+          log.level = @@config.log_level
         end
 
         def initialize

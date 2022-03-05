@@ -9,6 +9,11 @@ module Carioca
         DEFAULT_LOCALE = :en
         
 
+        DEFAULT_OUTPUT_MODE = :mono
+        DEFAULT_EMOJI_STATUS = true
+        DEFAULT_COLORS_STATUS = true
+        DEFAULT_LOG_LEVEL = :info
+
         # service definitions specs
         SERVICES_MANDATORY_SPECS = {type: Symbol, service: String}
         SERVICES_FULL_LIST_SPECS = SERVICES_MANDATORY_SPECS.merge({depends: Array, description: String, resource: String })
@@ -38,6 +43,16 @@ module Carioca
                                 default_locale: Carioca::Registry.config.default_locale,
                                 load_path: Carioca::Registry.config.locales_load_path,
                                 locales_availables: Carioca::Registry.config.locales_availables)"
+          },
+          output:{
+            type: :internal,
+            description: "The Output serice of Carioca",
+            service: "Carioca::Services::Output::Provider::new(
+                                mode: Carioca::Registry.config.output_mode,
+                                emoji: Carioca::Registry.config.output_emoji?,
+                                colors: Carioca::Registry.config.output_colors?,
+                                level: Carioca::Registry.config.log_level
+            )"
           }
         }
 

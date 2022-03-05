@@ -117,7 +117,7 @@ end
 
     $ emacs exe/yourgem_cmd
 
-contetnt the file
+content of the file
 
 ```ruby
 require 'yourgem'

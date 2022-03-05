@@ -6,6 +6,7 @@ require 'rubygems'
 require 'i18n'
 require 'locale'
 require 'deep_merge'
+require 'pastel'
 
 require_relative 'constants'
 require_relative 'validator'
