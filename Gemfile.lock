@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    carioca (2.0.2)
+    carioca (2.0.3)
       deep_merge (~> 1.2)
       i18n (~> 1.10)
       locale (~> 2.1)
