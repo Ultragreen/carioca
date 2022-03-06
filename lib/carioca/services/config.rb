@@ -85,7 +85,7 @@ class Hash
                     registry = Carioca::Registry.get
                     @logger = registry.get_service name: :logger
                     @i18n = registry.get_service name: :i18n
-                    
+                    @debug = Carioca::Registry.config.debug?
                     @stage = stage
                     @root = root
                     @config_file = Carioca::Services::Config::ConfigFile::new filename: config_filename
@@ -101,7 +101,7 @@ class Hash
                 private
                 def initconf
                     newsets = {}
-                    @logger.debug("Carioca->Config") { @i18n.t('config.load.error', message: @config_file.error) } if @config_file.error? 
+                    @logger.debug("Carioca->Config") { @i18n.t('config.load.error', message: @config_file.error) } if @config_file.error? and @debug
                     @content = @config_file.data
 
                     unless @stage then
@@ -112,6 +112,7 @@ class Hash
                         self.deep_merge! data
 
                     end
+                    @logger.debug("Carioca->Config") { @i18n.t('config.load.success', from: @config_file.filename) } if @debug
 
 
                 end

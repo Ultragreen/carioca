@@ -1,15 +1,18 @@
-require "tty-prompt"
-require "pastel"
-
 namespace :carioca  do
     namespace :registry do 
         desc "Adding service to Carioca Registry file"
         task :add_service do
+        prompt = TTY::Prompt.new
+            pastel = ::Pastel.new
             begin 
+                unless File::exist? "./config" then
+                
+                    puts pastel.yellow "Carioca is not initialized for Gem usage, perhaps need to run :"
+                    puts pastel.yellow "$ rake carioca:gem:init_path"
+                    exit unless prompt.yes?("Do you want to continue, with a standalone registry (not recommanded). ? ")
+                end
                 puts "Carioca : registering service :"
                 config = Carioca::Configuration::new
-                prompt = TTY::Prompt.new
-                pastel = Pastel.new
                 filename = prompt.ask("Registry File path ?", default: config.filename)
                 registry_file = Carioca::RegistryFile::new filename: filename
                 name = prompt.ask("Service name ?") { |q| q.required true }.to_sym
@@ -36,22 +39,26 @@ namespace :carioca  do
                 end
                 is_correct = prompt.yes?("Is it correct ? ")
             rescue TTY::Reader::InputInterrupt
-                puts 'Carioca : interrupted'
+                print "Carioca : "
+                puts pastel.yellow 'interrupted'
                 exit 5
             end
+             print "Carioca : Registry saving : "
             if is_correct then 
                 begin
                     registry_file.add service: name, definition: definition
                     registry_file.save!
                 rescue => e 
-                    puts "Carioca: Can't save : #{e}"
+                    print pastel.red "failed" 
+                    puts " error : #{e}"
                     exit 10
                 end
 
-                puts "Carioca : Registry saved"
+                puts pastel.green "done"
             else
-                puts 'Carioca : Nothing saved'
+                puts pastel.yellow 'canceled'
             end
         end
     end
-  end
+  
+end

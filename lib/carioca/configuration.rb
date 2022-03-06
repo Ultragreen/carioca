@@ -2,7 +2,7 @@ module Carioca
     class Configuration
         include Carioca::Constants
         include Carioca::Helpers
-        attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path
+        attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer
         attr_accessor :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level
         attr_writer :debug, :init_from_file,  :output_colors, :output_emoji
         attr_reader :log_file, :locales_availables
@@ -30,6 +30,7 @@ module Carioca
             Dir[path + '/*.yml'].sort.each do |file|
                 @locales_availables.push File::basename(file,'.yml').to_sym
             end
+            @debugger_tracer = DEFAULT_DEBUGGER_TRACER.dup
         end
 
         def debug? 

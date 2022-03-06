@@ -17,3 +17,7 @@ fr:
   config:
     load:
       error: "Fichier de configuration ignoré, erreur : %{message}"
+      success: "Service de configuration initialisé avec succès depuis : %{from}"
+  output: 
+    load:
+      context: "Service output initialisé en mode : %{confset}"

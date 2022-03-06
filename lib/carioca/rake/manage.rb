@@ -2,6 +2,9 @@
 require 'rake'
 require 'rubygems'
 require 'carioca'
+require "tty-prompt"
+require "pastel"
+
 
 $VERBOSE = nil
 if Gem::Specification.respond_to?(:find_by_name)

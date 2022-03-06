@@ -25,7 +25,7 @@ module Carioca
 
           raise "Service not found: #{name}" unless @services.include? name
           if @active_services.include? name then 
-            debug message: i18n.t('service.getting', name: name) if @active_services.include? :logger and ![:logger, :i18n].include? name and @@config.debug?
+            debug message: i18n.t('service.getting', name: name) if @active_services.include? :logger and ![:logger, :i18n, :output].include? name and @@config.debug?
           else
             service = @services[name]
             service[:depends].each do|dep|

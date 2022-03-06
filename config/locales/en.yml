@@ -17,3 +17,7 @@ en:
   config:
     load:
       error: "Config file ignored, error : %{message}"
+      success: "Configuration Service successfully initialized from : %{from}"
+  output: 
+    load:
+      context: "Output service initialized in mode : %{confset}"

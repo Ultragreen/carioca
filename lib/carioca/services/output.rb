@@ -70,13 +70,13 @@ module Carioca
                 MODE = [:mono, :dual]
                 
                 LEVELS.each do |method|
-                    define_method(method) do |message, session = ''|
-                        self.display(level: method, message:  message, session: session)
+                    define_method(method) do |message, session = '', source = 'Carioca->Output'|
+                        self.display(level: method, message:  message, session: session, source: source)
                     end
                 end
                 @@alias.keys.each do |method|
-                    define_method(method) do |message, session = ''|
-                        self.display( level: method, message: message, session: session)
+                    define_method(method) do |message, session = '',source = 'Carioca->Output'|
+                        self.display( level: method, message: message, session: session, source: source)
                     end
                 end
                 
@@ -104,14 +104,16 @@ module Carioca
                 
                 # constructor
                 def initialize(level: :debug, mode: :mono , emoji: true, colors: true)
+                    registry = Carioca::Registry.get
+                    @logger = registry.get_service name: :logger
+                    @i18n = registry.get_service name: :i18n
+                    @debug = Carioca::Registry.config.debug?
                     self.level = level
                     @mode = mode
-                    @emoji = emoji
+                    @emoji = (check_unicode_term)? emoji : false
                     @color = colors
-                    if @mode == :dual then 
-                        registry = Carioca::Registry.get
-                        @logger = registry.get_service name: :logger
-                    end
+                    set = []; set.push mode; set.push :emoji if @emoji ; set.push :colors if @color
+                    @logger.debug("Carioca->Output") { @i18n.t('output.load.context', confset: set.to_s ) } if  @debug
                     raise "Unknown output mode : #{@mode}" unless MODE.include? @mode
                 end
                 
@@ -136,12 +138,23 @@ module Carioca
                     @active_levels.shift(LEVELS.index(level))
                 end
                 
+                # check if unicode must be used with term ENV
+                # @return [Boolean]
+                def check_unicode_term
+                    return false unless ENV.include? "TERM"
+                    if ENV.values_at("LC_ALL","LC_CTYPE","LANG").compact.first.include?("UTF-8") and ENV.values_at('TERM').first.include? "xterm" then
+                    return true
+                    else
+                    return false
+                    end
+                end
+
                 
                 # abstract method for log wrapper
                 # @param [Hash] params
                 # @option params [Symbol] :level, a valid level in LEVELS or ALIAS
                 # @option params [String] :message text
-                def display(level: , message: , session:)
+                def display(level: , message: , session:, source:)
                     save = message.dup
                     target_level = (@@alias.keys.include? level)?  @@alias[level] : level
                     if @active_levels.include? target_level then
@@ -160,7 +173,8 @@ module Carioca
                             unless LEVELS.include? level
                                 save  =  "#{@@emoji[level][:text]} #{save}" if @@emoji[level].include? :text
                             end 
-                            @logger.send target_level, save
+                            block = Proc::new {save}
+                            @logger.send target_level, source, &block
                         end
                         puts message
                     end

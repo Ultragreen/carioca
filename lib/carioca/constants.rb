@@ -14,6 +14,9 @@ module Carioca
         DEFAULT_COLORS_STATUS = true
         DEFAULT_LOG_LEVEL = :info
 
+
+        DEFAULT_DEBUGGER_TRACER = :output
+
         # service definitions specs
         SERVICES_MANDATORY_SPECS = {type: Symbol, service: String}
         SERVICES_FULL_LIST_SPECS = SERVICES_MANDATORY_SPECS.merge({depends: Array, description: String, resource: String })
@@ -53,6 +56,11 @@ module Carioca
                                 colors: Carioca::Registry.config.output_colors?,
                                 level: Carioca::Registry.config.log_level
             )"
+          },
+          debugger:{
+            type: :internal,
+            description: "The Debugger Service of Carioca",
+            service: "Carioca::Services::Debugger"
           }
         }
 

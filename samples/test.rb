@@ -4,7 +4,7 @@ require 'carioca'
 
 Carioca::Registry.configure do |spec|
     spec.filename = './config/carioca.registry'
-    spec.debug = false
+    spec.debug = true
     spec.init_from_file = true
     #    spec.log_file = '/tmp/test.rge'
     spec.config_file = './config/settings.yml'
@@ -13,8 +13,10 @@ Carioca::Registry.configure do |spec|
     spec.default_locale = :fr
     spec.log_level = :debug
     spec.output_mode = :mono
-
+    spec.output_emoji = true
+    spec.output_colors = true
     spec.locales_load_path << Dir[File.expand_path('./config/locales') + "/*.yml"]
+    spec.debugger_tracer = :output
 end
 
 
@@ -29,6 +31,12 @@ class MyService
     def hello
         logger.info(self.class.to_s) {'Hello World'}
     end
+
+    def method_test(titi, tutu: )
+        yield if block_given?
+        return "result"
+    end     
+
 end
 
 
@@ -62,6 +70,7 @@ class MonAppli < Carioca::Container
     logger.info(self.to_s) { uuid.generate }
 
     inject service: :output
+    inject service: :debugger
 
     def test2
         cycle = [:unknown,:fatal,:error,:ko,:warn,:info,:item,:arrow,:scheduling,:trigger,:sending, :calling,:receive,:ok,:success,:debug,:flat]
@@ -83,6 +92,13 @@ class MonAppli < Carioca::Container
 
     end
 
+    def test3
+        proxy = debugger.get service: :myservice
+        proxy.method_test "param", tutu: "keyword" do 
+            puts 'titi'
+        end
+    end
+
 end
 
 
@@ -91,7 +107,11 @@ end
 
 appli = MonAppli::new
 appli.test
-appli.test2
+#appli.test2
+appli.test3
+
+
+
 
 
 

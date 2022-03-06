@@ -1,0 +1,15 @@
+namespace :carioca do
+     namespace :gem do
+        desc "prepare Gem vitals path for Carioca"
+        task :init_path do 
+            pastel = Pastel.new
+            if File::exist? "./config/locales"
+                puts pastel.yellow "Carioca path already initialized"
+            else
+                print 'Carioca : Initialising vitals gem path : '
+                FileUtils.mkdir_p "./config/locales"
+                puts pastel.green "done"
+            end
+        end
+    end
+end

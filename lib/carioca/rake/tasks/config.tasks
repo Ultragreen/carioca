@@ -1,0 +1,46 @@
+namespace :carioca do
+     namespace :services do
+         namespace :config do 
+            desc "Initialise Service configuration file ./config/settings.yml file"
+            task :init do 
+                begin
+                    prompt = TTY::Prompt.new
+                    pastel = ::Pastel.new
+
+                    if File::exist? "./config/settings.yml" then 
+                        puts pastel.yellow "WARNING : config file already exist, if you continue, you will destroy it !"
+                        continue = prompt.yes?("continue ? ") do |q|
+                            q.default false
+                        end
+                        print "Carioca : "                            
+                        unless continue then 
+                            puts pastel.yellow "canceled"
+                            exit 5
+                        else
+                            File::unlink "./config/settings.yml"
+                            puts pastel.cyan "Reset File"
+                        end
+                    end
+
+                    unless File::exist? "./config" then
+                        puts pastel.red "Carioca is not initialized for Gem usage, perhaps need to run :"
+                        puts pastel.red "$ rake carioca:gem:init_path"
+                        exit 10
+                    end
+                    puts "Carioca : initializing default config file (./config/settings.yml): "
+                    root = prompt.ask("Root config name ? (like your gem/App name)") { |q| 
+                        q.modify :down
+                        q.required true }.to_sym
+                    print "Carioca : Generating config file : "
+                    structure = {root => {:production => {}, :staging => {}, :development => {}, :test => {}, :default => {}}}
+                    File.open('./config/settings.yml', 'w') { |file| file.write(structure.to_yaml) } 
+                    puts pastel.green 'done'
+                rescue TTY::Reader::InputInterrupt
+                    print "Carioca : "
+                    puts pastel.yellow 'interrupted'
+                   exit 5
+                end
+            end
+        end
+    end
+end
