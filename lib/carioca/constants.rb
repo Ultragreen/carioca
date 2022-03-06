@@ -1,7 +1,7 @@
 module Carioca
     module Constants
 
-        VERSION = '2.0.2'
+        VERSION = '2.0.3'
         DEFAULT_REGISTRY_FILE  = './config/carioca.registry'
         DEFAULT_CONFIG_FILE = './config/settings.yml'
         DEFAULT_ENVIRONMENT = :development
