@@ -8,11 +8,11 @@ require 'locale'
 require 'deep_merge'
 require 'pastel'
 
+require_relative 'helpers'
 require_relative 'constants'
 require_relative 'validator'
 require_relative 'mixin'
 require_relative 'container'
-require_relative 'helpers'
 require_relative 'configuration'
 
 require_relative 'registry_file'

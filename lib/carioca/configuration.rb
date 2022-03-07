@@ -4,8 +4,8 @@ module Carioca
         include Carioca::Helpers
         attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer
         attr_accessor :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level
-        attr_writer :debug, :init_from_file,  :output_colors, :output_emoji
-        attr_reader :log_file, :locales_availables
+        attr_writer :init_from_file,  :output_colors, :output_emoji
+        attr_reader :log_file, :locales_availables, :debug
         def initialize
             @init_from_file = true
             @filename = DEFAULT_REGISTRY_FILE.dup
@@ -14,7 +14,6 @@ module Carioca
             @builtins = BUILTINS
             @log_file = ''
             @log_level = DEFAULT_LOG_LEVEL.dup
-            @log_level = :info if @debug == false and @log_level == :debug
             @config_file = DEFAULT_CONFIG_FILE.dup
             @environment = DEFAULT_ENVIRONMENT.dup
             @config_root = DEFAULT_CONFIG_ROOT.dup
@@ -31,6 +30,12 @@ module Carioca
                 @locales_availables.push File::basename(file,'.yml').to_sym
             end
             @debugger_tracer = DEFAULT_DEBUGGER_TRACER.dup
+        end
+
+        def debug=(state)
+            @debug = state
+            @log_level = :info if @debug == false and @log_level == :debug
+            @log_level = :debug if @debug == true
         end
 
         def debug? 

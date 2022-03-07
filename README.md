@@ -1,5 +1,8 @@
 # Carioca
 
+Carioca : Container And Registry with Inversion Of Control for your Applications
+
+Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a services registry, build with logs, config and Internationalization facilities for designing your applications
 ## Installation
 
 Install it yourself as:
@@ -35,17 +38,21 @@ require "carioca/rake/manage"
 Verify, all is right with :
 
     $ rake -T
-    rake build                         # Build yourgem-0.1.0.gem into the pkg directory
+    rake build                         # Build sample-0.1.0.gem into the pkg directory
+    rake carioca:gem:init_path         # prepare Gem vitals path for Carioca
     rake carioca:registry:add_service  # Adding service to Carioca Registry file
+    rake carioca:services:config:init  # Initialise Service configuration file ./config/settings.yml file
     rake clean                         # Remove any temporary products
     rake clobber                       # Remove any generated files
-    rake install                       # Build and install yourgem-0.1.0.gem into system gems
-    rake install:local                 # Build and install yourgem-0.1.0.gem into system gems without network access
-    rake release[remote]               # Create tag v0.1.0 and build and push yourgem-0.1.0.gem to Set to 'http://mygemserver.com'
+    rake install                       # Build and install sample-0.1.0.gem into system gems
+    rake install:local                 # Build and install sample-0.1.0.gem into system gems without network access
+    rake release[remote]               # Create tag v0.1.0 and build and push sample-0.1.0.gem to Set to 'http://mygemserver.com'
     rake spec                          # Run RSpec code examples
 
 You could now initialize the Carioca registry following the wizard, with (sample with a simple UUID generator gem): 
 
+    $ rake carioca:gem:init_path 
+    Carioca : Initialising vitals gem path : done
     $ rake carioca:registry:add_service
     Carioca : registering service :
     Registry File path ? ./config/carioca.registry
@@ -63,7 +70,7 @@ You could now initialize the Carioca registry following the wizard, with (sample
      * service: UUID
      * resource: uuid
     Is it correct ?  Yes
-    Carioca : Registry saved
+    Carioca : Registry saving : done
 
 This will initiate a Carioca Registry (YAML file, the format will be describe after, the wizard support all type of services, managed by Carioca, all keys are Symbols):
 
@@ -132,19 +139,21 @@ After this, don't forget to stage new files, and you could build & install the g
     $ rake install && yourgem_cmd
     yourgem 0.1.0 built to pkg/yourgem-0.1.0.gem.
     yourgem (0.1.0) installed.
-    D, [2022-03-04T23:11:52.663459 #88808] DEBUG -- Carioca: Preloaded service :i18n on locale : en
-    D, [2022-03-04T23:11:52.663519 #88808] DEBUG -- Carioca: Preloaded service :logger ready on STDOUT
-    D, [2022-03-04T23:11:52.663537 #88808] DEBUG -- Carioca: Initializing Carioca registry
-    D, [2022-03-04T23:11:52.663550 #88808] DEBUG -- Carioca: Preparing builtins services
-    D, [2022-03-04T23:11:52.663580 #88808] DEBUG -- Carioca: Adding service configuration
-    D, [2022-03-04T23:11:52.663609 #88808] DEBUG -- Carioca: Adding service i18n
-    D, [2022-03-04T23:11:52.663649 #88808] DEBUG -- Carioca: Initializing registry from file : ./config/carioca.registry
-    D, [2022-03-04T23:11:52.663773 #88808] DEBUG -- Carioca: Adding service uuid
-    D, [2022-03-04T23:11:52.663794 #88808] DEBUG -- Carioca: Registry initialized successfully
-    I, [2022-03-04T23:11:52.663802 #88808]  INFO -- Sample::YourGemCMD: Log me as class method
-    I, [2022-03-04T23:11:52.663813 #88808]  INFO -- #<Sample::YourGemCMD:0x00000001312c0bf0>: Log me as an instance method
-    D, [2022-03-04T23:11:52.663844 #88808] DEBUG -- Carioca: Starting service uuid
-    W, [2022-03-04T23:11:52.682812 #88808]  WARN -- Sample::YourGemCMD: Give me an UUID : 0505f3f0-7e36-013a-22c7-1e00870a7189
+    D, [2022-03-07T01:06:20.337961 #21513] DEBUG -- Carioca: Preloaded service :i18n on locale : en
+    D, [2022-03-07T01:06:20.338020 #21513] DEBUG -- Carioca: Preloaded service :logger ready on STDOUT
+    D, [2022-03-07T01:06:20.338037 #21513] DEBUG -- Carioca: Initializing Carioca registry
+    D, [2022-03-07T01:06:20.338049 #21513] DEBUG -- Carioca: Preparing builtins services
+    D, [2022-03-07T01:06:20.338079 #21513] DEBUG -- Carioca: Adding service configuration
+    D, [2022-03-07T01:06:20.338107 #21513] DEBUG -- Carioca: Adding service i18n
+    D, [2022-03-07T01:06:20.338133 #21513] DEBUG -- Carioca: Adding service output
+    D, [2022-03-07T01:06:20.338156 #21513] DEBUG -- Carioca: Adding service debugger
+    D, [2022-03-07T01:06:20.338191 #21513] DEBUG -- Carioca: Initializing registry from file : ./config/carioca.registry
+    D, [2022-03-07T01:06:20.338312 #21513] DEBUG -- Carioca: Adding service uuid
+    D, [2022-03-07T01:06:20.338333 #21513] DEBUG -- Carioca: Registry initialized successfully
+    I, [2022-03-07T01:06:20.338340 #21513]  INFO -- Sample::YourGemCMD: Log me as class method
+    I, [2022-03-07T01:06:20.338351 #21513]  INFO -- #<Sample::YourGemCMD:0x0000000148270698>: Log me as an instance method
+    D, [2022-03-07T01:06:20.338381 #21513] DEBUG -- Carioca: Starting service uuid
+    W, [2022-03-07T01:06:20.353142 #21513]  WARN -- Sample::YourGemCMD: Give me an UUID : 574cc860-7fd8-013a-2323-1e00870a7189
 
 You could see, somme interesting things : 
 * Carioca have an internationalisation service (this service will be explain in detail after): 
