@@ -2,6 +2,6 @@
 
 RSpec.describe Carioca do
   it 'has a version number' do
-    expect(Carioca::Constants::VERSION).not_to be nil
+    expect(Carioca::VERSION).not_to be nil
   end
 end

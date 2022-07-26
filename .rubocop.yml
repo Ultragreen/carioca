@@ -8,7 +8,7 @@
 
 AllCops:
   NewCops: enable
-
+  SuggestExtensions: false
 
 # definitive :
 Lint/Debugger:
