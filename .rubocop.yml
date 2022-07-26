@@ -22,6 +22,8 @@ Style/ClassVars:
   Enabled: false
 Style/MissingRespondToMissing:
   Enabled: false
+Gemspec/RequireMFA:
+  Enabled: false
 
 
 # to study :
