@@ -1,10 +1,10 @@
-# coding: utf-8
+# frozen_string_literal: true
+
 require 'rake'
 require 'rubygems'
 require 'carioca'
-require "tty-prompt"
-require "pastel"
-
+require 'tty-prompt'
+require 'pastel'
 
 $VERBOSE = nil
 if Gem::Specification.respond_to?(:find_by_name)
@@ -12,7 +12,7 @@ if Gem::Specification.respond_to?(:find_by_name)
     spec = Gem::Specification.find_by_name('carioca')
     res = spec.lib_dirs_glob.split('/')
   rescue LoadError
-    spec = nil
+    res = []
   end
 else
   spec = Gem.searcher.find('carioca')

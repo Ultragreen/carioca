@@ -1,16 +1,14 @@
+# frozen_string_literal: true
 
 module Carioca
-    class Container
+  class Container
+    extend Carioca::Injector
 
-        extend Carioca::Injector
+    inject service: :logger
+    inject service: :configuration
 
-        inject service: :logger
-        inject service: :configuration
-
-        def initialize(name: 'Carioca')
-            @name = name
-        end
-
+    def initialize(name: 'Carioca')
+      @name = name
     end
-
+  end
 end
