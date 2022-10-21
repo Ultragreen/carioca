@@ -43,7 +43,7 @@ module Carioca
           success: { value: "\u{1F4AA}", alt: '[+]', text: '(SUCCESS)' },
           debug: { value: "\u{1F41B}", alt: '[D]', text: '(DEBUG)' },
           flat: { value: '', alt: '' },
-          skipped: { value: 'U{23E9}', alt: '[I]', text: '(SKIPPED)'}
+          skipped: { value: "\u{23E9}", alt: '[I]', text: '(SKIPPED)'}
         }.freeze
         LEVELS = %i[debug info warn error fatal unknown].freeze
         ALIAS = {
