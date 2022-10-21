@@ -41,7 +41,8 @@ module Carioca
           ok: { value: "\u{1F44D}", alt: '[+]', text: '(OK)' },
           success: { value: "\u{1F4AA}", alt: '[+]', text: '(SUCCESS)' },
           debug: { value: "\u{1F41B}", alt: '[D]', text: '(DEBUG)' },
-          flat: { value: '', alt: '' }
+          flat: { value: '', alt: '' },
+          skip: { value: 'U{23E9}', alt: '[I]', text: '(SKIPPED)'}
         }.freeze
         LEVELS = %i[debug info warn error fatal unknown].freeze
         ALIAS = {
@@ -55,7 +56,8 @@ module Carioca
           sending: :info,
           calling: :info,
           receive: :info,
-          success: :info
+          success: :info,
+          skipped: :info
 
         }.freeze
       end
@@ -69,15 +71,15 @@ module Carioca
         @@colors = COLORS.dup
         @@emoji = EMOJI.dup
 
-        MODE = %i[mono dual].freeze
+        MODE = %i[mono dual log].freeze
 
         LEVELS.each do |method|
-          define_method(method) do |message, session = '', source = 'Carioca->Output'|
+          define_method(method) do |message, session = nil, source = 'Carioca->Output'|
             display(level: method, message: message, session: session, source: source)
           end
         end
         @@alias.each_key do |method|
-          define_method(method) do |message, session = '', source = 'Carioca->Output'|
+          define_method(method) do |message, session = nil, source = 'Carioca->Output'|
             display(level: method, message: message, session: session, source: source)
           end
         end
@@ -100,7 +102,7 @@ module Carioca
           raise 'Alias must be a Symbol' unless newalias.instance_of?(Symbol)
           raise "Bad Level : #{level}" unless LEVELS.include? level
 
-          self.class.define_method(newalias) do |message, session = ''|
+          self.class.define_method(newalias) do |message, session = nil|
             display({ level: newalias, message: message, session: session })
           end
         end
@@ -160,7 +162,7 @@ module Carioca
         # @option params [String] :message text
         # @option params [String] :session an id/timestamp of session
         def display(level:, message:, session:, source:)
-          message << "(#{session})" if session
+          message << " (#{session})" if session
           save = message.dup
           target_level = @@alias.keys.include?(level) ? @@alias[level] : level
           if @active_levels.include? target_level
@@ -178,7 +180,7 @@ module Carioca
               block = proc { save }
               @logger.send target_level, source, &block
             end
-            puts message
+            puts message if @mode == :mono or @mode == :dual
           end
         end
       end
