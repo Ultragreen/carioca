@@ -22,7 +22,7 @@ module Carioca
           success: :green,
           debug: :magenta,
           flat: :white,
-          skipped: :grey
+          skipped: :white
         }.freeze
 
         EMOJI = {
