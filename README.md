@@ -3,6 +3,25 @@
 Carioca : Container And Registry with Inversion Of Control for your Applications
 
 Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a services registry, build with logs, config and Internationalization facilities for designing your applications
+
+
+![GitHub](https://img.shields.io/github/license/Ultragreen/carioca)
+
+[![Documentation](https://img.shields.io/badge/docs-rubydoc.info-brightgreen)](https://rubydoc.info/gems/carioca)
+![GitHub issues](https://img.shields.io/github/issues/Ultragreen/carioca)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Ultragreen/carioca)
+![GitHub top language](https://img.shields.io/github/languages/top/Ultragreen/carioca)
+![GitHub milestones](https://img.shields.io/github/milestones/open/Ultragreen/carioca)
+
+![Gem](https://img.shields.io/gem/dt/carioca)
+[![Gem Version](https://badge.fury.io/rb/sc4ry.svg)](https://badge.fury.io/rb/carioca)
+![Twitter Follow](https://img.shields.io/twitter/follow/Ultragreen?style=social)
+![GitHub Org's stars](https://img.shields.io/github/stars/Ultragreen?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/Ultragreen/carioca?style=social)
+
+<noscript><a href="https://liberapay.com/ruydiaz/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+
+
 ## Installation
 
 Install it yourself as:
