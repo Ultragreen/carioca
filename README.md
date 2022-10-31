@@ -22,6 +22,10 @@ Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a
 <noscript><a href="https://liberapay.com/ruydiaz/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
 
+![Sc4ry logo](assets/images/logo_carioca.png) 
+_Container And Registry with Inversion Of Control for your Applications__
+
+
 ## Installation
 
 Install it yourself as:
