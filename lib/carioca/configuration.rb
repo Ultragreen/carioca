@@ -5,8 +5,8 @@ module Carioca
     include Carioca::Constants
     include Carioca::Helpers
     attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer,
-                  :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level
-    attr_writer :init_from_file, :output_colors, :output_emoji, :output_target
+                  :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level, :output_target
+    attr_writer :init_from_file, :output_colors, :output_emoji
     attr_reader :log_file, :locales_availables, :debug
 
     def initialize
