@@ -66,7 +66,7 @@ module Carioca
       class Provider
         include FormatsMapping
 
-        attr_accessor :mode, :emoji, :color
+        attr_accessor :mode, :emoji, :color, :target
 
         @@alias = ALIAS.dup
         @@colors = COLORS.dup
