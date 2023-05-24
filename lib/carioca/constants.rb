@@ -8,6 +8,7 @@ module Carioca
     DEFAULT_CONFIG_ROOT = :carioca
     DEFAULT_LOCALE = :en
 
+    DEFAULT_OUTPUT_TARGET = STDOUT
     DEFAULT_OUTPUT_MODE = :mono
     DEFAULT_EMOJI_STATUS = true
     DEFAULT_COLORS_STATUS = true
@@ -54,7 +55,8 @@ module Carioca
                                 mode: Carioca::Registry.config.output_mode,
                                 emoji: Carioca::Registry.config.output_emoji?,
                                 colors: Carioca::Registry.config.output_colors?,
-                                level: Carioca::Registry.config.log_level
+                                level: Carioca::Registry.config.log_level,
+                                target: Carioca::Registry.config.output_target
             )"
       },
       debugger: {

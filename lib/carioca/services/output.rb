@@ -109,12 +109,13 @@ module Carioca
         end
 
         # constructor
-        def initialize(level: :debug, mode: :mono, emoji: true, colors: true)
+        def initialize(level: :debug, mode: :mono, emoji: true, colors: true, target: STDOUT)
           registry = Carioca::Registry.get
           @logger = registry.get_service name: :logger
           @i18n = registry.get_service name: :i18n
           @debug = Carioca::Registry.config.debug?
           self.level = level
+          @target = target
           @mode = mode
           @emoji = check_unicode_term ? emoji : false
           @color = colors
@@ -122,6 +123,7 @@ module Carioca
           set.push mode
           set.push :emoji if @emoji
           set.push :colors if @color
+          set.push target
           @logger.debug('Carioca->Output') { @i18n.t('output.load.context', confset: set.to_s) } if @debug
           raise "Unknown output mode : #{@mode}" unless MODE.include? @mode
         end
@@ -181,7 +183,7 @@ module Carioca
               block = proc { save }
               @logger.send target_level, source, &block
             end
-            puts message if @mode == :mono or @mode == :dual
+            @target.puts message if @mode == :mono or @mode == :dual
           end
         end
       end

@@ -6,7 +6,7 @@ module Carioca
     include Carioca::Helpers
     attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer,
                   :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level
-    attr_writer :init_from_file, :output_colors, :output_emoji
+    attr_writer :init_from_file, :output_colors, :output_emoji, :output_target
     attr_reader :log_file, :locales_availables, :debug
 
     def initialize
@@ -27,6 +27,7 @@ module Carioca
       @output_mode = DEFAULT_OUTPUT_MODE.dup
       @output_colors = DEFAULT_COLORS_STATUS.dup
       @output_emoji = DEFAULT_EMOJI_STATUS.dup
+      @output_target = DEFAULT_OUTPUT_TARGET.dup
       path = search_file_in_gem('carioca', 'config/locales')
       @locales_load_path = Dir["#{File.expand_path(path)}/*.yml"]
       Dir["#{path}/*.yml"].sort.each do |file|
