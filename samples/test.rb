@@ -5,15 +5,15 @@ require 'carioca'
 
 Carioca::Registry.configure do |spec|
   spec.filename = './config/carioca.registry'
-  spec.debug = true
+  spec.debug = false
   spec.init_from_file = true
-  #    spec.log_file = '/tmp/test.rge'
+  spec.log_file = '/tmp/test.rge'
   spec.config_file = './config/settings.yml'
   spec.config_root = :monappli
   spec.environment = :development
   spec.default_locale = :fr
   spec.log_level = :debug
-  spec.output_mode = :mono
+  spec.output_mode = :dual
   spec.output_emoji = true
   spec.output_colors = true
   spec.locales_load_path << Dir["#{File.expand_path('./config/locales')}/*.yml"]
@@ -101,5 +101,5 @@ end
 
 appli = MonAppli.new
 appli.test
-# appli.test2
+appli.test2
 appli.test3

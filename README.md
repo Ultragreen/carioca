@@ -46,7 +46,14 @@ Install it yourself as:
 #### Principe
 
 ![Carioca synoptic](assets/images/description_container_carioca.png)
-### usecase
+
+* Carioca come with a Container Class Template
+  * the Container automatically inject :logger, :i18n and a :configuration service (explain in detail after) 
+  * the Container provide a class method macro :inject 
+    *  this macro give a way to use other services defined in the registry file (service could be register inline, presented after)  
+
+### Beginning usecase new gem
+
 Create you own gem :
 
     $ bundle gem yourgem
@@ -63,7 +70,7 @@ and after :
     $ bundle add carioca
     $ mkdir -p config/locales
 
-Edit the Rakefil, and add the following line :
+Edit the Rakefile, and add the following line :
 
 ```ruby
 require "carioca/rake/manage"
@@ -188,6 +195,10 @@ After this, don't forget to stage new files, and you could build & install the g
     D, [2022-03-07T01:06:20.338381 #21513] DEBUG -- Carioca: Starting service uuid
     W, [2022-03-07T01:06:20.353142 #21513]  WARN -- Sample::YourGemCMD: Give me an UUID : 574cc860-7fd8-013a-2323-1e00870a7189
 
+  
+
+## Builtins services
+
 You could see, somme interesting things : 
 * Carioca have an internationalisation service (this service will be explain in detail after): 
   * default configured on :en locale
@@ -195,12 +206,7 @@ You could see, somme interesting things :
 * Carioca have a builtin logger service using regular Logger from Stdlib (also explain in detail in this document)
   * default logging on STDOUT, but could be redirect in the configure bloc
 * Carioca give us some usefull traces in debug   
-* Carioca come with a Container Class Template
-  * the Container automatically inject :logger, :i18n and a :configuration service (explain in detail after) 
-  * the Container provide a class method macro :inject 
-    *  this macro give a way to use other services defined in the registry file (service could be register inline, presented after)   
-
-## Builtins services
+* Carioca provide a complete solution to manage CLI output.  
 
 ### Description Registry 
 
@@ -213,9 +219,173 @@ You could see, somme interesting things :
 
 ### Generic Usage 
 
-### Service Logger 
+#### Usage with the Carioca::Container template class
+
+Considering an existing service named : my_service with a unique method named a_method
+
+```ruby
+
+# frozen_string_literal: true
+
+require 'carioca'
+
+class MyObject < Carioca::Container
+
+    inject service: my_service
+
+    def initialize
+      my_service.a_method
+    end
+
+   
+
+    my_service.a_method
+
+  end
+
+end
+
+```
+the mecro inject is already mixed in Carioca::Container
+
+**Note** : Service cloud be used on class method wrapping and instance mecthode. 
+
+#### Usage without Carioca::Container heritage
+
+Considering an existing service named : my_service with a unique method named a_method
+
+```ruby
+
+require 'carioca'
+
+class MyObject 
+
+    extend Carioca::Injector
+    inject service: my_service
+
+    def initialize
+      my_service.a_method
+    end
+
+    my_service.a_method
+
+  end
+
+end
+
+```
 
 ### Service I18n
+
+the I18n is loaded by default with Carioca::Container, and loaded as dependency when using others builtin services.
+It's a fondation service for Carioca.
+
+For this exemple, we show you an explicit inject of I18n
+
+**Note** : I18n povide internationalisation for Carioca itself AND for self made services and more  
+
+**Note** : You could create all your locales files for any languages speciif to your application :
+- in $PWD/config/locales/*.yml
+- in $GEMPATH/config/locales/*.yml
+
+**Note** : If you create locales in other languages than :en or :fr (atcually the 2 supported by Carioca), for internals output (Carioca itself logs, outputs or debugs), carioca fallback on default locales defined in configuration (default :en).
+
+
+Considering a locale file en.yml in config/locales/ like :
+
+```yaml
+
+en:
+  sample:
+    string: "Display %{myvar}"
+ 
+
+```
+
+with the current code :
+
+```ruby
+
+require 'carioca'
+
+class MyObject 
+
+    extend Carioca::Injector
+    inject service: I18n
+
+    def initialize
+      puts i18n.t('sample.string', myvar: 'test')
+    end
+
+  end
+
+end
+
+``` 
+
+output  :
+
+   Display test
+
+### Service Logger 
+
+**Note** : Logger depends on service I18n
+#### Logging simply 
+
+```ruby
+
+require 'carioca'
+
+class MyObject 
+
+    extend Carioca::Injector
+    inject service: logger
+
+    def initialize
+      logger.info(self.to_s) { "my log" }
+    end
+
+  end
+
+end
+
+```
+
+
+#### Changing log strategy 
+
+
+```ruby
+require 'rubygems'
+require 'carioca'
+
+Carioca::Registry.configure do |spec|
+  spec.debug = false
+  spec.log_file = '/tmp/test_carioca.log' # a different log path (default STDOUT)
+  spec.log_level = :debug # log level base  (default :info)
+  spec.log_target = '::Logger::new(STDOUT)' # to change completly the log object 
+end
+```
+
+
+for more information on ruby Stdlib Logger, see :
+https://ruby-doc.org/3.2.2/stdlibs/logger/Logger.html
+
+
+**Note** : you could totally subsitute Logger with your own logger, by the configuration, or the logger of an other service. 
+BUT it's necessary to be compatible with standard Logger facilities :
+
+```ruby
+logger.debug('Maximal debugging info')
+logger.info('Non-error information')
+logger.warn('Non-error warning')
+logger.error('Non-fatal error')
+logger.fatal('Fatal error')
+logger.unknown('Most severe')
+```
+
+**Note** : the output service, detailled after could work in dual mode STDXXX + logger service. 
+
 ### Service Configuration  
 
 ### Service Output 
