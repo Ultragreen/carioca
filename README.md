@@ -22,8 +22,8 @@ Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a
 <noscript><a href="https://liberapay.com/ruydiaz/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
 
-![Sc4ry logo](assets/images/logo_carioca.png) 
-_Container And Registry with Inversion Of Control for your Applications__
+![Carioca logo](assets/images/logo_carioca_full_small.png) 
+_Container And Registry with Inversion Of Control for your Applications_
 
 
 ## Installation
@@ -32,11 +32,21 @@ Install it yourself as:
 
     $ gem install carioca
 
+## Principe 
+
+![Carioca synoptic](assets/images/description_carioca.png)
+
 ## Usage
 
 
 ### Basic usage
 
+
+
+#### Principe
+
+![Carioca synoptic](assets/images/description_container_carioca.png)
+### usecase
 Create you own gem :
 
     $ bundle gem yourgem
@@ -190,7 +200,33 @@ You could see, somme interesting things :
   * the Container provide a class method macro :inject 
     *  this macro give a way to use other services defined in the registry file (service could be register inline, presented after)   
 
-## A step further 
+## Builtins services
+
+### Description Registry 
+
+
+![Carioca synoptic](assets/images/description_registry_carioca.png)
+
+### Description of services
+
+![Carioca synoptic](assets/images/description_services_carioca.png)
+
+### Generic Usage 
+
+### Service Logger 
+
+### Service I18n
+### Service Configuration  
+
+### Service Output 
+
+### Service Debug
+
+
+
+## Carioca Configuration
+
+## Direct Registry Usage
 
 
 ## Development
