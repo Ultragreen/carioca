@@ -11,8 +11,14 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.0.0
-    - name: Run the default task
+    - name: Getting dependencies (Bundle)
       run: |
         gem install bundler -v 2.2.3
         bundle install
+    - name: Running test Rspec
+      run: |
         bundle exec rake
+    - name: Running CVE security audit 
+      run: |
+        bundle exec rake audit
+       
