@@ -44,3 +44,8 @@ namespace :yardoc do
   end
 end
 task clobber: 'yardoc:clobber'
+
+desc "Run CVE security audit over bundle"
+task :audit do
+  system('bundle audit')
+end

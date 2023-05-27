@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 1.32'
   spec.add_development_dependency 'yard', '~> 0.9.27'
   spec.add_development_dependency 'yard-rspec', '~> 0.1'
+  spec.add_development_dependency "bundle-audit", "~> 0.1.0"
   spec.metadata['rubygems_mfa_required'] = 'false'
   spec.add_dependency 'version', '~> 1.1'
 end

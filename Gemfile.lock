@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    carioca (2.0.4)
+    carioca (2.0.12)
       deep_merge (~> 1.2)
       i18n (~> 1.10)
       locale (~> 2.1)
@@ -13,6 +13,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    bundle-audit (0.1.0)
+      bundler-audit
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     code_statistics (0.2.13)
     concurrent-ruby (1.1.10)
     deep_merge (1.2.2)
@@ -56,6 +61,7 @@ GEM
     rubocop-ast (1.19.1)
       parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
+    thor (1.2.2)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.23.1)
@@ -80,6 +86,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundle-audit (~> 0.1.0)
   carioca!
   code_statistics (~> 0.2.13)
   rake (~> 13.0)
