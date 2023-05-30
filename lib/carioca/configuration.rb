@@ -5,7 +5,7 @@ module Carioca
     include Carioca::Constants
     include Carioca::Helpers
     attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer,
-                  :config_file, :config_root, :environment, :supported_environment, :output_mode, :log_level, :output_target
+                  :config_file, :config_root, :environment, :supported_environments, :output_mode, :log_level, :output_target
     attr_writer :init_from_file, :output_colors, :output_emoji
     attr_reader :log_file, :locales_availables, :debug
 
@@ -21,7 +21,7 @@ module Carioca
       @environment = DEFAULT_ENVIRONMENT.dup
       @config_root = DEFAULT_CONFIG_ROOT.dup
       @log_target = '::Logger::new(STDOUT)'
-      @supported_environment = DEFAULT_ENVIRONMENTS_LIST.dup
+      @supported_environments = DEFAULT_ENVIRONMENTS_LIST.dup
       @default_locale = DEFAULT_LOCALE
       @locales_availables = []
       @output_mode = DEFAULT_OUTPUT_MODE.dup
