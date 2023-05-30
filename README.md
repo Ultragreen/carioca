@@ -389,7 +389,7 @@ logger.unknown('Most severe')
 ### Service Configuration  
 
 
-### Configuration 
+#### Configuration 
 
 Configuration made with  Registry.configure :
 
@@ -405,7 +405,7 @@ end
 * config_root : Root of the YAML structure
 * environment : current evt used for override default values
 
-### Configuration file format
+#### Configuration file format
 
 **Note** :This file is corresponding with the presented configuration 
 
@@ -434,7 +434,7 @@ end
         :branch5: ["value"]
 ```
 
-### Access to Configuration 
+#### Access to Configuration 
 
 ```ruby
 config = Carioca::Registry.get.get_service name: :configuration
@@ -459,7 +459,7 @@ output :
 **Note** : you could see the result configuration is a merge of :development path ovec :default
 
 
-### R/W on runtime
+#### R/W on runtime
 
 **Note** : you could override value in runtime
 
@@ -470,12 +470,80 @@ config.settings.newkey = 'value'
 
 
 
-### Princpe 
+#### Princpe 
 
 ![Carioca synoptic](assets/images/description_configuration_carioca.png)
 
 
 ### Service Output 
+
+
+#### Configuration 
+
+Configuration made with  Registry.configure :
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.debug = false
+  spec.log_file = '/tmp/test.rge'
+  spec.log_level = :debug
+  spec.output_mode = :dual
+  spec.output_emoji = true
+  spec.output_colors = true
+  spec.output_target = STDOUT
+
+end
+```
+
+* output_mode : choose if you want to display to output_target OR/AND Logs, mode are : :mono, dual, log
+* output_emoji : display levels or alias as UTF8 EMOJI
+* output_colors : display output in colors
+* output_target : change output STDOUT or SDTERR
+
+#### Usage 
+
+
+```ruby
+output = Carioca::Registry.get.get_service name: :output
+
+cycle = %i[unknown fatal error ko warn info item arrow scheduling trigger sending calling receive
+               ok success debug flat]
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.color = false
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.emoji = false
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.color = true
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+
+```
+Note : list of ordered levels or alias : unknown fatal error ko warn info item arrow scheduling trigger sending calling receive ok success debug flat
+
+Output : 
+
+* Without colors nor Emojies
+
+![Carioca output](assets/images/carioca_output_no_emoji_no_colors)
+
+* Without colors but with Emojies
+
+![Carioca output](assets/images/carioca_output_emoji_no_colors)
+
+* With colors but no Emojies
+
+![Carioca output](assets/images/carioca_output_no_emoji_colors)
+
+* With colors and Emojies
+
+![Carioca output](assets/images/carioca_output_emoji_colors)
 
 ### Service Debug
 
