@@ -480,7 +480,7 @@ config.settings.newkey = 'value'
 
 #### Configuration 
 
-Configuration made with  Registry.configure :
+Configuration made with Registry.configure :
 
 ```ruby
 Carioca::Registry.configure do |spec|
@@ -531,19 +531,19 @@ Output :
 
 * Without colors nor Emojies
 
-![Carioca output](assets/images/carioca_output_no_emoji_no_colors)
+![Carioca output](assets/images/carioca_output_no_emoji_no_colors.PNG)
 
 * Without colors but with Emojies
 
-![Carioca output](assets/images/carioca_output_emoji_no_colors)
+![Carioca output](assets/images/carioca_output_emoji_no_colors.PNG)
 
 * With colors but no Emojies
 
-![Carioca output](assets/images/carioca_output_no_emoji_colors)
+![Carioca output](assets/images/carioca_output_no_emoji_colors.PNG)
 
 * With colors and Emojies
 
-![Carioca output](assets/images/carioca_output_emoji_colors)
+![Carioca output](assets/images/carioca_output_emoji_colors.PNG)
 
 ### Service Debug
 
