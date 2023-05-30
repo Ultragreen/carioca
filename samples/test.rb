@@ -9,7 +9,7 @@ Carioca::Registry.configure do |spec|
   spec.init_from_file = true
   spec.log_file = '/tmp/test.rge'
   spec.config_file = './config/settings.yml'
-  spec.config_root = :monappli
+  spec.config_root = :myappli
   spec.environment = :development
   spec.default_locale = :fr
   spec.log_level = :debug
@@ -54,6 +54,8 @@ i18n.locale = :es
 p i18n.t(:test)
 
 config = Carioca::Registry.get.get_service name: :configuration
+
+puts config.settings.to_h.to_yaml
 config.settings.newkey = 'value'
 
 logger.info(to_s) { config.settings }

@@ -1,19 +1,4 @@
 ---
-:toto:
-  :type: :gem
-  :description: The toto service
-  :service: Toto
-  :resource: toto
-  :depends:
-  - :configuration
-:sqdqd:
-  :type: :internal
-  :description: The sqdqd service
-  :service: SQP::new('titi')
-  :depends:
-  - :configuration
-  - :logger
-  - :toto
 :uuid:
   :type: :gem
   :description: The uuid service

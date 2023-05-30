@@ -388,6 +388,80 @@ logger.unknown('Most severe')
 
 ### Service Configuration  
 
+
+### Configuration 
+
+Configuration made with  Registry.configure :
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.config_file = './config/settings.yml'
+  spec.config_root = :myappli
+  spec.environment = :development
+end
+```
+
+* config_file : path to the configuraion file (YAML format) 
+* config_root : Root of the YAML structure
+* environment : current evt used for override default values
+
+### Configuration file format
+
+**Note** :This file is corresponding with the presented configuration 
+
+```yaml
+---
+:myappli:
+  :production: {}
+  :staging:
+    :onstaging: staging
+  :test: {}
+  :development:
+    :ondev: test
+    :treeA:
+      :trunk1:
+        :branch1: leaf1
+      :trunk2:
+        :branch3: leaf3
+        :branch4: leaf4
+        :branch5: [ "val1","val2","val3" ] 
+  :default:
+    :default_value: 'value'
+    :treeA:
+      :trunk1:
+        :branch2: leaf2
+      :trunk2:
+        :branch5: ["value"]
+```
+
+### Access to Configuration 
+
+```ruby
+config = Carioca::Registry.get.get_service name: :configuration
+config.settings.newkey = 'value'
+pp config.settings
+```
+output :
+
+```
+{:default_value=>"value",
+ :treeA=>
+  {:trunk1=>{:branch2=>"leaf2", :branch1=>"leaf1"},
+   :trunk2=>
+    {:branch5=>["value", "val1", "val2", "val3"],
+     :branch3=>"leaf3",
+     :branch4=>"leaf4"}},
+ :ondev=>"test"}
+ ```
+
+**Note** : you could see the result configuration is a merge of :development path ovec :default
+
+
+### Princpe 
+
+![Carioca synoptic](assets/images/description_configuration_carioca.png)
+
+
 ### Service Output 
 
 ### Service Debug
