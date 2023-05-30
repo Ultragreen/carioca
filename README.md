@@ -246,7 +246,7 @@ class MyObject < Carioca::Container
 end
 
 ```
-the mecro inject is already mixed in Carioca::Container
+the mAcro inject is already mixed in Carioca::Container
 
 **Note** : Service cloud be used on class method wrapping and instance mecthode. 
 
@@ -438,9 +438,11 @@ end
 
 ```ruby
 config = Carioca::Registry.get.get_service name: :configuration
-config.settings.newkey = 'value'
 pp config.settings
 ```
+
+**Note** : You could access it as usuallly, with inject, from Carioca::Container fork or mixin of Carioca::Injector in your own class.
+
 output :
 
 ```
@@ -457,6 +459,17 @@ output :
 **Note** : you could see the result configuration is a merge of :development path ovec :default
 
 
+### R/W on runtime
+
+**Note** : you could override value in runtime
+
+```ruby
+config = Carioca::Registry.get.get_service name: :configuration
+config.settings.newkey = 'value'
+```
+
+
+
 ### Princpe 
 
 ![Carioca synoptic](assets/images/description_configuration_carioca.png)
@@ -467,6 +480,75 @@ output :
 ### Service Debug
 
 
+For this example, we use a internal service defined programmaticalu on runtime, (we see it more in detail in the chapter dedicated to the registry)
+At the beginning of you code, just add : 
+
+```ruby
+class MyService
+  extend Carioca::Injector
+  inject service: :logger
+
+  def initialize
+    logger.warn(self.class.to_s) { 'Init service' }
+  end
+
+  def hello
+    logger.info(self.class.to_s) { 'Hello World' }
+  end
+
+  def method_test(_titi, tutu:)
+    @tutu = tutu
+    yield if block_given?
+    "result #{@tutu}"
+  end
+end
+
+spec = {
+  service: 'MyService::new',
+  type: :internal
+}
+
+Carioca::Registry.init.add service: :myservice, definition: spec
+
+```
+
+With a configuration like :
+
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.debug = true
+  spec.log_level = :debug
+  spec.output_emoji = true
+  spec.output_colors = false
+  spec.debugger_tracer = :output
+end
+
+```
+
+
+To help debug with services, Carioca come with a proxy class debugger :
+
+```ruby
+config = Carioca::Registry.get.get_service name: :debugger
+proxy = debugger.get service: :myservice
+    proxy.method_test 'param', tutu: 'keyword' do
+      puts 'titi'
+    end
+```
+
+output : 
+
+```
+🐛 BEGIN CALL for service #<MyService:0x00005635ed283290>
+🐛 Method called: method_test
+🐛 args : param
+🐛 keywords : {:tutu=>"keyword"}
+🐛 block given
+titi
+🐛 => method returned: result keyword
+🐛 END CALL
+```
 
 ## Carioca Configuration
 
