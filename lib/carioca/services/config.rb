@@ -67,7 +67,7 @@ module Carioca
           @data = {} unless @data.instance_of?(Hash)
           @data.delete_if { |key, _value| config.config_root != key }
           @data[config.config_root] = {} unless @data.include? config.config_root
-          config.supported_environment.each do |evt|
+          config.supported_environments.each do |evt|
             @data[config.config_root][evt] = {} unless @data[config.config_root].include? evt
           end
           @data[config.config_root][:default] = {} unless @data[config.config_root].include? :default

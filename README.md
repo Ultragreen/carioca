@@ -246,7 +246,7 @@ class MyObject < Carioca::Container
 end
 
 ```
-the mecro inject is already mixed in Carioca::Container
+the mAcro inject is already mixed in Carioca::Container
 
 **Note** : Service cloud be used on class method wrapping and instance mecthode. 
 
@@ -388,15 +388,357 @@ logger.unknown('Most severe')
 
 ### Service Configuration  
 
+
+#### Configuration 
+
+Configuration made with  Registry.configure :
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.config_file = './config/settings.yml'
+  spec.config_root = :myappli
+  spec.environment = :development
+end
+```
+
+* config_file : path to the configuraion file (YAML format) 
+* config_root : Root of the YAML structure
+* environment : current evt used for override default values
+
+#### Configuration file format
+
+**Note** :This file is corresponding with the presented configuration 
+
+```yaml
+---
+:myappli:
+  :production: {}
+  :staging:
+    :onstaging: staging
+  :test: {}
+  :development:
+    :ondev: test
+    :treeA:
+      :trunk1:
+        :branch1: leaf1
+      :trunk2:
+        :branch3: leaf3
+        :branch4: leaf4
+        :branch5: [ "val1","val2","val3" ] 
+  :default:
+    :default_value: 'value'
+    :treeA:
+      :trunk1:
+        :branch2: leaf2
+      :trunk2:
+        :branch5: ["value"]
+```
+
+#### Access to Configuration 
+
+```ruby
+config = Carioca::Registry.get.get_service name: :configuration
+pp config.settings
+```
+
+**Note** : You could access it as usuallly, with inject, from Carioca::Container fork or mixin of Carioca::Injector in your own class.
+
+output :
+
+```
+{:default_value=>"value",
+ :treeA=>
+  {:trunk1=>{:branch2=>"leaf2", :branch1=>"leaf1"},
+   :trunk2=>
+    {:branch5=>["value", "val1", "val2", "val3"],
+     :branch3=>"leaf3",
+     :branch4=>"leaf4"}},
+ :ondev=>"test"}
+ ```
+
+**Note** : you could see the result configuration is a merge of :development path ovec :default
+
+
+#### R/W on runtime
+
+**Note** : you could override value in runtime
+
+```ruby
+config = Carioca::Registry.get.get_service name: :configuration
+config.settings.newkey = 'value'
+```
+
+
+
+#### Princpe 
+
+![Carioca synoptic](assets/images/description_configuration_carioca.png)
+
+
 ### Service Output 
+
+
+#### Configuration 
+
+Configuration made with Registry.configure :
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.debug = false
+  spec.log_file = '/tmp/test.rge'
+  spec.log_level = :debug
+  spec.output_mode = :dual
+  spec.output_emoji = true
+  spec.output_colors = true
+  spec.output_target = STDOUT
+
+end
+```
+
+* output_mode : choose if you want to display to output_target OR/AND Logs, mode are : :mono, dual, log
+* output_emoji : display levels or alias as UTF8 EMOJI
+* output_colors : display output in colors
+* output_target : change output STDOUT or SDTERR
+
+**Note** : all of this have R/W accessors on output service 
+
+#### Usage 
+
+
+This example show a test script for displaying all type of output 
+
+```ruby
+output = Carioca::Registry.get.get_service name: :output
+
+cycle = %i[unknown fatal error ko warn info item arrow scheduling trigger sending calling receive
+               ok success debug flat]
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.color = false
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.emoji = false
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+    output.color = true
+    cycle.each do |verb|
+      output.send verb, verb.to_s
+    end
+
+```
+**Note** : list of ordered levels or alias : **unknown fatal error ko warn info item arrow scheduling trigger sending calling receive ok success debug flat**
+
+Output : 
+
+* Without colors nor Emojies
+
+![Carioca output](assets/images/carioca_output_no_emoji_no_colors.PNG)
+
+* Without colors but with Emojies
+
+![Carioca output](assets/images/carioca_output_emoji_no_colors.PNG)
+
+* With colors but no Emojies
+
+![Carioca output](assets/images/carioca_output_no_emoji_colors.PNG)
+
+* With colors and Emojies
+
+![Carioca output](assets/images/carioca_output_emoji_colors)
 
 ### Service Debug
 
 
+For this example, we use a internal service defined programmaticalu on runtime, (we see it more in detail in the chapter dedicated to the registry)
+At the beginning of you code, just add : 
+
+```ruby
+class MyService
+  extend Carioca::Injector
+  inject service: :logger
+
+  def initialize
+    logger.warn(self.class.to_s) { 'Init service' }
+  end
+
+  def hello
+    logger.info(self.class.to_s) { 'Hello World' }
+  end
+
+  def method_test(_titi, tutu:)
+    @tutu = tutu
+    yield if block_given?
+    "result #{@tutu}"
+  end
+end
+
+spec = {
+  service: 'MyService::new',
+  type: :internal
+}
+
+Carioca::Registry.init.add service: :myservice, definition: spec
+
+```
+
+With a configuration like :
+
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.debug = true
+  spec.log_level = :debug
+  spec.output_emoji = true
+  spec.output_colors = false
+  spec.debugger_tracer = :output
+end
+
+```
+
+
+To help debug with services, Carioca come with a proxy class debugger :
+
+```ruby
+config = Carioca::Registry.get.get_service name: :debugger
+proxy = debugger.get service: :myservice
+    proxy.method_test 'param', tutu: 'keyword' do
+      puts 'titi'
+    end
+```
+
+output : 
+
+```
+🐛 BEGIN CALL for service #<MyService:0x00005635ed283290>
+🐛 Method called: method_test
+🐛 args : param
+🐛 keywords : {:tutu=>"keyword"}
+🐛 block given
+titi
+🐛 => method returned: result keyword
+🐛 END CALL
+```
 
 ## Carioca Configuration
 
-## Direct Registry Usage
+Carioca use a bloc given mapping object of to configure like :
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.xxxxx = <SOMETHING>
+ ...
+end
+
+```
+### list of accessors over the spec object :
+
+```ruby
+attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer,
+                  :config_file, :config_root, :environment, :supported_environments, :output_mode, :log_level, :output_target
+attr_writer :init_from_file, :output_colors, :output_emoji
+attr_reader :log_file, :locales_availables, :debug
+
+```
+
+### Publique usage (with default values and possibles values)
+
+```ruby
+Carioca::Registry.configure do |spec|
+
+  spec.filename = './config/carioca.registry' # the carioca registry of services configuration
+  spec.name = 'Carioca' # the name of the application
+  spec.debug = false # activate debug, display debug Carioca message
+  spec.init_from_file = true # use the registry file to init services : (spec.filename)
+  spec.log_file = '' # path to a log file for carioca logger service
+  spec.config_file = './config/settings.yml' # path to the YAMl COnfiguration file for :configuration Carioca service 
+  spec.config_root = :carioca # the config root in the YAMl COnfiguration file for :configuration Carioca service
+  spec.environment = :development # the current environment running with Carioca
+  spec.default_locale = :en # the default locales Carioca fot I18n Carioca Service
+  spec.log_level = :info # the current log level (see logger ) for Carioca in :debug,:info,:warn,:error,:fatal,:unknown
+  spec.output_mode = :mono # the current output mode in :mono, :dual, :log (see Carioca Service Output)
+  spec.output_emoji = true # the current output status for emoji (see Carioca Service Output)
+  spec.output_target = STDOUT # the current output target STDOUT or STDERR (see Carioca Service Output)
+  spec.output_colors = true # the current output status for colors (see Carioca Service Output)
+  spec.locales_load_path << Dir["#{File.expand_path('./config/locales')}/*.yml"]
+  spec.debugger_tracer = :output # the Debbugger service output in #log , :output
+
+end
+```
+## Registry access and methods
+
+
+### Direct access to Registry
+
+#### Init or getting Registry 
+
+
+Carioca::Registry is a Singleton Object
+
+You cloud init or get it by #get, #instance or #init, like :
+
+```ruby
+registry = Carioca::Registry.init
+registry = Carioca::Registry.instance
+registry = Carioca::Registry.get 
+```
+
+#### Adding a service programatically 
+
+To add a service, you could insert it in the registry file (before run) or adding it programatically
+
+```ruby
+class MyService
+  extend Carioca::Injector
+  inject service: :logger
+
+  def initialize
+    logger.warn(self.class.to_s) { 'Init service' }
+  end
+
+  def hello
+    logger.info(self.class.to_s) { 'Hello World' }
+  end
+
+  def method_test(_titi, tutu:)
+    @tutu = tutu
+    yield if block_given?
+    "result #{@tutu}"
+  end
+end
+
+spec = {
+  service: 'MyService::new',
+  type: :internal
+}
+
+Carioca::Registry.init.add service: :myservice, definition: spec
+
+```
+
+
+#### Decription of type of Service 
+
+
+```ruby
+SERVICES_MANDATORY_SPECS = { type: Symbol, service: String }.freeze
+SERVICES_FULL_LIST_SPECS = SERVICES_MANDATORY_SPECS.merge({ depends: Array, description: String,
+                                                                resource: String })
+```
+
+
+* :type must be : :gem, :file, :stdlib all engage requirement of the resource field, tje last :internal is usable if the code is internal in your application.
+
+* :service : is the Ruby code to access to Class for class methods service usage or object instance
+  example : MYCLASS or MyClass::new(params)
+
+* :resource is respectively a name of a gem, an absolut path of a ruby file, the name of a Ruby Stdlib correspondingly to :type 
+* depends : is a list of requiered services for this service. (all services in depends are load before getting the wanted service (from builtin and in registry file or added at runtime ).
+* Description is not mandatory 
+
+
 
 
 ## Development

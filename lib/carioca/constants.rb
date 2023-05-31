@@ -24,6 +24,9 @@ module Carioca
 
     DEFAULT_ENVIRONMENTS_LIST = %i[production staging test development].freeze
 
+
+    
+
     BUILTINS = {
       configuration: {
         type: :internal,
@@ -50,7 +53,7 @@ module Carioca
       },
       output: {
         type: :internal,
-        description: 'The Output serice of Carioca',
+        description: 'The Output service of Carioca',
         service: "Carioca::Services::Output::Provider::new(
                                 mode: Carioca::Registry.config.output_mode,
                                 emoji: Carioca::Registry.config.output_emoji?,
@@ -58,6 +61,12 @@ module Carioca
                                 level: Carioca::Registry.config.log_level,
                                 target: Carioca::Registry.config.output_target
             )"
+      },
+      finisher: {
+        type: :internal,
+        service: 'Carioca::Services::Finisher::new',
+        description: 'The Finisher service of Carioca',
+        depends: [:i18n,:logger, :configuration]
       },
       debugger: {
         type: :internal,

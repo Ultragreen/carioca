@@ -9,7 +9,7 @@ Carioca::Registry.configure do |spec|
   spec.init_from_file = true
   spec.log_file = '/tmp/test.rge'
   spec.config_file = './config/settings.yml'
-  spec.config_root = :monappli
+  spec.config_root = :myappli
   spec.environment = :development
   spec.default_locale = :fr
   spec.log_level = :debug
@@ -48,12 +48,14 @@ Carioca::Registry.init.add service: :myservice, definition: spec
 
 logger = Carioca::Registry.get.get_service name: :logger
 
-logger.info(to_s) { "avaible services : #{Carioca::Registry.get.services.keys} " }
+logger.info(to_s) { "Avaible services : #{Carioca::Registry.get.services.keys} " }
 i18n = Carioca::Registry.get.get_service name: :i18n
 i18n.locale = :es
 p i18n.t(:test)
 
 config = Carioca::Registry.get.get_service name: :configuration
+
+puts config.settings.to_h.to_yaml
 config.settings.newkey = 'value'
 
 logger.info(to_s) { config.settings }
@@ -103,3 +105,34 @@ appli = MonAppli.new
 appli.test
 appli.test2
 appli.test3
+
+finisher = Carioca::Registry.get.get_service name: :finisher
+
+
+
+test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do 
+ "test"
+end
+puts test
+test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do 
+  finisher.secure_raise message: "error !", error_case: :status_ko
+  "test"
+ end
+ puts test
+
+test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do 
+  finisher.secure_raise message: "error !", error_case: :status_ko
+ "test"
+end
+puts test
+
+test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do 
+   "test"
+end
+puts test
+
+finisher.secure_execute! exit_case: :success_exit do 
+  puts 'finishing action'
+  #finisher.secure_raise message: "error !", error_case: :status_ko
+  'message'
+end

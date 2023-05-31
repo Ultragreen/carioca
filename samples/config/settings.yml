@@ -1,5 +1,5 @@
 ---
-:monappli:
+:myappli:
   :production: {}
   :staging:
     :onstaging: staging
@@ -12,13 +12,11 @@
       :trunk2:
         :branch3: leaf3
         :branch4: leaf4
-        :branch5: [ "toto","titi","tata" ] 
+        :branch5: [ "val1","val2","val3" ] 
   :default:
-    :toto: 'titi'
+    :default_value: 'value'
     :treeA:
       :trunk1:
         :branch2: leaf2
       :trunk2:
-        :branch5: ["tutu"]
-
-    
+        :branch5: ["value"]
