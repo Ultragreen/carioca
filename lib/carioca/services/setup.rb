@@ -30,7 +30,7 @@ module Carioca
                     end
                 rescue Exception
                     @finisher.secure_raise message: @i18n.t('setup.error'), error_case: :status_ko
-                end
+                end unless @schema.empty?
             end
 
 
@@ -48,7 +48,7 @@ module Carioca
     # @option [Bool] :gem resolve file in gem root (default true)
     # @option [String] :gem_name name of the gem where to search (default "carioca")
     def install_file(source:, target:, mode: "644", owner: nil, group: nil, force: true, gem: true, gem_name: "carioca" )
-        @output.info @i18n.t('setup.install', file: target)
+        @output.item @i18n.t('setup.install', file: target)
         source = (gem)? @toolbox.search_file_in_gem(gem_name,source) : source
         FileUtils::copy source, target if force
         FileUtils.chmod mode.to_i(8), target
@@ -61,7 +61,7 @@ module Carioca
       # @option [String] :owner file owner for folder
       # @option [String] :group  file group for folder
       def make_folder(path:, mode: "644", owner: nil, group: nil )
-        @output.info @i18n.t('setup.mkdir', path: path)
+        @output.item @i18n.t('setup.mkdir', path: path)
         FileUtils::mkdir_p path unless File::exist? path
         FileUtils.chmod mode.to_i(8), target
         FileUtils.chown owner, group, path if owner and group
@@ -71,7 +71,7 @@ module Carioca
       # @option [String] :source path of the file
       # @option [String] :link path of the symlink
       def make_link(source:, link:)
-        @output.info @i18n.t('setup.ln', target: link, source: source)
+        @output.item @i18n.t('setup.ln', target: link, source: source)
         FileUtils::rm link if (File::symlink? link and not File::exist? link)
         FileUtils::ln_s source, link unless File::exist? link
       end
