@@ -173,7 +173,7 @@ yourgem_cmd = Yourgem::YourgemCMD::new
 yourgem_cmd.test
 ```
 
-After this, don't forget to stage new files, and you could build & install the gem before running your new command for the first time :
+**Note** : After this, don't forget to stage new files, and you could build & install the gem before running your new command for the first time :
 
     $ git add config/ exe/
     $ rake install && yourgem_cmd
