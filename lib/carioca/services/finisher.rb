@@ -18,26 +18,26 @@ module Carioca
        
         DEFAULT_FINISHERS_SPECS = {
             # global
-            not_root: { message: "This operation need to be run as root (use sudo or rvmsudo)", code: 40},
-            options_incompatibility: { message: "Options incompatibility", code: 410},
-            service_dependence_missing: { message: "Appifier Service dependence missing", code: 430},
-            config_required: { message: "Specific configuration required", code: 420},
-            setup_error: { message: "Setup terminated unsuccessfully", code: 520},
-            setup_success: { message: "Setup terminated successfully", code: 0},
-            sanitycheck_error: { message: "Sanitycheck terminated unsuccessfully", code: 510},
-            sanitycheck_success: { message: "Sanitycheck terminated successfully", code: 0},
-            configuration_error: { message: "Configuration Error", code: 501},
-            success_exit: { code: 0 , message: "Operation sucessfull" },
+            not_root: { code: 40, key: 'finisher.messages.not_root' },
+            options_incompatibility: { code: 410, key: 'finisher.messages.options_incompatibility'},
+            service_dependence_missing: { code: 430, key: 'finisher.messages.service_dependence_missing'},
+            config_required: { code: 420, key: 'finisher.messages.config_required'},
+            setup_error: { code: 520, key: 'finisher.messages.setup_error'},
+            setup_success: { code: 0, key: 'finisher.messages.setup_success'},
+            sanitycheck_error: { code: 510, key: 'finisher.messages.sanitycheck_error'},
+            sanitycheck_success: { code: 0, key: 'finisher.messages.sanitycheck_success'},
+            configuration_error: { code: 501, key: 'finisher.messages.configuration_error'},
+            success_exit: { code: 0, key: 'finisher.messages.success_exit' },
             quiet_exit: { code: 0 },
-            error_exit: { code: 50, message: "Operation failure" },
+            error_exit: { code: 50, key: 'finisher.messages.error_exit' },
             # events
-            interrupt: { message: "User operation interrupted", code: 330 },
+            interrupt: { code: 330, key: 'finisher.messages.interrupt' },
             # request
-            not_found: { message: "Object not found", code: 404 },
-            already_exist: { message: "Object already exist", code: 408 },
+            not_found: { code: 404, key: 'finisher.messages.not_found' },
+            already_exist: { code: 408, key: 'finisher.messages.already_exist' },
             # daemon
-            status_ok: { message: "Status OK", code: 200 },
-            status_ko: { message: "Status KO", code: 500 }
+            status_ok: { code: 200, key: 'finisher.messages.status_ok' },
+            status_ko: { code: 500, key: 'finisher.messages.status_ko' }
           }
 
   
@@ -56,13 +56,12 @@ module Carioca
               do_return(return_case: return_case, more: more) if return_case
           end
   
-        # exiter wrapper
-        # @param [Hash] options
-        # @option options [Symbol] :case an exit case
-        # @option options [String] :more a complementary string to display
+        # exiter 
+        # @option [Symbol] :case an exit case
+        # @option [String] :more a complementary string to display
         def do_exit!(exit_case: :quiet_exit, more: nil )
           mess = ""
-          mess = @exit_map[exit_case][:message] if @exit_map[exit_case].include? :message
+          mess = @i18n.t(@exit_map[exit_case][:key]) if @exit_map[exit_case].include? :key
           mess << " : " unless mess.empty? or not more
           mess << "#{more}" if more
           if  @exit_map[exit_case][:code] == 0 then
@@ -76,6 +75,10 @@ module Carioca
     
         def do_return(return_case: :status_ok, more: nil )
           data = @exit_map[return_case].clone
+          if data.include? :key then
+            data[:message] = @i18n.t(data[:key])
+            data.delete :key
+          end
           data[:more] = more if more
           return data
         end

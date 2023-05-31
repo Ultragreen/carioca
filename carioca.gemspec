@@ -44,4 +44,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundle-audit", "~> 0.1.0"
   spec.metadata['rubygems_mfa_required'] = 'false'
   spec.add_dependency 'version', '~> 1.1'
+  spec.add_runtime_dependency 'ps-ruby','~> 0.0.4'
 end

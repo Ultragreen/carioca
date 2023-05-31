@@ -669,11 +669,7 @@ end
 ```
 ## Registry access and methods
 
-
-### Direct access to Registry
-
-#### Init or getting Registry 
-
+### Init or getting Registry 
 
 Carioca::Registry is a Singleton Object
 
@@ -685,7 +681,16 @@ registry = Carioca::Registry.instance
 registry = Carioca::Registry.get 
 ```
 
-#### Adding a service programatically 
+### Direct access to Registry and getting service Without Injector or Carioca::Container
+
+Example : for output service
+
+```ruby
+output = Carioca::Registry.get.get_service name: :output 
+```
+
+
+### Adding a service programatically 
 
 To add a service, you could insert it in the registry file (before run) or adding it programatically
 
@@ -719,7 +724,7 @@ Carioca::Registry.init.add service: :myservice, definition: spec
 ```
 
 
-#### Decription of type of Service 
+### Decription of type of Service 
 
 
 ```ruby

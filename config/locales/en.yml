@@ -21,3 +21,29 @@ en:
   output: 
     load:
       context: "Output service initialized in mode : %{confset}"
+  finisher:
+    messages: 
+      not_root: "This operation need to be run as root (use sudo or rvmsudo)"
+      options_incompatibility: "Options incompatibility"
+      service_dependence_missing: "Appifier Service dependence missing"
+      config_required: "Specific configuration required"
+      setup_error: "Setup terminated unsuccessfully"
+      setup_success: "Setup terminated successfully"
+      sanitycheck_error: "Sanitycheck terminated unsuccessfully"
+      sanitycheck_success: "Sanitycheck terminated successfully"
+      configuration_error: "Configuration Error"
+      success_exit: "Operation sucessfull"
+      error_exit: "Operation failure" 
+      interrupt: "User operation interrupted"
+      not_found: "Object not found"
+      already_exist: "Object already exist"
+      status_ok: "Status OK"
+      status_ko: "Status KO"
+    bad_usage: "Case must be a return or an exit"
+  setup:
+    error: "Setup operation failed"
+    execute:
+      start: "Begining setup :"
+    install: "Installation of file %{file}"
+    mkdir: "Creation of folder %{path}"
+    ln: "Creation of symlink %{target} -> %{source}"

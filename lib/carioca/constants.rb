@@ -68,6 +68,17 @@ module Carioca
         description: 'The Finisher service of Carioca',
         depends: [:i18n,:logger, :configuration]
       },
+      toolbox: {
+        type: :internal,
+        service: 'Carioca::Services::Toolbox',
+        description: 'The Misceleanous Toolbox service of Carioca',
+      },
+      setup: {
+        type: :internal,
+        service: 'Carioca::Services::Setup::new',
+        description: 'The Setup service of Carioca',
+        depends: [:i18n,:logger, :configuration, :finisher]
+      },
       debugger: {
         type: :internal,
         description: 'The Debugger Service of Carioca',

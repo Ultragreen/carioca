@@ -21,3 +21,29 @@ fr:
   output: 
     load:
       context: "Service output initialisé en mode : %{confset}"
+  finisher:
+    messages: 
+      not_root: "L'opération doit être lancée en root (utiliser sudo ou rvmsudo)"
+      options_incompatibility: "Options incompatibles"
+      service_dependence_missing: "Service Carioca, dépendence manquante"
+      config_required: "Configuration spécifique requise"
+      setup_error: "Setup terminé avec succès"
+      setup_success: "Setup terminé en échec"
+      sanitycheck_error: "Sanitycheck terminé en echec"
+      sanitycheck_success: "Sanitycheck terminé avec succès"
+      configuration_error: "Erreur de configuration"
+      success_exit: "Opération terminée avec succès"
+      error_exit: "Opération terminée en échec" 
+      interrupt: "Opération interrompue par l'utilisateur"
+      not_found: "Objet non trouvé"
+      already_exist: "L'objet existé déjà"
+      status_ok: "Status OK"
+      status_ko: "Status KO"
+    bad_usage: "return_case et exit_case sont incompatibles"
+  setup:
+    error: "Opération en echec durant le setup"
+    execute:
+      start: "Début du setup :"
+    install: "Installation du fichier %{file}"
+    mkdir: "Creation du répertoire %{path}"
+    ln: "Creation du lien symbolique %{target} -> %{source}"
