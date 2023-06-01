@@ -47,3 +47,7 @@ fr:
     install: "Installation du fichier %{file}"
     mkdir: "Creation du répertoire %{path}"
     ln: "Creation du lien symbolique %{target} -> %{source}"
+  sanitycheck:
+    error: "Sanitycheck status en erreur"
+    run:
+      start: "Début du sanitycheck :"

@@ -21,6 +21,18 @@ module Carioca
                 end
             end
 
+            def run
+              begin
+                  @output.info @i18n.t('sanitycheck.run.start')
+                  @schema.each do |item|
+                    action = item[:test] ; item.delete(:test)
+                    self.send action, **item
+                  end
+              rescue Exception
+                  @finisher.secure_raise message: @i18n.t('sanitychek.error'), error_case: :status_ko
+              end unless @schema.empty?
+          end
+
 
 
 #@!group  Verifiers for application : FS and TCP/IP services

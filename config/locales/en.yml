@@ -47,3 +47,7 @@ en:
     install: "Installation of file %{file}"
     mkdir: "Creation of folder %{path}"
     ln: "Creation of symlink %{target} -> %{source}"
+  sanitycheck:
+    error: "Sanitycheck status error"
+    run:
+      start: "Begining sanitycheck :"

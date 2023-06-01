@@ -31,6 +31,17 @@
           :mode: "755"
         - :action: :make_folder
           :path: /tmp/toto
+          :mode: "755"
         - :action: :make_link
           :source: /tmp/settings.yml
           :link: /tmp/application.yml
+    :sanitycheck:
+      :rules:
+        - :test: :verify_file
+          :name: "/tmp/carioca.registry"
+          :mode: "755"
+        - :test: :verify_folder
+          :name: "/tmp/toto"
+          :mode: "755"
+        - :test: :verify_link
+          :name: "/tmp/application.yml"
