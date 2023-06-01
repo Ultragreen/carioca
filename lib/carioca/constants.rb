@@ -79,6 +79,12 @@ module Carioca
         description: 'The Setup service of Carioca',
         depends: [:i18n,:logger, :configuration, :finisher]
       },
+      sanitycheck: {
+        type: :internal,
+        service: 'Carioca::Services::Sanitycheck::new',
+        description: 'The Sanitycheck service of Carioca',
+        depends: [:i18n,:logger, :configuration, :finisher]
+      },
       debugger: {
         type: :internal,
         description: 'The Debugger Service of Carioca',
