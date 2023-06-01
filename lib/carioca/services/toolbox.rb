@@ -8,15 +8,26 @@ module Carioca
         # Exiter namespace
         class Toolbox
             
+            def self.describe
+                result = {}
+                self.methods(false).each do |meth|
+                    next if meth == :describe
+                    result[meth] = self.send meth, **{describe: true}
+                end
+                return result
+            end
+
             # return the 'root' name
             # @return [String] name
-            def self.user_root
+            def self.user_root(description: "Get the local system root username ", describe: false)
+                return description if describe
                 return Etc.getpwuid(0).name
             end
             
             # return the 'root' group name : root or wheel
             # @return [String] name
-            def self.group_root
+            def self.group_root(description: "Get the local system root groupname ", describe: false)
+                return description if describe
                 return Etc.getgrgid(0).name
             end
             
@@ -25,13 +36,14 @@ module Carioca
             # @option  [Array] :patterns an array of regexp to search
             # @option  [Bool] :full flag to retrieve all process data not only PID
             # @return [String|Array] PID or data structure
-            def self.get_processes(patterns: [], pattern: nil, full: false)
+            def self.get_processes(patterns: [], pattern: nil, full: false, description: "Get the list of running processus", describe: false)
+                return description if describe
                 patterns << pattern if pattern
                 res = ::PS.get_all_processes
                 patterns.each do |item|
                     res = res.find_processes item
                 end
-                if options[:full] then
+                if full then
                     return res
                 else
                     return res.pick_attr('PID')
@@ -44,7 +56,8 @@ module Carioca
             # @param [String] _file a file relative path in the gem
             # @return [String] the path of the file, if found.
             # @return [False] if not found
-            def self.search_file_in_gem(_gem,_file)
+            def self.search_file_in_gem(_gem=nil,_file=nil, description: "Retrieve absolute path of a file in a specific gem", describe: false)
+                return description if describe
                 if Gem::Specification.respond_to?(:find_by_name)
                     begin
                         spec = Gem::Specification.find_by_name(_gem)
@@ -73,13 +86,15 @@ module Carioca
             
             # facility to verifying if the active process run as root
             # @return [Bool] status
-            def self.is_root?
+            def self.is_root?(description: "Verify if active current processus is running as root", describe: false)
+                return description if describe
                 return Process.uid == 0
             end
 
             # check if unicode must be used with term ENV
             # @return [Boolean]
-            def self.check_unicode_term
+            def self.check_unicode_term(description: "Check if terminal support unicode", describe: false)
+                return description if describe
                 return false unless ENV.include? "TERM"
                 return (ENV.values_at("LC_ALL","LC_CTYPE","LANG").compact.include?("UTF-8") and ENV.values_at('TERM').include? "xterm")
             end

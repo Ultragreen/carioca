@@ -25,8 +25,9 @@ module Carioca
             def execute!
                 begin
                     @output.info @i18n.t('setup.execute.start')
-                    @schema.each do |item, value|
-                      self.send item, **value
+                    @schema.each do |item|
+                      action = item[:action] ; item.delete(:action)
+                      self.send action, **item
                     end
                 rescue Exception
                     @finisher.secure_raise message: @i18n.t('setup.error'), error_case: :status_ko
@@ -63,7 +64,7 @@ module Carioca
       def make_folder(path:, mode: "644", owner: nil, group: nil )
         @output.item @i18n.t('setup.mkdir', path: path)
         FileUtils::mkdir_p path unless File::exist? path
-        FileUtils.chmod mode.to_i(8), target
+        FileUtils.chmod mode.to_i(8), path
         FileUtils.chown owner, group, path if owner and group
       end
   

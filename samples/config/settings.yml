@@ -22,6 +22,15 @@
         :branch5: ["value"]
     :setup:
       :rules:
-        :install_file: 
+        - :action: :install_file
           :source: "samples/config/settings.yml"
           :target: "/tmp/settings.yml"
+        - :action: :install_file
+          :source: "samples/config/carioca.registry"
+          :target: "/tmp/carioca.registry"
+          :mode: "755"
+        - :action: :make_folder
+          :path: /tmp/toto
+        - :action: :make_link
+          :source: /tmp/settings.yml
+          :link: /tmp/application.yml
