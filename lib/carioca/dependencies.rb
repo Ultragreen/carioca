@@ -11,6 +11,10 @@ require 'fileutils'
 require 'etc'
 require 'json'
 require 'uri'
+require 'openssl'
+require 'base64'
+
+
 
 require 'rubygems'
 require 'i18n'

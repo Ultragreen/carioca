@@ -77,13 +77,19 @@ module Carioca
         type: :internal,
         service: 'Carioca::Services::Setup::new',
         description: 'The Setup service of Carioca',
-        depends: [:i18n,:logger, :configuration, :finisher]
+        depends: [:i18n,:logger, :configuration ]
       },
       sanitycheck: {
         type: :internal,
         service: 'Carioca::Services::Sanitycheck::new',
         description: 'The Sanitycheck service of Carioca',
-        depends: [:i18n,:logger, :configuration, :finisher]
+        depends: [:i18n,:logger, :configuration ]
+      },
+      securestore: {
+        type: :internal,
+        service: 'Carioca::Services::SecureStore::new',
+        description: 'The SecureStore service of Carioca',
+        depends: [:i18n,:logger, :configuration ]
       },
       debugger: {
         type: :internal,

@@ -48,6 +48,10 @@ fr:
     mkdir: "Creation du répertoire %{path}"
     ln: "Creation du lien symbolique %{target} -> %{source}"
   sanitycheck:
-    error: "Sanitycheck status en erreur"
+    error: "Sanitycheck stoppé sur une erreur de configuration"
+    success: "Sanitycheck terminé sans erreurs"
+    failure: "Sanitycheck termoiné avec des erreurs"
     run:
-      start: "Début du sanitycheck :"
+      start: "Démarrage du sanitycheck :"
+      ok: "Testcase %{testcase} sur %{name}  ok"
+      ko: "Testcase %{testcase} sur %{name}  ko, problème(s) : %{pbm}"

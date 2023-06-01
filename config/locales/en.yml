@@ -48,6 +48,10 @@ en:
     mkdir: "Creation of folder %{path}"
     ln: "Creation of symlink %{target} -> %{source}"
   sanitycheck:
-    error: "Sanitycheck status error"
+    error: "Sanitycheck stop on Configuration error"
+    success: "Sanitycheck finish without errors"
+    failure: "Sanitycheck finish with errors"
     run:
       start: "Begining sanitycheck :"
+      ok: "Testcase %{testcase} on %{name} is ok"
+      ko: "Testcase %{testcase} on %{name} is ok, problem(s) : %{pbm}"

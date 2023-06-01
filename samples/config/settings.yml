@@ -39,7 +39,7 @@
       :rules:
         - :test: :verify_file
           :name: "/tmp/carioca.registry"
-          :mode: "755"
+          :mode: "644"
         - :test: :verify_folder
           :name: "/tmp/toto"
           :mode: "755"

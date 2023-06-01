@@ -152,7 +152,23 @@ puts "\nTest 12 : Service setup execute setup schema from configuration"
 setup = Carioca::Registry.get.get_service name: :setup
 setup.execute!
 
-puts "\nTest 13 : Service finisher : test all cases"
+puts "\nTest 13 : Service sanitycheck run checking schema from configuration"
+sanitycheck = Carioca::Registry.get.get_service name: :sanitycheck
+sanitycheck.run
+
+puts "\nTest 14 : Service SecureStore init or access"
+securestore = Carioca::Registry.get.get_service name: :securestore
+
+
+puts "\nTest 15 : Service SecureStore getting previous data"
+res = (securestore.data.empty?)? "first time" : securestore.data.to_s
+output.info res
+
+puts "\nTest 16 : Service SecureStore setting new data"
+securestore.data[:time] = Time.now
+securestore.save!
+
+puts "\nTest 17 : Service finisher : test all cases"
 output.item "flat api return, no-json, no-structured"
 finisher = Carioca::Registry.get.get_service name: :finisher
 test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do 
@@ -180,7 +196,7 @@ test = finisher.secure_api_return(return_case: :status_ok, structured: true, jso
 end
 puts test
 
-puts "\nTest 14 : Service finisher : exit case in success"
+puts "\nTest 18 : Service finisher : exit case in success"
 i18n.locale = :fr
 finisher.secure_execute! exit_case: :success_exit do 
   puts 'finishing action'

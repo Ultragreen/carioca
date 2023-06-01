@@ -23,14 +23,29 @@ module Carioca
 
             def run
               begin
+                result = []
                   @output.info @i18n.t('sanitycheck.run.start')
+                  error_number = 0
                   @schema.each do |item|
-                    action = item[:test] ; item.delete(:test)
-                    self.send action, **item
+                    testcase = item[:test] ; item.delete(:test)
+                    res = self.send(testcase, **item) 
+                    if  res.empty? then
+                        @output.ok @i18n.t('sanitycheck.run.ok', testcase: testcase, name: item[:name].to_s)
+                      else
+                        pbm = res.map {|p| p.to_s}.join(',')
+                        @output.ko @i18n.t('sanitycheck.run.ko', testcase: testcase, name: item[:name].to_s, pbm: pbm)
+                        error_number =+ 1
+                      end
                   end
+                 if error_number>0 then
+                    @output.error @i18n.t('sanitycheck.failure')
+                 else
+                    @output.success @i18n.t('sanitycheck.success') 
+                end
               rescue Exception
                   @finisher.secure_raise message: @i18n.t('sanitychek.error'), error_case: :status_ko
               end unless @schema.empty?
+
           end
 
 
@@ -64,8 +79,10 @@ module Carioca
       # @return [Boolean]
       # @option [String] :name path of the link
       def verify_link(name: )
-        return File.file?(name)
-      end
+        res = Array::new
+        res.push :inexistant unless File.file?(name)
+        return res
+    end
   
       # check file
       # @return [Array] of Symbol with error type : [:inexistant,:mode,:owner,:group]
@@ -74,7 +91,7 @@ module Carioca
       # @option [String] :owner file owner for file, optionnal
       # @option [String] :group  file group for file, optionnal
       def verify_file(name: , mode: '644', owner: nil, group: nil)
-        rres = Array::new
+        res = Array::new
         return  [:inexistant] unless File.file?(name)
         stat = File.stat(name)
         if mode then
@@ -92,10 +109,11 @@ module Carioca
   
       # TCP/IP service checker
       # @return [Bool] status
+      # @option [String] :name display name
       # @option [String] :host hostname
       # @option [String] :port TCP port
       # @option [String] :url full URL, priority on :host and :port
-      def verify_service(url: nil, host: nil, port: nil)
+      def verify_service(name: nil, url: nil, host: nil, port: nil)
         begin
           if url then
             uri = URI.parse(url)
