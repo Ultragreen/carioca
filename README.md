@@ -657,6 +657,49 @@ pp toolbox.search_file_in_gem('carioca','config/locales/en.yml')
 ### Service SecureStore
 
 
+
+#### Exemple of usage of the Secure Store
+
+This simplist example show how to store current time in Secure Data Store  
+
+**Note** : if the Data store not exist nor the master.key, when injecting the service, the two item are created on initialisation 
+
+```ruby
+securestore = Carioca::Registry.get.get_service name: :securestore
+res = (securestore.data.empty?)? "first time" : securestore.data.to_s
+puts res
+securestore.data[:time] = Time.now
+securestore.save!
+```
+
+Output, on the first iteration :
+
+```
+first time
+```
+
+Output, on the second iteration :
+
+```
+{:time=>2023-06-02 14:27:39.8903567 +0200}
+```
+
+**Note** : by default Secure store : secure.store and Master key : master.key (chmod 400, owned by the running user), are created in "~/.carioca" of the running user. 
+
+#### Configuration in Carioca
+
+You could change path for master.key and secure.store with : 
+
+```ruby
+Carioca::Registry.configure do |spec|
+  spec.user_config_path = "~/.carioca" # default user path (folder)
+  spec.master_key_file =  "#{spec.user_config_path}/master.key" # default OpenSSL secret key for service SecureStore
+  sepc.secure_store_file = "#{spec.user_config_path}/secure.Store" # default OpenSSL YAM secure store file for service SecureStore
+end
+```
+
+
+
 ## Carioca Configuration
 
 Carioca use a bloc given mapping object of to configure like :
@@ -672,7 +715,8 @@ end
 
 ```ruby
 attr_accessor :filename, :name, :builtins, :log_target, :default_locale, :locales_load_path, :debugger_tracer,
-                  :config_file, :config_root, :environment, :supported_environments, :output_mode, :log_level, :output_target
+                  :config_file, :config_root, :environment, :supported_environments, :output_mode, :log_level, :output_target, :user_config_path,
+                  :master_key_file, :secure_store_file
 attr_writer :init_from_file, :output_colors, :output_emoji
 attr_reader :log_file, :locales_availables, :debug
 
@@ -699,6 +743,9 @@ Carioca::Registry.configure do |spec|
   spec.output_colors = true # the current output status for colors (see Carioca Service Output)
   spec.locales_load_path << Dir["#{File.expand_path('./config/locales')}/*.yml"]
   spec.debugger_tracer = :output # the Debbugger service output in #log , :output
+  spec.user_config_path = "~/.carioca" # default user path (folder)
+  spec.master_key_file =  "#{spec.user_config_path}/master.key" # default OpenSSL secret key for service SecureStore
+  sepc.secure_store_file = "#{spec.user_config_path}/secure.Store" # default OpenSSL YAM secure store file for service SecureStore
 
 end
 ```
