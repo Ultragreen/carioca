@@ -14,6 +14,11 @@ module Carioca
     DEFAULT_COLORS_STATUS = true
     DEFAULT_LOG_LEVEL = :info
 
+    DEFAULT_USER_CONFIG_PATH = "~/.carioca"
+
+    DEFAULT_MASTER_KEY_FILE = "#{DEFAULT_USER_CONFIG_PATH}/master.key"
+    DEFAULT_SECURE_STORE_FILE = "#{DEFAULT_USER_CONFIG_PATH}/secure.Store"
+
     DEFAULT_DEBUGGER_TRACER = :output
 
     # service definitions specs

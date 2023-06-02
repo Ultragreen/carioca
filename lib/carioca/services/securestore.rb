@@ -8,9 +8,12 @@ module Carioca
             extend Carioca::Injector
             inject service: :logger
             inject service: :setup
-            
-            def initialize(storefile: '~/.carioca/secure.store', keyfile: '~/.carioca/master.key')
-                setup.make_folder path:  File.expand_path("./.carioca"), mode: "400"
+            inject service: :sanitycheck
+
+            def initialize(storefile: Carioca::Registry.config.secure_store_file, keyfile: Carioca::Registry.config.master_key_file)
+                [storefile, keyfile].map {|file| File.dirname(file) }.each do |path|
+                    setup.make_folder path:  File.expand_path(path), mode: "400" unless sanitycheck.verify_folder name: path
+                end
                 @storefile = File.expand_path(storefile)
                 @keyfile = File.expand_path(keyfile)
                 init! unless initialized?
@@ -20,8 +23,6 @@ module Carioca
             def initialized?
                 File.exist?(@storefile) && File.exist?(@keyfile)
             end
-            
-
             
             def save!
                 encrypt(@data)
@@ -75,8 +76,6 @@ module Carioca
                 File.write(@storefile, encoded)
             end
         end
-        
-        
     end
 end
 
