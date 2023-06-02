@@ -613,6 +613,50 @@ titi
 🐛 END CALL
 ```
 
+### Service Finisher
+
+### Service Setup
+
+### Service SanityCheck
+
+### Service Toolbox
+
+The toolbox service is a misceleanous all purpose toolbox of methods, used by carioca's services and available for you.
+### Listing of all methods and description 
+
+
+```ruby
+toolbox = Carioca::Registry.get.get_service name: :toolbox
+pp toolbox.describe
+```
+
+Output (actual for this version, lust increase with the time): 
+
+```ruby
+{:is_root?=>"Verify if active current processus is running as root",
+ :check_unicode_term=>"Check if terminal support unicode",
+ :user_root=>"Get the local system root username ",
+ :search_file_in_gem=>"Retrieve absolute path of a file in a specific gem",
+ :group_root=>"Get the local system root groupname ",
+ :get_processes=>"Get the list of running processus"}
+```
+
+### methods usage
+
+```ruby
+pp toolbox.user_root
+pp toolbox.search_file_in_gem('carioca','config/locales/en.yml')
+
+```
+
+```ruby
+"root"
+"/var/lib/gems/3.0.0/gems/carioca-2.0.12/config/locales/en.yml"
+```
+
+### Service SecureStore
+
+
 ## Carioca Configuration
 
 Carioca use a bloc given mapping object of to configure like :
