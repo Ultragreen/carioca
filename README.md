@@ -199,15 +199,6 @@ yourgem_cmd.test
 
 ## Builtins services
 
-You could see, somme interesting things : 
-* Carioca have an internationalisation service (this service will be explain in detail after): 
-  * default configured on :en locale
-  * must be in French (:fr) or English (:en), other traductions are welcome
-* Carioca have a builtin logger service using regular Logger from Stdlib (also explain in detail in this document)
-  * default logging on STDOUT, but could be redirect in the configure bloc
-* Carioca give us some usefull traces in debug   
-* Carioca provide a complete solution to manage CLI output.  
-
 ### Description Registry 
 
 
@@ -246,7 +237,7 @@ class MyObject < Carioca::Container
 end
 
 ```
-the mAcro inject is already mixed in Carioca::Container
+The macro inject is already mixed in Carioca::Container
 
 **Note** : Service cloud be used on class method wrapping and instance mecthode. 
 
@@ -547,7 +538,7 @@ Output :
 
 * With colors and Emojies
 
-![Carioca output](assets/images/carioca_output_emoji_colors)
+![Carioca output](assets/images/carioca_output_emoji_colors.PNG)
 
 ### Service Debug
 
