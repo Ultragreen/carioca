@@ -45,4 +45,5 @@ Gem::Specification.new do |spec|
   spec.metadata['rubygems_mfa_required'] = 'false'
   spec.add_dependency 'version', '~> 1.1'
   spec.add_runtime_dependency 'ps-ruby','~> 0.0.4'
+  spec.add_development_dependency "cyclonedx-ruby", "~> 1.1"
 end
