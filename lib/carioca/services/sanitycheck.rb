@@ -59,9 +59,10 @@ module Carioca
     # @option [String] :owner file owner for folder, optionnal
     # @option [String] :group  file group for folder, optionnal
     def verify_folder(name:, mode: "755", owner: nil, group: nil)
+        full_name = File.expand_path(name)     
         res = Array::new
-        return  [:inexistant] unless File.directory?(name)
-        stat = File.stat(name)
+        return  [:inexistant] unless File.directory?(full_name)
+        stat = File.stat(full_name)
         if mode then
           tested_mode = "%o" % stat.mode
           res << :mode if tested_mode[-3..-1] != mode
@@ -79,10 +80,11 @@ module Carioca
       # @return [Boolean]
       # @option [String] :name path of the link
       def verify_link(name: )
+        full_name = File.expand_path(name)  
         res = Array::new
-        res.push :inexistant unless File.file?(name)
+        res.push :inexistant unless File.file?(full_name)
         return res
-    end
+      end
   
       # check file
       # @return [Array] of Symbol with error type : [:inexistant,:mode,:owner,:group]
@@ -91,9 +93,10 @@ module Carioca
       # @option [String] :owner file owner for file, optionnal
       # @option [String] :group  file group for file, optionnal
       def verify_file(name: , mode: '644', owner: nil, group: nil)
+        full_name = File.expand_path(name)
         res = Array::new
-        return  [:inexistant] unless File.file?(name)
-        stat = File.stat(name)
+        return  [:inexistant] unless File.file?(full_name)
+        stat = File.stat(full_name)
         if mode then
           tested_mode = "%o" % stat.mode
           res << :mode if tested_mode[-3..-1] != mode

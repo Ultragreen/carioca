@@ -49,11 +49,12 @@ module Carioca
     # @option [Bool] :gem resolve file in gem root (default true)
     # @option [String] :gem_name name of the gem where to search (default "carioca")
     def install_file(source:, target:, mode: "644", owner: nil, group: nil, force: true, gem: true, gem_name: "carioca" )
-        @output.item @i18n.t('setup.install', file: target)
+      @output.item @i18n.t('setup.install', file: target)
+        full_target = File.expand_path(target)
         source = (gem)? @toolbox.search_file_in_gem(gem_name,source) : source
-        FileUtils::copy source, target if force
-        FileUtils.chmod mode.to_i(8), target
-        FileUtils.chown owner, group, target if owner and group
+        FileUtils::copy source, full_target if force
+        FileUtils.chmod mode.to_i(8), full_target
+        FileUtils.chown owner, group, full_target if owner and group
       end
   
       # facility for folder creation
@@ -61,17 +62,20 @@ module Carioca
       # @option [String] :mode String for OCTAL rights like "644"
       # @option [String] :owner file owner for folder
       # @option [String] :group  file group for folder
-      def make_folder(path:, mode: "644", owner: nil, group: nil )
-        @output.item @i18n.t('setup.mkdir', path: path)
-        FileUtils::mkdir_p path unless File::exist? path
-        FileUtils.chmod mode.to_i(8), path
-        FileUtils.chown owner, group, path if owner and group
+    def make_folder(path:, mode: "644", owner: nil, group: nil )
+        full_path = File.expand_path(path)
+        @output.item @i18n.t('setup.mkdir', path: full_path)
+        FileUtils::mkdir_p path unless File::exist? full_path
+        FileUtils.chmod mode.to_i(8), full_path
+        FileUtils.chown owner, group, full_path if owner and group
       end
   
       # facility for Symbolic link
       # @option [String] :source path of the file
       # @option [String] :link path of the symlink
       def make_link(source:, link:)
+        full_source = File.expand_path(source)
+        full_link = File.expand_path(link)
         @output.item @i18n.t('setup.ln', target: link, source: source)
         FileUtils::rm link if (File::symlink? link and not File::exist? link)
         FileUtils::ln_s source, link unless File::exist? link
