@@ -188,10 +188,19 @@ test = finisher.secure_api_return(return_case: :status_ok, structured: true, jso
   finisher.secure_raise message: "error !", error_case: :status_ko
  "test"
 end
-puts test
+puts test[:status]
+puts test[:data]
 
 output.item "api return, json, structured"
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do 
+   "test"
+end
+puts test[:status]
+puts test[:data]
+
+
+output.item "api return, json, structured with status=false"
+test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do 
    "test"
 end
 puts test

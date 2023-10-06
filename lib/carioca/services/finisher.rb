@@ -92,7 +92,7 @@ module Carioca
         end
 
 
-        def secure_api_return(data: nil, return_case: nil, structured: false, json: true)
+        def secure_api_return(data: nil, return_case: nil, structured: false, json: true, status: true)
             result = {}
             begin
               data = yield if block_given?
@@ -102,8 +102,14 @@ module Carioca
               more  = (e.respond_to? :error_case)? e.message : "#{e.class.to_s} : #{e.message}"
               result = do_return return_case: key, more: more
             end
-            result = JSON.pretty_generate(JSON.parse(result.to_json)) if json
-            return result
+            if status and structured and json then
+              p result
+              return {status: result[:code], data: JSON.pretty_generate(JSON.parse(result.to_json))}
+            elsif json then
+              return JSON.pretty_generate(JSON.parse(result.to_json)) if json
+            else
+              return result
+            end
           end
 
 
