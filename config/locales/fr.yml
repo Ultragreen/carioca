@@ -39,6 +39,10 @@ fr:
       already_exist: "L'objet existé déjà"
       status_ok: "Status OK"
       status_ko: "Status KO"
+      no_content: "Pas de contenu trouvé"
+      bad_request: "Requête incorrecte"
+      created: "Contenu créé avec succès"
+      accepted: "Requête acceptée"
     bad_usage: "return_case et exit_case sont incompatibles"
   setup:
     error: "Opération en echec durant le setup"

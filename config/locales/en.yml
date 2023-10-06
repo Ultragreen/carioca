@@ -39,6 +39,10 @@ en:
       already_exist: "Object already exist"
       status_ok: "Status OK"
       status_ko: "Status KO"
+      no_content: "No content found"
+      bad_request: "Bad request"
+      created: "Content Successfully created"
+      accepted: "Request accepted"
     bad_usage: "Case must be a return or an exit"
   setup:
     error: "Setup operation failed"

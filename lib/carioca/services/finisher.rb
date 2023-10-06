@@ -32,12 +32,16 @@ module Carioca
             error_exit: { code: 50, key: 'finisher.messages.error_exit' },
             # events
             interrupt: { code: 330, key: 'finisher.messages.interrupt' },
-            # request
+            # request & API
             not_found: { code: 404, key: 'finisher.messages.not_found' },
             already_exist: { code: 408, key: 'finisher.messages.already_exist' },
-            # daemon
+            # daemon & API
             status_ok: { code: 200, key: 'finisher.messages.status_ok' },
-            status_ko: { code: 500, key: 'finisher.messages.status_ko' }
+            created: { code: 201, key: 'finisher.messages.created' },
+            accepted: { code: 202, key: 'finisher.messages.accepted' },
+            bad_request: { code: 400, key: 'finisher.messages.bad_request' },
+            status_ko: { code: 500, key: 'finisher.messages.status_ko' },
+            no_content: { code: 204, key: 'finisher.messages.no_content' },
           }
 
   
