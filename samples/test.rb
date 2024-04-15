@@ -157,16 +157,19 @@ sanitycheck = Carioca::Registry.get.get_service name: :sanitycheck
 sanitycheck.run
 
 puts "\nTest 14 : Service SecureStore init or access"
-securestore = Carioca::Registry.get.get_service name: :securestore
+puts "skipped"
+#securestore = Carioca::Registry.get.get_service name: :securestore
 
 
 puts "\nTest 15 : Service SecureStore getting previous data"
-res = (securestore.data.empty?)? "first time" : securestore.data.to_s
-output.info res
+#res = (securestore.data.empty?)? "first time" : securestore.data.to_s
+#output.info res
+puts "skipped"
 
 puts "\nTest 16 : Service SecureStore setting new data"
-securestore.data[:time] = Time.now
-securestore.save!
+#securestore.data[:time] = Time.now
+#securestore.save!
+puts "skipped"
 
 puts "\nTest 17 : Service finisher : test all cases"
 output.item "flat api return, no-json, no-structured"

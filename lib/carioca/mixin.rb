@@ -6,7 +6,7 @@ module Carioca
       create_methods(service) { return Carioca::Registry.get.get_service name: service }
     end
 
-    def register(service:, definition:)
+    def add(service:, definition:)
       Carioca::Registry.get.add service: service, definition: definition
     end
 

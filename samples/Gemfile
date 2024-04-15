@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem "carioca", "~> 2.1"
+
+gem "uuid", "~> 2.3"
