@@ -615,6 +615,59 @@ titi
 
 ### Service Finisher
 
+
+#### List of available return code and associated symbols :
+
+- code : must be a clI OR HTTP return code 
+- key : a I18n service key in locales files (Carioca internals locales) see https://github.com/Ultragreen/carioca/tree/master/config/locales
+
+```ruby
+            # global
+            not_root: { code: 40, key: 'finisher.messages.not_root' },
+            options_incompatibility: { code: 410, key: 'finisher.messages.options_incompatibility'},
+            service_dependence_missing: { code: 430, key: 'finisher.messages.service_dependence_missing'},
+            config_required: { code: 420, key: 'finisher.messages.config_required'},
+            setup_error: { code: 520, key: 'finisher.messages.setup_error'},
+            setup_success: { code: 0, key: 'finisher.messages.setup_success'},
+            sanitycheck_error: { code: 510, key: 'finisher.messages.sanitycheck_error'},
+            sanitycheck_success: { code: 0, key: 'finisher.messages.sanitycheck_success'},
+            configuration_error: { code: 501, key: 'finisher.messages.configuration_error'},
+            success_exit: { code: 0, key: 'finisher.messages.success_exit' },
+            quiet_exit: { code: 0 },
+            error_exit: { code: 50, key: 'finisher.messages.error_exit' },
+
+            # events
+            interrupt: { code: 330, key: 'finisher.messages.interrupt' },
+
+            # request & API
+            not_found: { code: 404, key: 'finisher.messages.not_found' },
+            already_exist: { code: 408, key: 'finisher.messages.already_exist' },
+
+            # daemon & API
+            status_ok: { code: 200, key: 'finisher.messages.status_ok' },
+            created: { code: 201, key: 'finisher.messages.created' },
+            accepted: { code: 202, key: 'finisher.messages.accepted' },
+            bad_request: { code: 400, key: 'finisher.messages.bad_request' },
+            status_ko: { code: 500, key: 'finisher.messages.status_ko' },
+            no_content: { code: 204, key: 'finisher.messages.no_content' },
+```
+
+This returns must be override from Config File (using Builtin Configuration Service) inbluding a key exit_cases: 
+like : 
+
+```yaml
+---
+:my_root:
+  :default:
+    :exit_cases:
+      :mystatus:
+        :code: 8000
+        key: 'my.own.i18n.key'
+
+```
+
+
+
 ### Service Setup
 
 ### Service SanityCheck
