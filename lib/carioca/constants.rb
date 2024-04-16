@@ -8,13 +8,13 @@ module Carioca
     DEFAULT_CONFIG_ROOT = :carioca
     DEFAULT_LOCALE = :en
 
-    DEFAULT_OUTPUT_TARGET = STDOUT
+    DEFAULT_OUTPUT_TARGET = $stdout
     DEFAULT_OUTPUT_MODE = :mono
     DEFAULT_EMOJI_STATUS = true
     DEFAULT_COLORS_STATUS = true
     DEFAULT_LOG_LEVEL = :info
 
-    DEFAULT_USER_CONFIG_PATH = "~/.carioca"
+    DEFAULT_USER_CONFIG_PATH = '~/.carioca'
 
     DEFAULT_MASTER_KEY_FILE = "#{DEFAULT_USER_CONFIG_PATH}/master.key"
     DEFAULT_SECURE_STORE_FILE = "#{DEFAULT_USER_CONFIG_PATH}/secure.Store"
@@ -28,9 +28,6 @@ module Carioca
     SERVICES_SPECS_DETAIL = { type: %i[gem stdlib file internal] }.freeze
 
     DEFAULT_ENVIRONMENTS_LIST = %i[production staging test development].freeze
-
-
-    
 
     BUILTINS = {
       configuration: {
@@ -71,30 +68,30 @@ module Carioca
         type: :internal,
         service: 'Carioca::Services::Finisher::new',
         description: 'The Finisher service of Carioca',
-        depends: [:i18n,:logger, :configuration]
+        depends: %i[i18n logger configuration]
       },
       toolbox: {
         type: :internal,
         service: 'Carioca::Services::Toolbox',
-        description: 'The Misceleanous Toolbox service of Carioca',
+        description: 'The Misceleanous Toolbox service of Carioca'
       },
       setup: {
         type: :internal,
         service: 'Carioca::Services::Setup::new',
         description: 'The Setup service of Carioca',
-        depends: [:i18n,:logger, :configuration ]
+        depends: %i[i18n logger configuration]
       },
       sanitycheck: {
         type: :internal,
         service: 'Carioca::Services::Sanitycheck::new',
         description: 'The Sanitycheck service of Carioca',
-        depends: [:i18n,:logger, :configuration ]
+        depends: %i[i18n logger configuration]
       },
       securestore: {
         type: :internal,
         service: 'Carioca::Services::SecureStore::new',
         description: 'The SecureStore service of Carioca',
-        depends: [:i18n,:logger, :configuration ]
+        depends: %i[i18n logger configuration]
       },
       debugger: {
         type: :internal,

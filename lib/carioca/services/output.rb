@@ -43,7 +43,7 @@ module Carioca
           success: { value: "\u{1F4AA}", alt: '[+]', text: '(SUCCESS)' },
           debug: { value: "\u{1F41B}", alt: '[D]', text: '(DEBUG)' },
           flat: { value: '', alt: '' },
-          skipped: { value: "\u{23E9}", alt: '[I]', text: '(SKIPPED)'}
+          skipped: { value: "\u{23E9}", alt: '[I]', text: '(SKIPPED)' }
         }.freeze
         LEVELS = %i[debug info warn error fatal unknown].freeze
         ALIAS = {
@@ -109,7 +109,7 @@ module Carioca
         end
 
         # constructor
-        def initialize(level: :debug, mode: :mono, emoji: true, colors: true, target: STDOUT)
+        def initialize(level: :debug, mode: :mono, emoji: true, colors: true, target: $stdout)
           registry = Carioca::Registry.get
           @logger = registry.get_service name: :logger
           @i18n = registry.get_service name: :i18n
@@ -183,7 +183,7 @@ module Carioca
               block = proc { save }
               @logger.send target_level, source, &block
             end
-            @target.puts message if @mode == :mono or @mode == :dual
+            @target.puts message if (@mode == :mono) || (@mode == :dual)
           end
         end
       end

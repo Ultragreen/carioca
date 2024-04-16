@@ -5,16 +5,12 @@ require 'forwardable'
 require 'singleton'
 
 require 'socket'
-require 'yaml'
-require 'thread'
 require 'fileutils'
 require 'etc'
 require 'json'
 require 'uri'
 require 'openssl'
 require 'base64'
-
-
 
 require 'rubygems'
 require 'i18n'

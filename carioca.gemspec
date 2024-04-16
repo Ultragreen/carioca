@@ -35,15 +35,15 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'locale', '~> 2.1'
   spec.add_dependency 'pastel', '~>0.8.0'
   spec.add_dependency 'tty-prompt', '~>0.23.1'
+  spec.add_development_dependency 'bundle-audit', '~> 0.1.0'
   spec.add_development_dependency 'code_statistics', '~> 0.2.13'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 1.32'
   spec.add_development_dependency 'yard', '~> 0.9.27'
   spec.add_development_dependency 'yard-rspec', '~> 0.1'
-  spec.add_development_dependency "bundle-audit", "~> 0.1.0"
   spec.metadata['rubygems_mfa_required'] = 'false'
   spec.add_dependency 'version', '~> 1.1'
-  spec.add_runtime_dependency 'ps-ruby','~> 0.0.4'
-  spec.add_development_dependency "cyclonedx-ruby", "~> 1.1"
+  spec.add_runtime_dependency 'ps-ruby', '~> 0.0.4'
+  spec.add_development_dependency 'cyclonedx-ruby', '~> 1.1'
 end
