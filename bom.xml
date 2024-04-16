@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:1266bf21-8e20-4ef5-b237-536698997a61">
+<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:96c2568c-3cfe-47ca-bdf7-0dcba49e5255">
   <components>
     <component type="library">
       <name>ast</name>
@@ -45,17 +45,17 @@
     </component>
     <component type="library">
       <name>carioca</name>
-      <version>2.1.0</version>
+      <version>2.1.5</version>
       <description>Carioca : Container And Registry with Inversion Of Control for your Applications</description>
       <hashes>
-        <hash alg="SHA-256">4e89e5c23f92aa4731ca58110218d9b9b82ff5075a5bf500a96e19ba1ca9d1e1</hash>
+        <hash alg="SHA-256">100d0fae4d1a8449e10c055bc5923bf710abb7c4d7c327b02c5cd4639e4984e5</hash>
       </hashes>
       <licenses>
         <license>
           <id>BSD-3-Clause</id>
         </license>
       </licenses>
-      <purl>pkg:gem/carioca@2.1.0</purl>
+      <purl>pkg:gem/carioca@2.1.5</purl>
     </component>
     <component type="library">
       <name>code_statistics</name>
@@ -68,17 +68,17 @@
     </component>
     <component type="library">
       <name>concurrent-ruby</name>
-      <version>1.2.2</version>
+      <version>1.2.3</version>
       <description>Modern concurrency tools for Ruby. Inspired by Erlang, Clojure, Scala, Haskell, F#, C#, Java, and classic concurrency patterns.</description>
       <hashes>
-        <hash alg="SHA-256">3879119b8b75e3b62616acc256c64a134d0b0a7a9a3fcba5a233025bcde22c4f</hash>
+        <hash alg="SHA-256">82fdd3f8a0816e28d513e637bb2b90a45d7b982bdf4f3a0511722d2e495801e2</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/concurrent-ruby@1.2.2</purl>
+      <purl>pkg:gem/concurrent-ruby@1.2.3</purl>
     </component>
     <component type="library">
       <name>cyclonedx-ruby</name>
@@ -110,31 +110,31 @@
     </component>
     <component type="library">
       <name>diff-lcs</name>
-      <version>1.5.0</version>
+      <version>1.5.1</version>
       <description>Diff::LCS computes the difference between two Enumerable sequences using the McIlroy-Hunt longest common subsequence (LCS) algorithm</description>
       <hashes>
-        <hash alg="SHA-256">49b934001c8c6aedb37ba19daec5c634da27b318a7a3c654ae979d6ba1929b67</hash>
+        <hash alg="SHA-256">273223dfb40685548436d32b4733aa67351769c7dea621da7d9dd4813e63ddfe</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/diff-lcs@1.5.0</purl>
+      <purl>pkg:gem/diff-lcs@1.5.1</purl>
     </component>
     <component type="library">
       <name>domain_name</name>
-      <version>0.5.20190701</version>
+      <version>0.6.20240107</version>
       <description>Domain Name manipulation library for Ruby</description>
       <hashes>
-        <hash alg="SHA-256">000a600454cb4a344769b2f10b531765ea7bd3a304fe47ed12e5ca1eab969851</hash>
+        <hash alg="SHA-256">5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933</hash>
       </hashes>
       <licenses>
         <license>
           <id>BSD-2-Clause</id>
         </license>
       </licenses>
-      <purl>pkg:gem/domain_name@0.5.20190701</purl>
+      <purl>pkg:gem/domain_name@0.6.20240107</purl>
     </component>
     <component type="library">
       <name>http-accept</name>
@@ -161,87 +161,87 @@
     </component>
     <component type="library">
       <name>i18n</name>
-      <version>1.14.1</version>
+      <version>1.14.4</version>
       <description>New wave Internationalization support for Ruby</description>
       <hashes>
-        <hash alg="SHA-256">9d03698903547c060928e70a9bc8b6b87fda674453cda918fc7ab80235ae4a61</hash>
+        <hash alg="SHA-256">c7deedead0866ea9102975a4eab7968f53de50793a0c211a37808f75dd187551</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/i18n@1.14.1</purl>
+      <purl>pkg:gem/i18n@1.14.4</purl>
     </component>
     <component type="library">
       <name>json</name>
-      <version>2.6.2</version>
+      <version>2.7.2</version>
       <description>JSON Implementation for Ruby</description>
       <hashes>
-        <hash alg="SHA-256">cc9eedb357374667fe2b45e2a7fa65af517cc33bbfa12f56a14953f38a4845f5</hash>
+        <hash alg="SHA-256">138e3038b5361b3d06ee2e8aa2be00bed0d0de4ef5f1553fc5935e5b93aca7ee</hash>
       </hashes>
       <licenses>
         <license>
           <id>Ruby</id>
         </license>
       </licenses>
-      <purl>pkg:gem/json@2.6.2</purl>
+      <purl>pkg:gem/json@2.7.2</purl>
+    </component>
+    <component type="library">
+      <name>language_server-protocol</name>
+      <version>3.17.0.3</version>
+      <description>A Language Server Protocol SDK</description>
+      <hashes>
+        <hash alg="SHA-256">3d5c58c02f44a20d972957a9febe386d7e7468ab3900ce6bd2b563dd910c6b3f</hash>
+      </hashes>
+      <licenses>
+        <license>
+          <id>MIT</id>
+        </license>
+      </licenses>
+      <purl>pkg:gem/language_server-protocol@3.17.0.3</purl>
     </component>
     <component type="library">
       <name>locale</name>
-      <version>2.1.3</version>
+      <version>2.1.4</version>
       <description>Ruby-Locale is the pure ruby library which provides basic APIs for localization.</description>
       <hashes>
-        <hash alg="SHA-256">b6ddee011e157817cb98e521b3ce7cb626424d5882f1e844aafdee3e8b212725</hash>
+        <hash alg="SHA-256">522f9973ef3eee64aac9bca06d21db2fba675fa3d2cf61d21f42d1ca18a9f780</hash>
       </hashes>
       <licenses>
         <license>
           <id>Ruby</id>
         </license>
       </licenses>
-      <purl>pkg:gem/locale@2.1.3</purl>
+      <purl>pkg:gem/locale@2.1.4</purl>
     </component>
     <component type="library">
       <name>mime-types</name>
-      <version>3.4.1</version>
+      <version>3.5.2</version>
       <description>The mime-types library provides a library and registry for information about MIME content type definitions</description>
       <hashes>
-        <hash alg="SHA-256">6bcf8b0e656b6ae9977bdc1351ef211d0383252d2f759a59ef4bcf254542fc46</hash>
+        <hash alg="SHA-256">c1299f10fa34c75a6f168e99e9dadbd11bc507d9d62dc5cf98c4e65f2af8c4e4</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/mime-types@3.4.1</purl>
+      <purl>pkg:gem/mime-types@3.5.2</purl>
     </component>
     <component type="library">
       <name>mime-types-data</name>
-      <version>3.2023.0218.1</version>
+      <version>3.2024.0305</version>
       <description>mime-types-data provides a registry for information about MIME media type definitions</description>
       <hashes>
-        <hash alg="SHA-256">e90f027e54346bbbf7bd993a97e9cb7270cd4fe41c535ef84bf5d1aefe1e7ede</hash>
+        <hash alg="SHA-256">a5101ed02bf708fbaf1f65453d9dd27ece1bf910bece3df61835498d7be1a703</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/mime-types-data@3.2023.0218.1</purl>
-    </component>
-    <component type="library">
-      <name>mini_portile2</name>
-      <version>2.8.2</version>
-      <description>Simplistic port-like solution for developers</description>
-      <hashes>
-        <hash alg="SHA-256">46b2d244cc6ff01a89bf61274690c09fdbdca47a84ae9eac39039e81231aee7c</hash>
-      </hashes>
-      <licenses>
-        <license>
-          <id>MIT</id>
-        </license>
-      </licenses>
-      <purl>pkg:gem/mini_portile2@2.8.2</purl>
+      <purl>pkg:gem/mime-types-data@3.2024.0305</purl>
     </component>
     <component type="library">
       <name>netrc</name>
@@ -259,31 +259,17 @@
     </component>
     <component type="library">
       <name>nokogiri</name>
-      <version>1.15.2</version>
+      <version>1.16.4</version>
       <description>Nokogiri (鋸) makes it easy and painless to work with XML and HTML from Ruby.</description>
       <hashes>
-        <hash alg="SHA-256">20dc800b8fbe4c4f4b5b164e6aa3ab82a371bcb27eb685c166961c34dd8a22d7</hash>
+        <hash alg="SHA-256">62c116c3a14b4ed4e1faec786da266c4bd4c717a0bd04a9916164a7046040f45</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/nokogiri@1.15.2</purl>
-    </component>
-    <component type="library">
-      <name>nokogiri</name>
-      <version>1.15.2</version>
-      <description>Nokogiri (鋸) makes it easy and painless to work with XML and HTML from Ruby.</description>
-      <hashes>
-        <hash alg="SHA-256">20dc800b8fbe4c4f4b5b164e6aa3ab82a371bcb27eb685c166961c34dd8a22d7</hash>
-      </hashes>
-      <licenses>
-        <license>
-          <id>MIT</id>
-        </license>
-      </licenses>
-      <purl>pkg:gem/nokogiri@1.15.2</purl>
+      <purl>pkg:gem/nokogiri@1.16.4</purl>
     </component>
     <component type="library">
       <name>ostruct</name>
@@ -301,31 +287,31 @@
     </component>
     <component type="library">
       <name>parallel</name>
-      <version>1.22.1</version>
+      <version>1.24.0</version>
       <description>Run any kind of code in parallel processes</description>
       <hashes>
-        <hash alg="SHA-256">ebdf1f0c51f182df38522f70ba770214940bef998cdb6e00f36492b29699761f</hash>
+        <hash alg="SHA-256">5bf38efb9b37865f8e93d7a762727f8c5fc5deb19949f4040c76481d5eee9397</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/parallel@1.22.1</purl>
+      <purl>pkg:gem/parallel@1.24.0</purl>
     </component>
     <component type="library">
       <name>parser</name>
-      <version>3.1.2.0</version>
+      <version>3.3.0.5</version>
       <description>A Ruby parser written in pure Ruby.</description>
       <hashes>
-        <hash alg="SHA-256">eda4d7b49bbfddad3b6ca9cdfb23302eec6cf73c2e808b6d5b0cc9161f7c0e76</hash>
+        <hash alg="SHA-256">7748313e505ca87045dc0465c776c802043f777581796eb79b1654c5d19d2687</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/parser@3.1.2.0</purl>
+      <purl>pkg:gem/parser@3.3.0.5</purl>
     </component>
     <component type="library">
       <name>pastel</name>
@@ -357,17 +343,17 @@
     </component>
     <component type="library">
       <name>racc</name>
-      <version>1.7.1</version>
+      <version>1.7.3</version>
       <description>Racc is a LALR(1) parser generator</description>
       <hashes>
-        <hash alg="SHA-256">eaa5cd10ace36a5c5a139e699875a45fa1dfd7d5df8432ffd6243962c6b24ef0</hash>
+        <hash alg="SHA-256">b2ad737e788cfa083263ce7c9290644bb0f2c691908249eb4f6eb48ed2815dbf</hash>
       </hashes>
       <licenses>
         <license>
           <id>Ruby</id>
         </license>
       </licenses>
-      <purl>pkg:gem/racc@1.7.1</purl>
+      <purl>pkg:gem/racc@1.7.3</purl>
     </component>
     <component type="library">
       <name>rainbow</name>
@@ -385,31 +371,31 @@
     </component>
     <component type="library">
       <name>rake</name>
-      <version>13.0.6</version>
+      <version>13.2.1</version>
       <description>Rake is a Make-like program implemented in Ruby</description>
       <hashes>
-        <hash alg="SHA-256">5ce4bf5037b4196c24ac62834d8db1ce175470391026bd9e557d669beeb19097</hash>
+        <hash alg="SHA-256">46cb38dae65d7d74b6020a4ac9d48afed8eb8149c040eccf0523bec91907059d</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rake@13.0.6</purl>
+      <purl>pkg:gem/rake@13.2.1</purl>
     </component>
     <component type="library">
       <name>regexp_parser</name>
-      <version>2.5.0</version>
+      <version>2.9.0</version>
       <description>Scanner, lexer, parser for ruby's regular expressions</description>
       <hashes>
-        <hash alg="SHA-256">a076d2d35ab8d11feab5fecf8aa09ec6df68c2429810748cba079f7b021ecde5</hash>
+        <hash alg="SHA-256">81a00ba141cec0d4b4bf58cb80cd9193e5180836d3fa6ef623f7886d3ba8bdd9</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/regexp_parser@2.5.0</purl>
+      <purl>pkg:gem/regexp_parser@2.9.0</purl>
     </component>
     <component type="library">
       <name>rest-client</name>
@@ -427,143 +413,143 @@
     </component>
     <component type="library">
       <name>rexml</name>
-      <version>3.2.5</version>
+      <version>3.2.6</version>
       <description>An XML toolkit for Ruby</description>
       <hashes>
-        <hash alg="SHA-256">a33c3bf95fda7983ec7f05054f3a985af41dbc25a0339843bd2479e93cabb123</hash>
+        <hash alg="SHA-256">e0669a2d4e9f109951cb1fde723d8acd285425d81594a2ea929304af50282816</hash>
       </hashes>
       <licenses>
         <license>
           <id>BSD-2-Clause</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rexml@3.2.5</purl>
+      <purl>pkg:gem/rexml@3.2.6</purl>
     </component>
     <component type="library">
       <name>rspec</name>
-      <version>3.9.0</version>
-      <description>rspec-3.9.0</description>
+      <version>3.13.0</version>
+      <description>rspec-3.13.0</description>
       <hashes>
-        <hash alg="SHA-256">90a037a7cc02365d7c112201881839aafbc875a88094423bc8cba778c98bfac3</hash>
+        <hash alg="SHA-256">d490914ac1d5a5a64a0e1400c1d54ddd2a501324d703b8cfe83f458337bab993</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rspec@3.9.0</purl>
+      <purl>pkg:gem/rspec@3.13.0</purl>
     </component>
     <component type="library">
       <name>rspec-core</name>
-      <version>3.9.3</version>
-      <description>rspec-core-3.9.3</description>
+      <version>3.13.0</version>
+      <description>rspec-core-3.13.0</description>
       <hashes>
-        <hash alg="SHA-256">704f3af166bb8d763199742d94f0be3027c0f26d61a2f2156d99d0444248082d</hash>
+        <hash alg="SHA-256">557792b4e88da883d580342b263d9652b6a10a12d5bda9ef967b01a48f15454c</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rspec-core@3.9.3</purl>
+      <purl>pkg:gem/rspec-core@3.13.0</purl>
     </component>
     <component type="library">
       <name>rspec-expectations</name>
-      <version>3.9.4</version>
-      <description>rspec-expectations-3.9.4</description>
+      <version>3.13.0</version>
+      <description>rspec-expectations-3.13.0</description>
       <hashes>
-        <hash alg="SHA-256">58248bcc7ca1cde7255aa2436d27a1a6133d8d235409011b5256a24ce050583e</hash>
+        <hash alg="SHA-256">621d48c62262f955421eaa418130744760802cad47e781df70dba4d9f897102e</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rspec-expectations@3.9.4</purl>
+      <purl>pkg:gem/rspec-expectations@3.13.0</purl>
     </component>
     <component type="library">
       <name>rspec-mocks</name>
-      <version>3.9.1</version>
-      <description>rspec-mocks-3.9.1</description>
+      <version>3.13.0</version>
+      <description>rspec-mocks-3.13.0</description>
       <hashes>
-        <hash alg="SHA-256">b9820ed35afbc552b4448ccb98984ffe20e92bff6760dbd60f4fec503d6e75a7</hash>
+        <hash alg="SHA-256">735a891215758d77cdb5f4721fffc21078793959d1f0ee4a961874311d9b7f66</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rspec-mocks@3.9.1</purl>
+      <purl>pkg:gem/rspec-mocks@3.13.0</purl>
     </component>
     <component type="library">
       <name>rspec-support</name>
-      <version>3.9.4</version>
-      <description>rspec-support-3.9.4</description>
+      <version>3.13.1</version>
+      <description>rspec-support-3.13.1</description>
       <hashes>
-        <hash alg="SHA-256">f4333c6df9413909aa652e8460588b36e8bb62e76e51e94c039e1b4bc3e4e645</hash>
+        <hash alg="SHA-256">48877d4f15b772b7538f3693c22225f2eda490ba65a0515c4e7cf6f2f17de70f</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rspec-support@3.9.4</purl>
+      <purl>pkg:gem/rspec-support@3.13.1</purl>
     </component>
     <component type="library">
       <name>rubocop</name>
-      <version>1.32.0</version>
+      <version>1.63.1</version>
       <description>Automatic Ruby code style checking tool.</description>
       <hashes>
-        <hash alg="SHA-256">82d2a9c2995324ee0d27b75f4396d30a021e965c0e82c39162e7041a6a386326</hash>
+        <hash alg="SHA-256">63b3708babf7ede96e17c8ec03a96fc3c162a1c267579d7c9e477d25650d1b73</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rubocop@1.32.0</purl>
+      <purl>pkg:gem/rubocop@1.63.1</purl>
     </component>
     <component type="library">
       <name>rubocop-ast</name>
-      <version>1.19.1</version>
+      <version>1.31.2</version>
       <description>RuboCop tools to deal with Ruby code AST.</description>
       <hashes>
-        <hash alg="SHA-256">f549a8f636a3d4d7bc235ee091a7cea955441cf7a250d124d44e218df91b1841</hash>
+        <hash alg="SHA-256">7c206fb094553779923eca862aceece3913ce384f1bf85730208228e884578ec</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/rubocop-ast@1.19.1</purl>
+      <purl>pkg:gem/rubocop-ast@1.31.2</purl>
     </component>
     <component type="library">
       <name>ruby-progressbar</name>
-      <version>1.11.0</version>
+      <version>1.13.0</version>
       <description>Ruby/ProgressBar is a flexible text progress bar library for Ruby.</description>
       <hashes>
-        <hash alg="SHA-256">cc127db3866dc414ffccbf92928a241e585b3aa2b758a5563e74a6ee0f57d50a</hash>
+        <hash alg="SHA-256">80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/ruby-progressbar@1.11.0</purl>
+      <purl>pkg:gem/ruby-progressbar@1.13.0</purl>
     </component>
     <component type="library">
       <name>thor</name>
-      <version>1.2.2</version>
+      <version>1.3.1</version>
       <description>Thor is a toolkit for building powerful command-line interfaces.</description>
       <hashes>
-        <hash alg="SHA-256">2f93c652828cba9fcf4f65f5dc8c306f1a7317e05aad5835a13740122c17f24c</hash>
+        <hash alg="SHA-256">fa7e3471d4f6a27138e3d9c9b0d4daac9c3d7383927667ae83e9ab42ae7401ef</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/thor@1.2.2</purl>
+      <purl>pkg:gem/thor@1.3.1</purl>
     </component>
     <component type="library">
       <name>tty-color</name>
@@ -623,59 +609,31 @@
     </component>
     <component type="library">
       <name>tty-screen</name>
-      <version>0.8.1</version>
-      <description>Terminal screen size detection which works on Linux, OS X and Windows/Cygwin platforms and supports MRI, JRuby, TruffleRuby and Rubinius interpreters.</description>
+      <version>0.8.2</version>
+      <description>Terminal screen size detection.</description>
       <hashes>
-        <hash alg="SHA-256">6508657c38f32bdca64880abe201ce237d80c94146e1f9b911cba3c7823659a2</hash>
+        <hash alg="SHA-256">c090652115beae764336c28802d633f204fb84da93c6a968aa5d8e319e819b50</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/tty-screen@0.8.1</purl>
-    </component>
-    <component type="library">
-      <name>unf</name>
-      <version>0.1.4</version>
-      <description>A wrapper library to bring Unicode Normalization Form support to Ruby/JRuby</description>
-      <hashes>
-        <hash alg="SHA-256">49a5972ec0b3d091d3b0b2e00113f2f342b9b212f0db855eb30a629637f6d302</hash>
-      </hashes>
-      <licenses>
-        <license>
-          <name>2-clause BSDL</name>
-        </license>
-      </licenses>
-      <purl>pkg:gem/unf@0.1.4</purl>
-    </component>
-    <component type="library">
-      <name>unf_ext</name>
-      <version>0.0.8.2</version>
-      <description>Unicode Normalization Form support library for CRuby</description>
-      <hashes>
-        <hash alg="SHA-256">6d44c13c98924bebd15ebdd4ed196ead403a0770ac03304570873349fda2a208</hash>
-      </hashes>
-      <licenses>
-        <license>
-          <id>MIT</id>
-        </license>
-      </licenses>
-      <purl>pkg:gem/unf_ext@0.0.8.2</purl>
+      <purl>pkg:gem/tty-screen@0.8.2</purl>
     </component>
     <component type="library">
       <name>unicode-display_width</name>
-      <version>2.2.0</version>
+      <version>2.5.0</version>
       <description>Determines the monospace display width of a string in Ruby.</description>
       <hashes>
-        <hash alg="SHA-256">967fa4071b42b2c4afab8375c4f464392c5fb956959c0ceeb3cea0f4cd648eda</hash>
+        <hash alg="SHA-256">7e7681dcade1add70cb9fda20dd77f300b8587c81ebbd165d14fd93144ff0ab4</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/unicode-display_width@2.2.0</purl>
+      <purl>pkg:gem/unicode-display_width@2.5.0</purl>
     </component>
     <component type="library">
       <name>version</name>
@@ -690,20 +648,6 @@
         </license>
       </licenses>
       <purl>pkg:gem/version@1.1.1</purl>
-    </component>
-    <component type="library">
-      <name>webrick</name>
-      <version>1.7.0</version>
-      <description>HTTP server toolkit</description>
-      <hashes>
-        <hash alg="SHA-256">87e9b8e39947b7925338a5eb55427b11ce1f2b25a3645770ec9f39d8ebdb8cb4</hash>
-      </hashes>
-      <licenses>
-        <license>
-          <id>Ruby</id>
-        </license>
-      </licenses>
-      <purl>pkg:gem/webrick@1.7.0</purl>
     </component>
     <component type="library">
       <name>wisper</name>
@@ -721,17 +665,17 @@
     </component>
     <component type="library">
       <name>yard</name>
-      <version>0.9.28</version>
+      <version>0.9.36</version>
       <description>Documentation tool for consistent and usable documentation in Ruby.</description>
       <hashes>
-        <hash alg="SHA-256">d31b7e3172405165212e0c8db5b3b57865f0831f1bc33bdda5d0709e1e72315c</hash>
+        <hash alg="SHA-256">5505736c1b00c926f71053a606ab75f02070c5960d0778b901fe9d8b0a470be4</hash>
       </hashes>
       <licenses>
         <license>
           <id>MIT</id>
         </license>
       </licenses>
-      <purl>pkg:gem/yard@0.9.28</purl>
+      <purl>pkg:gem/yard@0.9.36</purl>
     </component>
     <component type="library">
       <name>yard-rspec</name>

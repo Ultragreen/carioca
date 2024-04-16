@@ -50,3 +50,7 @@ Layout/LineLength:
 
 Metrics/ParameterLists:
   Max: 8
+
+Gemspec/DevelopmentDependencies:
+  Exclude:
+    - 'carioca.gemspec'

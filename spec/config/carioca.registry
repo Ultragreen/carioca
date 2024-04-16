@@ -1,0 +1,7 @@
+---
+:uuid:
+  :type: :gem
+  :description: The uuid service
+  :service: UUID
+  :resource: uuid
+

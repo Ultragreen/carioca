@@ -8,7 +8,7 @@ module Carioca
     DEFAULT_CONFIG_ROOT = :carioca
     DEFAULT_LOCALE = :en
 
-    DEFAULT_OUTPUT_TARGET = $stdout
+    DEFAULT_OUTPUT_TARGET = :stdout
     DEFAULT_OUTPUT_MODE = :mono
     DEFAULT_EMOJI_STATUS = true
     DEFAULT_COLORS_STATUS = true

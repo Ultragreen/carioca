@@ -20,8 +20,8 @@ module Carioca
       end
 
       def method_missing(methodname, *args, **keywords, &)
-        trace message: "BEGIN CALL for service #{@service} "
-        trace message: "Method called: #{methodname} "
+        trace message: "BEGIN CALL for service #{@service.class}"
+        trace message: "Method called: #{methodname}"
         trace message: "args : #{args.join ' '}"
         trace message: "keywords : #{keywords}"
         if block_given?
@@ -30,7 +30,7 @@ module Carioca
         else
           a = @service.send(methodname, *args, **keywords)
         end
-        trace message: "=> method returned: #{a} "
+        trace message: "=> method returned: #{a}"
         trace message: 'END CALL'
 
         a

@@ -109,7 +109,7 @@ module Carioca
         end
 
         # constructor
-        def initialize(level: :debug, mode: :mono, emoji: true, colors: true, target: $stdout)
+        def initialize(level: :debug, mode: :mono, emoji: true, colors: true, target: :stdout)
           registry = Carioca::Registry.get
           @logger = registry.get_service name: :logger
           @i18n = registry.get_service name: :i18n
@@ -183,7 +183,11 @@ module Carioca
               block = proc { save }
               @logger.send target_level, source, &block
             end
-            @target.puts message if (@mode == :mono) || (@mode == :dual)
+            if @target == :stderr then
+              $stderr.puts message if (@mode == :mono) || (@mode == :dual)
+            else
+              $stdout.puts message if (@mode == :mono) || (@mode == :dual)
+            end
           end
         end
       end

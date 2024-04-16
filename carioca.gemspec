@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'diff/lcs'
 require_relative 'lib/carioca/constants'
 
 Gem::Specification.new do |spec|
@@ -42,6 +43,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 1.32'
   spec.add_development_dependency 'yard', '~> 0.9.27'
   spec.add_development_dependency 'yard-rspec', '~> 0.1'
+  spec.add_development_dependency 'diff-lcs', '~> 1.5.1'
   spec.metadata['rubygems_mfa_required'] = 'false'
   spec.add_dependency 'version', '~> 1.1'
   spec.add_runtime_dependency 'ps-ruby', '~> 0.0.4'
