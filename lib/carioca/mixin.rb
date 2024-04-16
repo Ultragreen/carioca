@@ -7,7 +7,7 @@ module Carioca
     end
 
     def add(service:, definition:)
-      Carioca::Registry.get.add service: service, definition: definition
+      Carioca::Registry.get.add service:, definition:
     end
 
     def services
@@ -18,9 +18,9 @@ module Carioca
       Carioca::Registry.get.active_services
     end
 
-    def create_methods(name, &block)
-      define_method name, &block
-      self.class.send(:define_method, name, &block)
+    def create_methods(name, &)
+      define_method(name, &)
+      self.class.send(:define_method, name, &)
     end
 
     def self.extended(base)

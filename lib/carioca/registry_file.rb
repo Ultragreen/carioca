@@ -29,7 +29,7 @@ module Carioca
     end
 
     def add(service:, definition:)
-      checker = Carioca::Services::Validator.new service: service, definition: definition
+      checker = Carioca::Services::Validator.new(service:, definition:)
       checker.validate!
       @validated[service] = checker.definition
     end
@@ -50,7 +50,7 @@ module Carioca
       @candidates.delete_if { |key, _value| BUILTINS.keys.include? key }
       @altered = save.keys - @candidates.keys
       @candidates.each do |service, definition|
-        checker = Carioca::Services::Validator.new service: service, definition: definition
+        checker = Carioca::Services::Validator.new(service:, definition:)
         checker.validate!
         @validated[service] = checker.definition
       end

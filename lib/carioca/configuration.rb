@@ -34,7 +34,7 @@ module Carioca
       @secure_store_file = DEFAULT_SECURE_STORE_FILE.dup
       path = search_file_in_gem('carioca', 'config/locales')
       @locales_load_path = Dir["#{File.expand_path(path)}/*.yml"]
-      Dir["#{path}/*.yml"].sort.each do |file|
+      Dir["#{path}/*.yml"].each do |file|
         @locales_availables.push File.basename(file, '.yml').to_sym
       end
       @debugger_tracer = DEFAULT_DEBUGGER_TRACER.dup

@@ -10,7 +10,7 @@ module Carioca
         methods(false).each do |meth|
           next if meth == :describe
 
-          result[meth] = send meth, **{ describe: true }
+          result[meth] = send meth, describe: true
         end
         result
       end
@@ -56,17 +56,17 @@ module Carioca
       # @param [String] _file a file relative path in the gem
       # @return [String] the path of the file, if found.
       # @return [False] if not found
-      def self.search_file_in_gem(_gem = nil, _file = nil, description: 'Retrieve absolute path of a file in a specific gem', describe: false)
+      def self.search_file_in_gem(gem: nil, file: nil, description: 'Retrieve absolute path of a file in a specific gem', describe: false)
         return description if describe
 
         if Gem::Specification.respond_to?(:find_by_name)
           begin
-            spec = Gem::Specification.find_by_name(_gem)
+            spec = Gem::Specification.find_by_name(gem)
           rescue LoadError
             spec = nil
           end
         else
-          spec = Gem.searcher.find(_gem)
+          spec = Gem.searcher.find(gem)
         end
         if spec
           res = if Gem::Specification.respond_to?(:find_by_name)
@@ -75,7 +75,7 @@ module Carioca
                   Gem.searcher.lib_dirs_for(spec).split('/')
                 end
           res.pop
-          services_path = res.join('/').concat("/#{_file}")
+          services_path = res.join('/').concat("/#{file}")
           return services_path if File.exist?(services_path)
 
         end
@@ -84,7 +84,7 @@ module Carioca
 
       # facility to verifying if the active process run as root
       # @return [Bool] status
-      def self.is_root?(description: 'Verify if active current processus is running as root', describe: false)
+      def self.root?(description: 'Verify if active current processus is running as root', describe: false)
         return description if describe
 
         Process.uid.zero?

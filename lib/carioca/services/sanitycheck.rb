@@ -14,14 +14,13 @@ module Carioca
         @finisher = registry.get_service name: :finisher
         @schema = {}
         if @configuration.settings.include? :sanitycheck
-          @schema = (@configuration.settings.sanitycheck.include? :rules) ? @configuration.settings.sanitycheck.rules : {}
+          @schema = @configuration.settings.sanitycheck.include?(:rules) ? @configuration.settings.sanitycheck.rules : {}
         end
       end
 
       def run
         unless @schema.empty?
           begin
-            result = []
             @output.info @i18n.t('sanitycheck.run.start')
             error_number = 0
             @schema.each do |item|
@@ -29,10 +28,10 @@ module Carioca
               item.delete(:test)
               res = send(testcase, **item)
               if  res.empty?
-                @output.ok @i18n.t('sanitycheck.run.ok', testcase: testcase, name: item[:name].to_s)
+                @output.ok @i18n.t('sanitycheck.run.ok', testcase:, name: item[:name].to_s)
               else
                 pbm = res.map(&:to_s).join(',')
-                @output.ko @i18n.t('sanitycheck.run.ko', testcase: testcase, name: item[:name].to_s, pbm: pbm)
+                @output.ko @i18n.t('sanitycheck.run.ko', testcase:, name: item[:name].to_s, pbm:)
                 error_number = + 1
               end
             end
@@ -41,7 +40,7 @@ module Carioca
             else
               @output.success @i18n.t('sanitycheck.success')
             end
-          rescue Exception
+          rescue StandardError
             @finisher.secure_raise message: @i18n.t('sanitychek.error'), error_case: :status_ko
           end
         end
@@ -62,7 +61,7 @@ module Carioca
 
         stat = File.stat(full_name)
         if mode
-          tested_mode = '%o' % stat.mode
+          tested_mode = format('%o', stat.mode)
           res << :mode if tested_mode[-3..] != mode
         end
         res << :owner if owner && (Etc.getpwuid(stat.uid).name != owner)
@@ -93,7 +92,7 @@ module Carioca
 
         stat = File.stat(full_name)
         if mode
-          tested_mode = '%o' % stat.mode
+          tested_mode = format('%o', stat.mode)
           res << :mode if tested_mode[-3..] != mode
         end
         res << :owner if owner && (Etc.getpwuid(stat.uid).name != owner)
@@ -103,11 +102,10 @@ module Carioca
 
       # TCP/IP service checker
       # @return [Bool] status
-      # @option [String] :name display name
       # @option [String] :host hostname
       # @option [String] :port TCP port
       # @option [String] :url full URL, priority on :host and :port
-      def verify_service(name: nil, url: nil, host: nil, port: nil)
+      def verify_service(url: nil, host: nil, port: nil)
         if url
           uri = URI.parse(url)
           host = uri.host

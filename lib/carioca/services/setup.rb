@@ -14,7 +14,7 @@ module Carioca
         @finisher = registry.get_service name: :finisher
         @schema = {}
         if @configuration.settings.include? :setup
-          @schema = (@configuration.settings.setup.include? :rules) ? @configuration.settings.setup.rules : {}
+          @schema = @configuration.settings.setup.include?(:rules) ? @configuration.settings.setup.rules : {}
         end
       end
 
@@ -27,7 +27,7 @@ module Carioca
               item.delete(:action)
               send action, **item
             end
-          rescue Exception
+          rescue StandardError
             @finisher.secure_raise message: @i18n.t('setup.error'), error_case: :status_ko
           end
         end
@@ -47,7 +47,7 @@ module Carioca
       def install_file(source:, target:, mode: '644', owner: nil, group: nil, force: true, gem: true, gem_name: 'carioca')
         @output.item @i18n.t('setup.install', file: target)
         full_target = File.expand_path(target)
-        source = gem ? @toolbox.search_file_in_gem(gem_name, source) : source
+        source = @toolbox.search_file_in_gem(gem: gem_name, file: source) if gem
         FileUtils.copy source, full_target if force
         FileUtils.chmod mode.to_i(8), full_target
         FileUtils.chown owner, group, full_target if owner && group
@@ -70,9 +70,9 @@ module Carioca
       # @option [String] :source path of the file
       # @option [String] :link path of the symlink
       def make_link(source:, link:)
-        full_source = File.expand_path(source)
-        full_link = File.expand_path(link)
-        @output.item @i18n.t('setup.ln', target: link, source: source)
+        File.expand_path(source)
+        File.expand_path(link)
+        @output.item @i18n.t('setup.ln', target: link, source:)
         FileUtils.rm link if File.symlink?(link) && !File.exist?(link)
         FileUtils.ln_s source, link unless File.exist? link
       end

@@ -133,7 +133,7 @@ appli.test3
 output.emoji = true
 output.color = true
 
-puts "\nTest 9 : Service toolbox list of avaibles methodes"
+puts "\nTest 9 : Service toolbox list of availables methodes"
 toolbox = Carioca::Registry.get.get_service name: :toolbox
 pp toolbox.describe
 
@@ -141,7 +141,7 @@ puts "\nTest 10 : Service toolbox test of simple methode : :user_root"
 pp toolbox.user_root
 
 puts "\nTest 11 : Service toolbox test of simple methode : :search_file_in_gem"
-pp toolbox.search_file_in_gem('carioca', 'config/locales/en.yml')
+pp toolbox.search_file_in_gem(gem: 'carioca', file: 'config/locales/en.yml')
 
 puts "\nTest 12 : Service setup execute setup schema from configuration"
 setup = Carioca::Registry.get.get_service name: :setup

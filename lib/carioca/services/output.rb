@@ -76,12 +76,12 @@ module Carioca
 
         LEVELS.each do |method|
           define_method(method) do |message, session = nil, source = 'Carioca->Output'|
-            display(level: method, message: message, session: session, source: source)
+            display(level: method, message:, session:, source:)
           end
         end
         @@alias.each_key do |method|
           define_method(method) do |message, session = nil, source = 'Carioca->Output'|
-            display(level: method, message: message, session: session, source: source)
+            display(level: method, message:, session:, source:)
           end
         end
 
@@ -104,7 +104,7 @@ module Carioca
           raise "Bad Level : #{level}" unless LEVELS.include? level
 
           self.class.define_method(newalias) do |message, session = nil|
-            display({ level: newalias, message: message, session: session })
+            display({ level: newalias, message:, session: })
           end
         end
 

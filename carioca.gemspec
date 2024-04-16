@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage = 'https://github.com/Ultragreen/carioca'
   spec.description = 'Carioca 2: is a complete rewrite who provide a full IoC/DI light Container and a services registry, build with logs, config and Internationalization facilities for designing your applications'
 
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.6.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.2.3')
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 

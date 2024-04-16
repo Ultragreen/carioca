@@ -48,7 +48,5 @@ Style/Documentation:
 Layout/LineLength:
   Enabled: false
 
-
-
-
-
+Metrics/ParameterLists:
+  Max: 8

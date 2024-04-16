@@ -54,8 +54,8 @@ module Carioca
       def terminate(return_case: nil, exit_case: nil, more: nil)
         raise 'Case must be a return or an exit' if return_case && exit_case
 
-        do_exit!(exit_case: exit_case, more: more) if exit_case
-        do_return(return_case: return_case, more: more) if return_case
+        do_exit!(exit_case:, more:) if exit_case
+        do_return(return_case:, more:) if return_case
       end
 
       # exiter
@@ -86,39 +86,38 @@ module Carioca
       end
 
       def secure_raise(message: 'unknown error', error_case: :status_ko)
-        raise SpecificError.new message, error_case: error_case
+        raise SpecificError.new(message, error_case:)
       end
 
       def secure_api_return(data: nil, return_case: nil, structured: false, json: true, status: true)
         result = {}
         begin
           data = yield if block_given?
-          result = structured ? do_return(return_case: return_case).merge({ data: data }) : data
-        rescue Exception => e
-          key = (e.respond_to? :error_case) ? e.error_case : :status_ko
-          more = (e.respond_to? :error_case) ? e.message : "#{e.class} : #{e.message}"
-          result = do_return return_case: key, more: more
+          result = structured ? do_return(return_case:).merge({ data: }) : data
+        rescue StandardError => e
+          key = e.respond_to?(:error_case) ? e.error_case : :status_ko
+          more = e.respond_to?(:error_case) ? e.message : "#{e.class} : #{e.message}"
+          result = do_return return_case: key, more:
         end
         if status && structured && json
           p result
           { status: result[:code], data: JSON.pretty_generate(JSON.parse(result.to_json)) }
         elsif json
-          return JSON.pretty_generate(JSON.parse(result.to_json)) if json
+          JSON.pretty_generate(JSON.parse(result.to_json)) if json
         else
           result
         end
       end
 
       def secure_execute!(exit_case: :success_exit)
-        result = {}
         begin
           more = yield
-        rescue Exception => e
-          key = (e.respond_to? :error_case) ? e.error_case : :error_exit
-          more = (e.respond_to? :error_case) ? e.message : "#{e.class} : #{e.message}"
-          exit_case = key
+          key = exit_case
+        rescue StandardError => e
+          key = e.respond_to?(:error_case) ? e.error_case : :error_exit
+          more = e.respond_to?(:error_case) ? e.message : "#{e.class} : #{e.message}"
         end
-        do_exit! exit_case: exit_case, more: more
+        do_exit! exit_case: key, more:
       end
     end
   end

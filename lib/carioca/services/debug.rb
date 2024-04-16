@@ -4,7 +4,7 @@ module Carioca
   module Services
     class Debugger
       def self.get(service:, trace: Carioca::Registry.config.debugger_tracer)
-        ProxyDebug.new service: service, trace: trace
+        ProxyDebug.new service:, trace:
       end
     end
 
@@ -19,14 +19,14 @@ module Carioca
         @tracer_type = trace
       end
 
-      def method_missing(methodname, *args, **keywords, &block)
+      def method_missing(methodname, *args, **keywords, &)
         trace message: "BEGIN CALL for service #{@service} "
         trace message: "Method called: #{methodname} "
         trace message: "args : #{args.join ' '}"
         trace message: "keywords : #{keywords}"
         if block_given?
           trace message: 'block given'
-          a = @service.send(methodname, *args, **keywords, &block)
+          a = @service.send(methodname, *args, **keywords, &)
         else
           a = @service.send(methodname, *args, **keywords)
         end
