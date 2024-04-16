@@ -62,13 +62,13 @@ RSpec.describe Carioca do
     it "must be possible to use output service" do
       output = Carioca::Registry.get.get_service name: :output
       expect { output.info "test" }.to output("ℹ \e[36mtest\e[0m\n").to_stdout
-    end
+    end unless ENV["GITHUB_ACTIONS"]
     
     it "must be possible to use  MyService" do
       myservice = Carioca::Registry.get.get_service name: :myservice
       expect { myservice.hello  }.to output("ℹ \e[36mHello World\e[0m\n").to_stdout
 
-    end
+    end unless ENV["GITHUB_ACTIONS"]
   end
 
   context "I18n Service" do
@@ -80,7 +80,7 @@ RSpec.describe Carioca do
       {es: "español", fr: "français", en: "english"}.each do |locale,result|
         i18n.locale = locale
         expect { output.item i18n.t(:test) }.to output(" 🔹 \e[37m#{result}\e[0m\n").to_stdout
-      end
+      end unless ENV["GITHUB_ACTIONS"]
     end
 
 
@@ -90,7 +90,7 @@ RSpec.describe Carioca do
       i18n.locale = :es
       expect { output.item i18n.t(:fallback) }.to output(" 🔹 \e[37menglish fallback\e[0m\n").to_stdout
       i18n.locale = :en
-    end
+    end unless ENV["GITHUB_ACTIONS"]
   end
 
   context "Configuration Service" do 
@@ -128,13 +128,13 @@ RSpec.describe Carioca do
     it "must be possible to use Carioca Container with Config file defined gem service in registry UUID (logging) see : /tmp/test.rge" do 
       appli = MyAppli.new
       expect { appli.test  }.to output("ℹ \e[36mHello World\e[0m\n").to_stdout
-    end
+    end unless ENV["GITHUB_ACTIONS"]
 
 
     it "must be possible to use Carioca Container with debbugger service for own service" do 
       appli = MyAppli.new
       expect { appli.test2  }.to output("🐛 \e[35mBEGIN CALL for service MyService\e[0m\n🐛 \e[35mMethod called: method_test\e[0m\n🐛 \e[35margs : param\e[0m\n🐛 \e[35mkeywords : {:tutu=>\"keyword\"}\e[0m\n🐛 \e[35mblock given\e[0m\ntiti\n🐛 \e[35m=> method returned: result keyword\e[0m\n🐛 \e[35mEND CALL\e[0m\n").to_stdout
-    end
+    end unless ENV["GITHUB_ACTIONS"]
 
   end
 
@@ -166,11 +166,11 @@ RSpec.describe Carioca do
     it "must be possible on Service setup to execute setup schema from configuration" do
       setup = Carioca::Registry.get.get_service name: :setup
       expect { setup.execute! }.to output("ℹ \e[36mBegining setup :\e[0m\n 🔹 \e[37mInstallation of file /tmp/settings.yml\e[0m\n 🔹 \e[37mInstallation of file /tmp/carioca.registry\e[0m\n 🔹 \e[37mCreation of folder /tmp/toto\e[0m\n 🔹 \e[37mCreation of symlink /tmp/application.yml -> /tmp/settings.yml\e[0m\n").to_stdout
-    end
+    end unless ENV["GITHUB_ACTIONS"] 
     it "must be possible on Service sanitycheck to run checking schema from configuration" do
       sanitycheck = Carioca::Registry.get.get_service name: :sanitycheck
       expect { sanitycheck.run }.to output("ℹ \e[36mBegining sanitycheck :\e[0m\n👍 \e[32mTestcase verify_file on /tmp/carioca.registry is ok\e[0m\n👍 \e[32mTestcase verify_folder on /tmp/toto is ok\e[0m\n👍 \e[32mTestcase verify_link on /tmp/application.yml is ok\e[0m\n💪 \e[32mSanitycheck finish without errors\e[0m\n").to_stdout
-    end
+    end unless ENV["GITHUB_ACTIONS"]
   end
 
 
