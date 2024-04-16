@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'diff/lcs'
 require_relative 'lib/carioca/constants'
 
 Gem::Specification.new do |spec|

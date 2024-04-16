@@ -2,6 +2,7 @@
 
 require 'carioca'
 require 'pathname'
+require 'diff/lcs'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
