@@ -173,5 +173,67 @@ RSpec.describe Carioca do
     end unless ENV["GITHUB_ACTIONS"]
   end
 
+  context "SecureStore Service" do
+    it "must be possible to use Service SecureStore init or access and store data in" do
+      securestore = Carioca::Registry.get.get_service name: :securestore
+      res = (securestore.data.empty?)? {:time => "first time"} : securestore.data
+      expect(res[:time]).to be_an_instance_of String
+    end
+
+
+    it "must be possible to use Service SecureStore for setting new data" do
+      securestore = Carioca::Registry.get.get_service name: :securestore
+      securestore.data[:time] = Time.now.to_s
+      securestore.save!
+    end
+  end
+
+  context "Finisher Service" do
+
+    it "must be possible to use Service finisher for flat api return, no-json, no-structured" do 
+      finisher = Carioca::Registry.get.get_service name: :finisher
+      result = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do
+        'test'
+      end
+      expect(result).to eq "test"
+    end
+
+    it "must be possible to use Service finisher for api return, no-json, no-structured but with secure_raise" do
+      finisher = Carioca::Registry.get.get_service name: :finisher
+      result = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do
+        finisher.secure_raise message: 'error !', error_case: :status_ko
+        'test'
+      end
+      expect(result).to eq({:code=>500, :message=>"Status KO", :more=>"error !"})
+    end
+
+    it "must be possible to use Service finisher for api return, json, structured but with secure_raise" do
+      finisher = Carioca::Registry.get.get_service name: :finisher
+      result = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
+        finisher.secure_raise message: 'error !', error_case: :status_ko
+        'test'
+      end
+      expect(result[:status]).to eq 500
+      expect(JSON.parse(result[:data], symbolize_names: true)).to eq({:code=>500, :message=>"Status KO", :more=>"error !"})
+
+    end
+
+    it "must be possible to use Service finisher for api return, json, structured" do
+      finisher = Carioca::Registry.get.get_service name: :finisher
+      result = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
+        'test'
+      end
+      expect(result[:status]).to eq 200
+      expect(JSON.parse(result[:data], symbolize_names: true)).to eq({:code=>200, :message=>"Status OK", :data=>"test"})
+    end
+
+    it "must be possible to use Service finisher for api return, json, structured with status=false" do
+      finisher = Carioca::Registry.get.get_service name: :finisher 
+      result = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do
+        'test'
+      end
+      expect(JSON.parse(result, symbolize_names: true)).to eq({:code=>200, :message=>"Status OK", :data=>"test"})
+    end
+  end
 
 end

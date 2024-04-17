@@ -61,7 +61,7 @@ module Carioca
         encoded = File.read(@storefile)
         encrypted = Base64.decode64(encoded)
         plain = decipher.update(encrypted) + decipher.final
-        YAML.safe_load(plain)
+        YAML.load(plain)
       end
 
       def encrypt(data)
