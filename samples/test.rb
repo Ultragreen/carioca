@@ -175,28 +175,28 @@ puts test
 output.item 'api return, no-json, no-structured but with secure_raise'
 test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do
   finisher.secure_raise message: 'error !', error_case: :status_ko
-  'test'
+    { test: 'test'}
 end
 puts test
 
 output.item 'api return, json, structured but with secure_raise'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
   finisher.secure_raise message: 'error !', error_case: :status_ko
-  'test'
+  { test: 'test'}
 end
 puts test[:status]
 puts test[:data]
 
 output.item 'api return, json, structured'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
-  'test'
+  { test: 'test' }
 end
 puts test[:status]
 puts test[:data]
 
 output.item 'api return, json, structured with status=false'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do
-  'test'
+  { test: 'test'}
 end
 puts test
 
