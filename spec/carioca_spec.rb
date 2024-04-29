@@ -241,6 +241,8 @@ RSpec.describe Carioca do
 
     it 'must be possible to use Service finisher for api return, json, structured with alternative' do
       finisher = Carioca::Registry.get.get_service name: :finisher
+      i18n = Carioca::Registry.get.get_service name: :i18n
+      i18n.locale = :en
       test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
         data = { test: 'test' }
         finisher.secure_alternative(message: 'test alernative', return_case: :accepted, data:)
