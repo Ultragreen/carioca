@@ -152,17 +152,15 @@ sanitycheck = Carioca::Registry.get.get_service name: :sanitycheck
 sanitycheck.run
 
 puts "\nTest 14 : Service SecureStore init or access"
- securestore = Carioca::Registry.get.get_service name: :securestore
+securestore = Carioca::Registry.get.get_service name: :securestore
 
 puts "\nTest 15 : Service SecureStore getting previous data"
- res = (securestore.data.empty?)? "first time" : securestore.data.to_s
- output.info res
-
+res = securestore.data.empty? ? 'first time' : securestore.data.to_s
+output.info res
 
 puts "\nTest 16 : Service SecureStore setting new data"
- securestore.data[:time] = Time.now.to_s
- securestore.save!
-
+securestore.data[:time] = Time.now.to_s
+securestore.save!
 
 puts "\nTest 17 : Service finisher : test all cases"
 output.item 'flat api return, no-json, no-structured'
@@ -175,14 +173,14 @@ puts test
 output.item 'api return, no-json, no-structured but with secure_raise'
 test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do
   finisher.secure_raise message: 'error !', error_case: :status_ko
-    { test: 'test'}
+  { test: 'test' }
 end
 puts test
 
 output.item 'api return, json, structured but with secure_raise'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
   finisher.secure_raise message: 'error !', error_case: :status_ko
-  test = { test: 'test'}
+  test = { test: 'test' }
   test
 end
 puts test[:status]
@@ -196,34 +194,32 @@ end
 puts test[:status]
 puts test[:data]
 
-
 output.item 'api return, json, structured with alternative'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
   test = { test: 'test' }
-  finisher.secure_alternative message: "test alernative", return_case: :accepted, data: test
+  finisher.secure_alternative message: 'test alernative', return_case: :accepted, data: test
   test
 end
 puts test[:status]
 puts test[:data]
 
-
 output.item 'api return, json, structured with alternative'
 test = finisher.secure_api_return(return_case: :status_ok, structured: false, json: false) do
   test = { test: 'test' }
-  finisher.secure_alternative message: "test alernative", return_case: :accepted, data: test
+  finisher.secure_alternative message: 'test alernative', return_case: :accepted, data: test
   test
 end
 puts test
 
 output.item 'api return, json, structured with status=false'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do
-  { test: 'test'}
+  { test: 'test' }
 end
 puts test
 
 output.item 'api return, json, structured but raising unknown case'
 test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do
-  raise "Boom"
+  raise 'Boom'
 end
 puts test
 

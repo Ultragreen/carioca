@@ -183,10 +183,10 @@ module Carioca
               block = proc { save }
               @logger.send target_level, source, &block
             end
-            if @target == :stderr then
-              $stderr.puts message if (@mode == :mono) || (@mode == :dual)
-            else
-              $stdout.puts message if (@mode == :mono) || (@mode == :dual)
+            if @target == :stderr
+              warn message if (@mode == :mono) || (@mode == :dual)
+            elsif (@mode == :mono) || (@mode == :dual)
+              $stdout.puts message
             end
           end
         end

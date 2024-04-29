@@ -24,6 +24,11 @@ Style/MissingRespondToMissing:
   Enabled: false
 Gemspec/RequireMFA:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - 'spec/carioca_spec.rb'
+    - 'carioca.gemspec'
 
 
 # to study :

@@ -44,6 +44,6 @@ install_file
 make_link
 get_processes
 group_root
-is_root?
+root?
 extended
 method_missing

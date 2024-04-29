@@ -12,7 +12,6 @@ module Carioca
       end
     end
 
-
     class AlternativeCatcher < StandardError
       attr_reader :return_case, :data
 
@@ -106,15 +105,13 @@ module Carioca
           data = yield if block_given?
           result = structured ? do_return(return_case:).merge({ data: }) : data
         rescue StandardError => e
-          key = :status_ko
-          more = "#{e.class} : #{e.message}"
-          if e.respond_to?(:error_case)
-            result = do_return(return_case: e.error_case, more: e.message)
-          elsif e.respond_to?(:return_case)
-            result = structured ? do_return(return_case: e.return_case, more: e.message).merge({ data: e.data}) : e.data
-          else  
-            result = do_return(return_case: :status_ko, more: "#{e.class.to_s} : #{e.message}")
-          end
+          result = if e.respond_to?(:error_case)
+                     do_return(return_case: e.error_case, more: e.message)
+                   elsif e.respond_to?(:return_case)
+                     structured ? do_return(return_case: e.return_case, more: e.message).merge({ data: e.data }) : e.data
+                   else
+                     do_return(return_case: :status_ko, more: "#{e.class} : #{e.message}")
+                   end
         end
         if status && structured && json
           { status: result[:code], data: JSON.pretty_generate(JSON.parse(result.to_json)) }
@@ -125,10 +122,9 @@ module Carioca
         end
       end
 
-      def secure_alternative(message: , return_case: :accepted, data: )
-        raise AlternativeCatcher.new(message, return_case: return_case, data: data)
+      def secure_alternative(message:, data:, return_case: :accepted)
+        raise AlternativeCatcher.new(message, return_case:, data:)
       end
-
 
       def secure_execute!(exit_case: :success_exit)
         begin
