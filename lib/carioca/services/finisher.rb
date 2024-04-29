@@ -112,6 +112,8 @@ module Carioca
             result = do_return(return_case: e.error_case, more: e.message)
           elsif e.respond_to?(:return_case)
             result = structured ? do_return(return_case: e.return_case, more: e.message).merge({ data: e.data}) : e.data
+          else  
+            result = do_return(return_case: :status_ko, more: "#{e.class.to_s} : #{e.message}")
           end
         end
         if status && structured && json

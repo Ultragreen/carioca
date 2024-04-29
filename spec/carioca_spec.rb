@@ -235,6 +235,15 @@ RSpec.describe Carioca do
       expect(JSON.parse(result, symbolize_names: true)).to eq({:code=>200, :message=>"Status OK", :data=>"test"})
     end
 
+    it "must be possible to use Service finisher for api return, json, structured but raising unknown case" do 
+      finisher = Carioca::Registry.get.get_service name: :finisher 
+      test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do
+        raise "Boom"
+      end
+      expect(test[:status]).to eq 500
+      expect(JSON.parse(test[:data], symbolize_names: true)).to eq({:code=>500, :message=>"Status KO",:more => "RuntimeError : Boom"})
+    end
+
     it "must be possible to use Service finisher for api return, json, structured with alternative" do 
       finisher = Carioca::Registry.get.get_service name: :finisher 
       test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true) do

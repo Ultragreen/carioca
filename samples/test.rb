@@ -221,6 +221,12 @@ test = finisher.secure_api_return(return_case: :status_ok, structured: true, jso
 end
 puts test
 
+output.item 'api return, json, structured but raising unknown case'
+test = finisher.secure_api_return(return_case: :status_ok, structured: true, json: true, status: false) do
+  raise "Boom"
+end
+puts test
+
 puts "\nTest 18 : Service finisher : exit case in success"
 i18n.locale = :fr
 finisher.secure_execute! exit_case: :success_exit do
