@@ -25,7 +25,7 @@ en:
     messages: 
       not_root: "This operation need to be run as root (use sudo or rvmsudo)"
       options_incompatibility: "Options incompatibility"
-      service_dependence_missing: "Appifier Service dependence missing"
+      missing_service_dependency: "Missing Service dependency"
       config_required: "Specific configuration required"
       setup_error: "Setup terminated unsuccessfully"
       setup_success: "Setup terminated successfully"
@@ -43,6 +43,7 @@ en:
       bad_request: "Bad request"
       created: "Content Successfully created"
       accepted: "Request accepted"
+      not_implemented: "Not yet implemented"
     bad_usage: "Case must be a return or an exit"
   setup:
     error: "Setup operation failed"

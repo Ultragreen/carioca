@@ -28,7 +28,7 @@ module Carioca
         # global
         not_root: { code: 40, key: 'finisher.messages.not_root' },
         options_incompatibility: { code: 410, key: 'finisher.messages.options_incompatibility' },
-        service_dependence_missing: { code: 430, key: 'finisher.messages.service_dependence_missing' },
+        missing_service_dependency: { code: 430, key: 'finisher.messages.missing_service_dependency' },
         config_required: { code: 420, key: 'finisher.messages.config_required' },
         setup_error: { code: 520, key: 'finisher.messages.setup_error' },
         setup_success: { code: 0, key: 'finisher.messages.setup_success' },
@@ -49,7 +49,8 @@ module Carioca
         accepted: { code: 202, key: 'finisher.messages.accepted' },
         bad_request: { code: 400, key: 'finisher.messages.bad_request' },
         status_ko: { code: 500, key: 'finisher.messages.status_ko' },
-        no_content: { code: 204, key: 'finisher.messages.no_content' }
+        no_content: { code: 204, key: 'finisher.messages.no_content' },
+        not_implemented: { code: 210, key: 'finisher.messages.not_implemented' },
       }.freeze
 
       def initialize

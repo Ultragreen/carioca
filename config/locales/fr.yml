@@ -25,7 +25,7 @@ fr:
     messages: 
       not_root: "L'opération doit être lancée en root (utiliser sudo ou rvmsudo)"
       options_incompatibility: "Options incompatibles"
-      service_dependence_missing: "Service Carioca, dépendence manquante"
+      missing_service_dependency: "Service Carioca, dépendence manquante"
       config_required: "Configuration spécifique requise"
       setup_error: "Setup terminé avec succès"
       setup_success: "Setup terminé en échec"
@@ -43,6 +43,7 @@ fr:
       bad_request: "Requête incorrecte"
       created: "Contenu créé avec succès"
       accepted: "Requête acceptée"
+      not_implemented: "Pas encore implémenté"
     bad_usage: "return_case et exit_case sont incompatibles"
   setup:
     error: "Opération en echec durant le setup"
